@@ -37,4 +37,6 @@ source "https://rubygems.org" do
   gem "rake",                         "~> 13.0", :require => false
   gem "timecop",                      "~> 0.7", :require => false
   gem "yard",                         "~> 0.9", ">= 0.9.11", :require => false
+  gem "standard",                     ">= 1.0", :require => false
+  gem "standard-performance",         ">= 1.0", :require => false
 end
