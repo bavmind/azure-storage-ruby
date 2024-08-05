@@ -29,7 +29,7 @@ module Stubs
   end
 end
 
-class MiniTest::Mock
+class Minitest::Mock
   def stub(name, value = nil)
     metaclass = class << self; self; end
     metaclass.send :define_method, name do |*args|
@@ -46,6 +46,6 @@ class MiniTest::Mock
   end
 end
 
-class MiniTest::Unit::TestCase
+class Minitest::Test
   include Stubs
 end
