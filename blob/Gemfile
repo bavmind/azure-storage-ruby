@@ -26,5 +26,3 @@
 source "https://rubygems.org"
 
 gemspec name: "azure-storage-blob"
-
-gem "coveralls", require: false

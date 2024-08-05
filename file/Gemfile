@@ -26,5 +26,3 @@
 source "https://rubygems.org"
 
 gemspec name: "azure-storage-file"
-
-gem "coveralls", require: false
