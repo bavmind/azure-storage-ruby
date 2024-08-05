@@ -69,7 +69,7 @@ task :publishDoc do
   repo = %x(git config remote.origin.url).gsub(/^git:/, "https:")
   deploy_branch = "gh-pages"
   if repo.match(/github\.com\.git$/)
-    deploy_branch = "master"
+    deploy_branch = "main"
   end
   system "git remote set-url --push origin #{repo}"
   system "git remote set-branches --add origin #{deploy_branch}"
@@ -91,7 +91,7 @@ task :publishDoc do
   system "git add *"
   system "git commit -m \"update document\""
   system "git push"
-  system "git checkout master"
+  system "git checkout main"
   File.delete ".git/credentials"
 end
 
