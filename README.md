@@ -4,8 +4,7 @@ This project will be in [Community Support](https://azure.github.io/azure-sdk/po
 
 ---
 
-* Master: [![Master Build Status](https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=master)](https://travis-ci.org/Azure/azure-storage-ruby/branches)
-* Dev: [![Dev Build Status](https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=dev)](https://travis-ci.org/Azure/azure-storage-ruby/branches)
+* Main: [![Main Build Status](https://github.com/MoneyBrilliant/azure-storage-ruby/actions/workflows/ruby.yml/badge.svg?branch=main)](https://github.com/MoneyBrilliant/azure-storage-ruby/branches)
 
 This project provides Ruby packages that makes it easy to access and manage Microsoft Azure Storage Services.
 

@@ -1,8 +1,7 @@
 # Microsoft Azure Storage Common Client Library for Ruby
 
 [![Gem Version](https://badge.fury.io/rb/azure-storage-common.svg)](https://badge.fury.io/rb/azure-storage-common)
-* Master: [![Master Build Status](https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=master)](https://travis-ci.org/Azure/azure-storage-ruby/branches)
-* Dev: [![Dev Build Status](https://travis-ci.org/Azure/azure-storage-ruby.svg?branch=dev)](https://travis-ci.org/Azure/azure-storage-ruby/branches)
+* Main: [![Main Build Status](https://github.com/MoneyBrilliant/azure-storage-ruby/actions/workflows/ruby.yml/badge.svg?branch=main)](https://github.com/MoneyBrilliant/azure-storage-ruby/branches)
 
 This project provides a Ruby package that supports service client libraries.
 
