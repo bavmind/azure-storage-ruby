@@ -50,7 +50,7 @@ describe Azure::Core::Http::HTTPError do
 
   describe 'with invalid http_response body' do
     let :http_response do
-      stub(:body => "\r\nInvalid request\r\n", :status_code => 409, :uri => 'http://dummy.uri', headers: {})
+      stub(body: "\r\nInvalid request\r\n", status_code: 409, uri: 'http://dummy.uri', headers: {})
     end
 
     it 'sets the type to unknown if the response body is not an XML' do

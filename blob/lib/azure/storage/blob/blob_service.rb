@@ -614,7 +614,7 @@ module Azure::Storage
       #
       protected
         def user_delegation_key_uri(query = {}, options = {})
-          query = { :restype => "service", :comp => "userdelegationkey" }.merge(query)
+          query = { restype: "service", comp: "userdelegationkey" }.merge(query)
           generate_uri("", query, options)
         end
 

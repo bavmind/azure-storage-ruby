@@ -4,7 +4,6 @@
 ignore:
 - Gemfile:
   - Layout/ExtraSpacing
-  - Style/HashSyntax
 - Rakefile:
   - Layout/ExtraSpacing
   - Style/CommandLiteral
@@ -42,7 +41,6 @@ ignore:
   - Layout/IndentationWidth
   - Layout/IndentationConsistency
   - Style/ConditionalAssignment
-  - Style/HashSyntax
   - Style/ClassCheck
   - Style/OrAssignment
 - blob/lib/azure/storage/blob/block.rb:
@@ -917,7 +915,6 @@ ignore:
 - test/unit/core/http/http_error_test.rb:
   - Style/StringLiterals
   - Layout/SpaceInsideHashLiteralBraces
-  - Style/HashSyntax
 - test/unit/core/http/http_request_test.rb:
   - Style/StringLiterals
   - Layout/ArgumentAlignment
@@ -975,6 +972,5 @@ ignore:
   - Layout/EmptyLinesAroundBlockBody
   - Layout/SpaceInsideHashLiteralBraces
   - Layout/SpaceBeforeComma
-  - Style/HashSyntax
 - test/unit/test_helper.rb:
   - Style/ColonMethodCall
