@@ -28,7 +28,7 @@ module Azure
         #                global configuration.
         # @param access_key   [String] The access_key encoded in Base64. Defaults to the
         #                one in the global configuration.
-        def initialize(account_name=Azure.storage_account_name, access_key=Azure.storage_access_key)
+        def initialize(account_name = Azure.storage_account_name, access_key = Azure.storage_access_key)
           @account_name = account_name
           super(access_key)
         end
@@ -101,10 +101,10 @@ module Azure
         #
         # @return [String] a string with the canonicalized headers.
         def canonicalized_headers(headers)
-          headers = headers.map { |k,v| [k.to_s.downcase, v] }
-          headers.select! { |k,_| k =~ /^x-ms-/ }
-          headers.sort_by! { |(k,_)| k }
-          headers.map! { |k,v| '%s:%s' % [k, v] }.join("\n")
+          headers = headers.map { |k, v| [k.to_s.downcase, v] }
+          headers.select! { |k, _| k =~ /^x-ms-/ }
+          headers.sort_by! { |(k, _)| k }
+          headers.map! { |k, v| '%s:%s' % [k, v] }.join("\n")
         end
 
         # Calculate the Canonicalized Resource string for a request.
@@ -114,9 +114,9 @@ module Azure
         # @return           [String] a string with the canonicalized resource.
         def canonicalized_resource(uri)
           resource = '/' + account_name + (uri.path.empty? ? '/' : uri.path)
-          params = CGI.parse(uri.query.to_s).map { |k,v| [k.downcase, v] }
-          params.sort_by! { |k,_| k }
-          params.map! { |k,v| '%s:%s' % [k, v.map(&:strip).sort.join(',')] }
+          params = CGI.parse(uri.query.to_s).map { |k, v| [k.downcase, v] }
+          params.sort_by! { |k, _| k }
+          params.map! { |k, v| '%s:%s' % [k, v.map(&:strip).sort.join(',')] }
           [resource, *params].join("\n")
         end
       end

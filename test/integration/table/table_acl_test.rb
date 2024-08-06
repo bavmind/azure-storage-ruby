@@ -44,7 +44,7 @@ describe Azure::Storage::Table::TableService do
     after { TableNameHelper.clean }
 
     it "sets and gets the ACL for a table" do
-      subject.set_table_acl(table_name, signed_identifiers: [ signed_identifier ])
+      subject.set_table_acl(table_name, signed_identifiers: [signed_identifier])
 
       result = subject.get_table_acl table_name
       _(result).must_be_kind_of Array

@@ -274,7 +274,7 @@ module Azure::Storage
     #
     # Returns nil on success.
     def set_blob_properties(container, blob, options = {})
-      query = { "comp" => "properties" }
+      query = {"comp" => "properties"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
       uri = blob_uri(container, blob, query)
 
@@ -293,7 +293,7 @@ module Azure::Storage
           StorageService.with_header headers, "x-ms-sequence-number-action", options[:sequence_number_action]
 
           if options[:sequence_number_action].to_s != "increment" && options[:sequence_number]
-            StorageService.with_header headers, "x-ms-blob-sequence-number", options[:sequence_number] 
+            StorageService.with_header headers, "x-ms-blob-sequence-number", options[:sequence_number]
           end
         end
 
@@ -347,7 +347,7 @@ module Azure::Storage
     #
     # Returns a Blob
     def get_blob_metadata(container, blob, options = {})
-      query = { "comp" => "metadata" }
+      query = {"comp" => "metadata"}
       StorageService.with_query query, "snapshot", options[:snapshot]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
@@ -402,7 +402,7 @@ module Azure::Storage
     #
     # Returns nil on success.
     def set_blob_metadata(container, blob, metadata, options = {})
-      query = { "comp" => "metadata" }
+      query = {"comp" => "metadata"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
@@ -666,7 +666,7 @@ module Azure::Storage
     #
     # Returns the snapshot DateTime value
     def create_blob_snapshot(container, blob, options = {})
-      query = { "comp" => "snapshot" }
+      query = {"comp" => "snapshot"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
@@ -827,7 +827,7 @@ module Azure::Storage
     #                                    "pending" - The copy is in progress.
     #
     def copy_blob(destination_container, destination_blob, source_container, source_blob, options = {})
-      source_blob_uri = blob_uri(source_container, source_blob, options[:source_snapshot] ? { "snapshot" => options[:source_snapshot] } : {}).to_s
+      source_blob_uri = blob_uri(source_container, source_blob, options[:source_snapshot] ? {"snapshot" => options[:source_snapshot]} : {}).to_s
 
       return copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options)
     end
@@ -853,7 +853,7 @@ module Azure::Storage
     #
     # Returns nil on success
     def abort_copy_blob(container, blob, copy_id, options = {})
-      query = { "comp" => "copy" }
+      query = {"comp" => "copy"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
       StorageService.with_query query, "copyid", copy_id
 

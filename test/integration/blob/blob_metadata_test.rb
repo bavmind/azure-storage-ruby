@@ -32,7 +32,7 @@ describe Azure::Storage::Blob::BlobService do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { "blobname" }
     let(:length) { 1024 }
-    let(:metadata) { { "custommetadata" => "CustomMetadataValue" } }
+    let(:metadata) { {"custommetadata" => "CustomMetadataValue"} }
     before {
       subject.create_container container_name
       subject.create_page_blob container_name, blob_name, length
@@ -55,7 +55,6 @@ describe Azure::Storage::Blob::BlobService do
       before { s = snapshot }
 
       it "gets metadata for a blob snapshot (when set during create)" do
-
         blob = subject.get_blob_metadata container_name, blob_name, snapshot: snapshot
         _(blob.encrypted).must_be_nil
 
@@ -64,7 +63,6 @@ describe Azure::Storage::Blob::BlobService do
           _(blob.metadata).must_include k
           _(blob.metadata[k]).must_equal v
         }
-
       end
 
       it "errors if the snapshot does not exist" do

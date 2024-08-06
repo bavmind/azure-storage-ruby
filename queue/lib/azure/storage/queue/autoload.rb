@@ -32,12 +32,12 @@ require "azure/storage/common"
 module Azure
   module Storage
     module Queue
-      autoload :Default,       "azure/storage/queue/default"
-      autoload :Version,       "azure/storage/queue/version"
-      autoload :QueueService,  "azure/storage/queue/queue_service"
-      autoload :Message,       "azure/storage/queue/message"
+      autoload :Default, "azure/storage/queue/default"
+      autoload :Version, "azure/storage/queue/version"
+      autoload :QueueService, "azure/storage/queue/queue_service"
+      autoload :Message, "azure/storage/queue/message"
       autoload :Serialization, "azure/storage/queue/serialization"
-      autoload :Queue,         "azure/storage/queue/queue"
+      autoload :Queue, "azure/storage/queue/queue"
     end
   end
 end

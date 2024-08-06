@@ -91,7 +91,7 @@ module Azure::Storage
       def self.response(context)
         match = /HTTP\/1.1 (\d*) (.*)/.match(current_line(context))
         return nil unless match
-        response = { status_code: match[1], message: match[2] }
+        response = {status_code: match[1], message: match[2]}
         context[:responses].push response
       end
 

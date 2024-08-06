@@ -72,7 +72,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::Queue::QueueService]
         def create(options = {}, &block)
-          service_options = { client: Azure::Storage::Common::Client::create(options, &block), api_version: Azure::Storage::Queue::Default::STG_VERSION }
+          service_options = {client: Azure::Storage::Common::Client::create(options, &block), api_version: Azure::Storage::Queue::Default::STG_VERSION}
           service_options[:user_agent_prefix] = options[:user_agent_prefix] if options[:user_agent_prefix]
           Azure::Storage::Queue::QueueService.new(service_options, &block)
         end
@@ -85,7 +85,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::Queue::QueueService]
         def create_development(proxy_uri = nil, &block)
-          service_options = { client: Azure::Storage::Common::Client::create_development(proxy_uri, &block), api_version: Azure::Storage::Queue::Default::STG_VERSION }
+          service_options = {client: Azure::Storage::Common::Client::create_development(proxy_uri, &block), api_version: Azure::Storage::Queue::Default::STG_VERSION}
           Azure::Storage::Queue::QueueService.new(service_options, &block)
         end
 
@@ -93,7 +93,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::Queue::QueueService]
         def create_from_env(&block)
-          service_options = { client: Azure::Storage::Common::Client::create_from_env(&block), api_version: Azure::Storage::Queue::Default::STG_VERSION }
+          service_options = {client: Azure::Storage::Common::Client::create_from_env(&block), api_version: Azure::Storage::Queue::Default::STG_VERSION}
           Azure::Storage::Queue::QueueService.new(service_options, &block)
         end
 
@@ -105,7 +105,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::Queue::QueueService]
         def create_from_connection_string(connection_string, &block)
-          service_options = { client: Azure::Storage::Common::Client::create_from_connection_string(connection_string, &block), api_version: Azure::Storage::Queue::Default::STG_VERSION }
+          service_options = {client: Azure::Storage::Common::Client::create_from_connection_string(connection_string, &block), api_version: Azure::Storage::Queue::Default::STG_VERSION}
           Azure::Storage::Queue::QueueService.new(service_options, &block)
         end
       end
@@ -191,7 +191,7 @@ module Azure::Storage
       # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide
       #                                  which location the request should be sent to.
       #
       # NOTE: Metadata requested with the :metadata parameter must have been stored in
@@ -324,7 +324,7 @@ module Azure::Storage
       # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide
       #                                  which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179384
@@ -335,7 +335,7 @@ module Azure::Storage
       # * metadata                    - Hash. The queue metadata (Default: {})
       #
       def get_queue_metadata(queue_name, options = {})
-        query = { "comp" => "metadata" }
+        query = {"comp" => "metadata"}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
@@ -369,7 +369,7 @@ module Azure::Storage
       #
       # Returns nil on success
       def set_queue_metadata(queue_name, metadata, options = {})
-        query = { "comp" => "metadata" }
+        query = {"comp" => "metadata"}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = queue_uri(queue_name, query)
@@ -394,14 +394,14 @@ module Azure::Storage
       # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide
       #                                  which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159101
       #
       # Returns a list of Azure::Storage::Entity::SignedIdentifier instances
       def get_queue_acl(queue_name, options = {})
-        query = { "comp" => "acl" }
+        query = {"comp" => "acl"}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
@@ -431,7 +431,7 @@ module Azure::Storage
       #
       # Returns nil on success
       def set_queue_acl(queue_name, options = {})
-        query = { "comp" => "acl" }
+        query = {"comp" => "acl"}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = queue_uri(queue_name, query)
@@ -543,7 +543,7 @@ module Azure::Storage
       # additional error information indicating that the cause of the failure was a mismatched pop receipt.
       #
       def delete_message(queue_name, message_id, pop_receipt, options = {})
-        query = { "popreceipt" => pop_receipt }
+        query = {"popreceipt" => pop_receipt}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = message_uri(queue_name, message_id, query)
@@ -567,7 +567,7 @@ module Azure::Storage
       # * +:timeout+                   - Integer. A timeout in seconds.
       # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                  in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+             - LocationMode. Specifies the location mode used to decide
       #                                  which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179472
@@ -577,7 +577,7 @@ module Azure::Storage
         number_of_messages = 1
         number_of_messages = options[:number_of_messages] if options[:number_of_messages]
 
-        query = { "peekonly" => "true", "numofmessages" => number_of_messages.to_s }
+        query = {"peekonly" => "true", "numofmessages" => number_of_messages.to_s}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
@@ -612,7 +612,7 @@ module Azure::Storage
         number_of_messages = 1
         number_of_messages = options[:number_of_messages] if options[:number_of_messages]
 
-        query = { "visibilitytimeout" => visibility_timeout.to_s, "numofmessages" => number_of_messages.to_s }
+        query = {"visibilitytimeout" => visibility_timeout.to_s, "numofmessages" => number_of_messages.to_s}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = messages_uri(queue_name, query)
@@ -676,7 +676,7 @@ module Azure::Storage
       # eventually the message would become visible again and another worker role could process it.
       #
       def update_message(queue_name, message_id, pop_receipt, message_text, visibility_timeout, options = {})
-        query = { "visibilitytimeout" => visibility_timeout.to_s, "popreceipt" => pop_receipt }
+        query = {"visibilitytimeout" => visibility_timeout.to_s, "popreceipt" => pop_receipt}
         query["timeout"] = options[:timeout].to_s if options[:timeout]
 
         uri = message_uri(queue_name, message_id, query)
@@ -696,10 +696,11 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-        def collection_uri(query = {}, options = {})
-          query.update(comp: "list", include: "metadata")
-          generate_uri("", query, options)
-        end
+
+      def collection_uri(query = {}, options = {})
+        query.update(comp: "list", include: "metadata")
+        generate_uri("", query, options)
+      end
 
       # Protected: Generate the URI for a given queue.
       #
@@ -710,10 +711,11 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-        def queue_uri(queue_name, query = {}, options = {})
-          return queue_name if queue_name.kind_of? ::URI
-          generate_uri(queue_name, query, options)
-        end
+
+      def queue_uri(queue_name, query = {}, options = {})
+        return queue_name if queue_name.kind_of? ::URI
+        generate_uri(queue_name, query, options)
+      end
 
       # Protected: Generate the messages URI for the given queue.
       #
@@ -724,9 +726,10 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-        def messages_uri(queue_name, query = {}, options = {})
-          generate_uri("#{queue_name}/messages", query, options)
-        end
+
+      def messages_uri(queue_name, query = {}, options = {})
+        generate_uri("#{queue_name}/messages", query, options)
+      end
 
       # Protected: Generate the URI for a given message
       #
@@ -738,16 +741,18 @@ module Azure::Storage
       #
       # Returns a URI.
       protected
-        def message_uri(queue_name, message_id, query = {}, options = {})
-          generate_uri("#{queue_name}/messages/#{message_id}", query, options)
-        end
+
+      def message_uri(queue_name, message_id, query = {}, options = {})
+        generate_uri("#{queue_name}/messages/#{message_id}", query, options)
+      end
 
       protected
-        def call(method, uri, body = nil, headers = {}, options = {})
-          headers["x-ms-version"] = @api_version ? @api_version : Default::STG_VERSION
-          headers["User-Agent"] = @user_agent_prefix ? "#{@user_agent_prefix}; #{Default::USER_AGENT}" : Default::USER_AGENT
-          super
-        end
+
+      def call(method, uri, body = nil, headers = {}, options = {})
+        headers["x-ms-version"] = @api_version ? @api_version : Default::STG_VERSION
+        headers["User-Agent"] = @user_agent_prefix ? "#{@user_agent_prefix}; #{Default::USER_AGENT}" : Default::USER_AGENT
+        super
+      end
     end
   end
 end

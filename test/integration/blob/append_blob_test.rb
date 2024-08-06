@@ -51,9 +51,11 @@ describe Azure::Storage::Blob::BlobService do
         def initialize(string)
           @string = StringIO.new(string)
         end
+
         def read(length)
           @string.read(length)
         end
+
         def eof?
           @string.eof?
         end
@@ -142,7 +144,7 @@ describe Azure::Storage::Blob::BlobService do
   end
 
   describe "#create_append_blob" do
-    let(:complex_blob_name) { 'qa-872053-/*"\'&.({[<+ ' + [ 0x7D, 0xEB, 0x8B, 0xA4].pack("U*") + "_" + "0" }
+    let(:complex_blob_name) { 'qa-872053-/*"\'&.({[<+ ' + [0x7D, 0xEB, 0x8B, 0xA4].pack("U*") + "_" + "0" }
 
     before {
       subject.create_container container_name
@@ -175,7 +177,7 @@ describe Azure::Storage::Blob::BlobService do
         content_encoding: "gzip",
         content_language: "en-US",
         cache_control: "max-age=1296000",
-        metadata: { "CustomMetadataProperty" => "CustomMetadataValue" }
+        metadata: {"CustomMetadataProperty" => "CustomMetadataValue"}
       }
 
       blob = subject.create_append_blob container_name, blob_name, options
@@ -233,7 +235,7 @@ describe Azure::Storage::Blob::BlobService do
     it "appends a block as part of an append blob" do
       subject.create_append_blob container_name, blob_name
 
-      options = { content_md5: Base64.strict_encode64(Digest::MD5.digest(content)) }
+      options = {content_md5: Base64.strict_encode64(Digest::MD5.digest(content))}
       blob = subject.append_blob_block container_name, blob_name, content, options
       _(is_boolean(blob.encrypted)).must_equal true
 
@@ -258,7 +260,7 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_append_blob container_name, blob_name
 
       exception = assert_raises(Azure::Core::Http::HTTPError) do
-        options = { content_md5: "aaaaaa==" }
+        options = {content_md5: "aaaaaa=="}
         subject.append_blob_block container_name, blob_name, content, options
       end
       refute_nil(exception.message.index "InvalidMd5 (400): The MD5 value specified in the request is invalid")
@@ -268,7 +270,7 @@ describe Azure::Storage::Blob::BlobService do
       blob_name = BlobNameHelper.name
       subject.create_append_blob container_name, blob_name
 
-      options = { max_size: 600.to_s }
+      options = {max_size: 600.to_s}
       blob = subject.append_blob_block container_name, blob_name, content, options
       _(is_boolean(blob.encrypted)).must_equal true
       _(blob.properties[:append_offset]).must_equal 0
@@ -289,7 +291,7 @@ describe Azure::Storage::Blob::BlobService do
       _(blob.properties[:append_offset]).must_equal 0
       _(blob.properties[:committed_count]).must_equal 1
 
-      options = { append_position: 512.to_s }
+      options = {append_position: 512.to_s}
       blob = subject.append_blob_block container_name, blob_name, content, options
       _(is_boolean(blob.encrypted)).must_equal true
       _(blob.properties[:append_offset]).must_equal 512

@@ -74,7 +74,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::Table::TableService]
         def create(options = {}, &block)
-          service_options = { client: Azure::Storage::Common::Client::create(options, &block), api_version: Azure::Storage::Table::Default::STG_VERSION }
+          service_options = {client: Azure::Storage::Common::Client::create(options, &block), api_version: Azure::Storage::Table::Default::STG_VERSION}
           service_options[:user_agent_prefix] = options[:user_agent_prefix] if options[:user_agent_prefix]
           Azure::Storage::Table::TableService.new(service_options, &block)
         end
@@ -87,7 +87,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::Table::TableService]
         def create_development(proxy_uri = nil, &block)
-          service_options = { client: Azure::Storage::Common::Client::create_development(proxy_uri, &block), api_version: Azure::Storage::Table::Default::STG_VERSION }
+          service_options = {client: Azure::Storage::Common::Client::create_development(proxy_uri, &block), api_version: Azure::Storage::Table::Default::STG_VERSION}
           Azure::Storage::Table::TableService.new(service_options, &block)
         end
 
@@ -95,7 +95,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::Table::TableService]
         def create_from_env(&block)
-          service_options = { client: Azure::Storage::Common::Client::create_from_env(&block), api_version: Azure::Storage::Table::Default::STG_VERSION }
+          service_options = {client: Azure::Storage::Common::Client::create_from_env(&block), api_version: Azure::Storage::Table::Default::STG_VERSION}
           Azure::Storage::Table::TableService.new(service_options, &block)
         end
 
@@ -107,7 +107,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::Table::TableService]
         def create_from_connection_string(connection_string, &block)
-          service_options = { client: Azure::Storage::Common::Client::create_from_connection_string(connection_string, &block), api_version: Azure::Storage::Table::Default::STG_VERSION }
+          service_options = {client: Azure::Storage::Common::Client::create_from_connection_string(connection_string, &block), api_version: Azure::Storage::Table::Default::STG_VERSION}
           Azure::Storage::Table::TableService.new(service_options, &block)
         end
       end
@@ -234,7 +234,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       #
       # Returns the last updated time for the table
@@ -263,7 +263,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
       #                                 :no_meta
@@ -306,7 +306,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/jj159100
@@ -317,7 +317,7 @@ module Azure::Storage
         query[Azure::Storage::Common::QueryStringConstants::COMP] = Azure::Storage::Common::QueryStringConstants::ACL
 
         options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
-        response = call(:get, generate_uri(table_name, query, options), nil, { "x-ms-version" => "2012-02-12" }, options)
+        response = call(:get, generate_uri(table_name, query, options), nil, {"x-ms-version" => "2012-02-12"}, options)
 
         signed_identifiers = []
         signed_identifiers = Serialization.signed_identifiers_from_xml response.body unless response.body == nil || response.body.length < 1
@@ -352,7 +352,7 @@ module Azure::Storage
         body = nil
         body = Serialization.signed_identifiers_to_xml options[:signed_identifiers] if options[:signed_identifiers] && options[:signed_identifiers].length > 0
 
-        call(:put, uri, body, { "x-ms-version" => "2012-02-12" }, options)
+        call(:put, uri, body, {"x-ms-version" => "2012-02-12"}, options)
         nil
       end
 
@@ -381,7 +381,7 @@ module Azure::Storage
       # Returns a Azure::Storage::Entity::Table::Entity
       def insert_entity(table_name, entity_values, options = {})
         body = Serialization.hash_to_json(entity_values)
-        #time = EdmType::to_edm_time(Time.now)
+        # time = EdmType::to_edm_time(Time.now)
         headers = {
           Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept])
         }
@@ -412,7 +412,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       # * +:accept+                  - String. Specifies the accepted content-type of the response payload. Possible values are:
       #                                 :no_meta
@@ -523,7 +523,7 @@ module Azure::Storage
           entity_values[:PartitionKey] || entity_values["PartitionKey"],
           entity_values[:RowKey] || entity_values["RowKey"], new_query(options))
 
-        headers = { "X-HTTP-Method" => "MERGE" }
+        headers = {"X-HTTP-Method" => "MERGE"}
         headers["If-Match"] = if_match || "*" unless options[:create_if_not_exists]
 
         body = Serialization.hash_to_json(entity_values)
@@ -604,7 +604,7 @@ module Azure::Storage
         if_match = "*"
         if_match = options[:if_match] if options[:if_match]
 
-        call(:delete, entities_uri(table_name, partition_key, row_key, new_query(options)), nil, { "If-Match" => if_match }, options)
+        call(:delete, entities_uri(table_name, partition_key, row_key, new_query(options)), nil, {"If-Match" => if_match}, options)
         nil
       end
 
@@ -621,7 +621,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd894038
@@ -657,7 +657,7 @@ module Azure::Storage
       # * +:timeout+                 - Integer. A timeout in seconds.
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       #
       # Returns an Azure::Storage::Table::Entity instance on success
@@ -672,9 +672,10 @@ module Azure::Storage
       #
       # Returns a URI
       protected
-        def collection_uri(query = {}, options = {})
-          generate_uri("Tables", query, options)
-        end
+
+      def collection_uri(query = {}, options = {})
+        generate_uri("Tables", query, options)
+      end
 
       # Public: Generate the URI for a specific table.
       #
@@ -684,6 +685,7 @@ module Azure::Storage
       #
       # Returns a URI
       public
+
       def table_uri(name, query = {}, options = {})
         return name if name.kind_of? ::URI
         generate_uri("Tables('#{name}')", query, options)
@@ -701,6 +703,7 @@ module Azure::Storage
       #
       # Returns a URI
       public
+
       def entities_uri(table_name, partition_key = nil, row_key = nil, query = {}, options = {})
         return table_name if table_name.kind_of? ::URI
 
@@ -708,14 +711,14 @@ module Azure::Storage
           "%s(PartitionKey='%s',RowKey='%s')" % [
             table_name.encode("UTF-8"), encodeODataUriValue(partition_key.encode("UTF-8")), encodeODataUriValue(row_key.encode("UTF-8"))
           ]
-               else
-                 "%s()" % table_name.encode("UTF-8")
-               end
+        else
+          "%s()" % table_name.encode("UTF-8")
+        end
 
         uri = generate_uri(path, query, options)
         qs = []
         if query
-          query.each do | key, val |
+          query.each do |key, val|
             key = key.encode("UTF-8")
             val = val.encode("UTF-8")
 
@@ -731,46 +734,51 @@ module Azure::Storage
       end
 
       protected
-        def encodeODataUriValues(values)
-          new_values = []
-          values.each do |value|
-            new_values.push encodeODataUriValue(value)
-          end
-          new_values
+
+      def encodeODataUriValues(values)
+        new_values = []
+        values.each do |value|
+          new_values.push encodeODataUriValue(value)
         end
+        new_values
+      end
 
       protected
-        def encodeODataUriValue(value)
-          # Replace each single quote (') with double single quotes ('') not double
-          # quotes (")
-          value = value.gsub("'", "''")
 
-          # Encode the special URL characters
-          value = URI.encode_www_form_component(value)
+      def encodeODataUriValue(value)
+        # Replace each single quote (') with double single quotes ('') not double
+        # quotes (")
+        value = value.gsub("'", "''")
 
-          value
-        end
+        # Encode the special URL characters
+        value = URI.encode_www_form_component(value)
 
-      protected
-        def raise_with_response(e, response)
-          raise e if response.nil?
-          raise "Response header: #{response.headers.inspect}\nResponse body: #{response.body.inspect}\n#{e.inspect}\n#{e.backtrace.join("\n")}"
-        end
+        value
+      end
 
       protected
-        def call(method, uri, body = nil, headers = {}, options = {}, is_batch = false)
-          headers["x-ms-version"] = @api_version ? @api_version : Default::STG_VERSION unless headers["x-ms-version"]
-          headers["User-Agent"] = @user_agent_prefix ? "#{@user_agent_prefix}; #{Default::USER_AGENT}" : Default::USER_AGENT
-          # Add JSON Content-Type header if is_batch is false because default is Atom.
-          headers[Azure::Storage::Common::HeaderConstants::CONTENT_TYPE] = Azure::Storage::Common::HeaderConstants::JSON_CONTENT_TYPE_VALUE unless is_batch
-          headers[Azure::Storage::Common::HeaderConstants::DATA_SERVICE_VERSION] = TableConstants::DEFAULT_DATA_SERVICE_VERSION
-          super(method, uri, body, headers, options)
-        end
+
+      def raise_with_response(e, response)
+        raise e if response.nil?
+        raise "Response header: #{response.headers.inspect}\nResponse body: #{response.body.inspect}\n#{e.inspect}\n#{e.backtrace.join("\n")}"
+      end
 
       protected
-        def new_query(options = {})
-          options[:timeout].nil? ? {} : { Azure::Storage::Common::QueryStringConstants::TIMEOUT => options[:timeout].to_s }
-        end
+
+      def call(method, uri, body = nil, headers = {}, options = {}, is_batch = false)
+        headers["x-ms-version"] = @api_version ? @api_version : Default::STG_VERSION unless headers["x-ms-version"]
+        headers["User-Agent"] = @user_agent_prefix ? "#{@user_agent_prefix}; #{Default::USER_AGENT}" : Default::USER_AGENT
+        # Add JSON Content-Type header if is_batch is false because default is Atom.
+        headers[Azure::Storage::Common::HeaderConstants::CONTENT_TYPE] = Azure::Storage::Common::HeaderConstants::JSON_CONTENT_TYPE_VALUE unless is_batch
+        headers[Azure::Storage::Common::HeaderConstants::DATA_SERVICE_VERSION] = TableConstants::DEFAULT_DATA_SERVICE_VERSION
+        super(method, uri, body, headers, options)
+      end
+
+      protected
+
+      def new_query(options = {})
+        options[:timeout].nil? ? {} : {Azure::Storage::Common::QueryStringConstants::TIMEOUT => options[:timeout].to_s}
+      end
     end
   end
 end

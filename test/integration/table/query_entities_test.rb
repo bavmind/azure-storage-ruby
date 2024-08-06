@@ -195,6 +195,5 @@ describe Azure::Storage::Table::TableService do
       _(result4.length).must_equal 3
       _(result4.continuation_token).must_be_nil
     end
-
   end
 end

@@ -24,7 +24,6 @@
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
 
-
 module Azure::Storage::Common::Core
   module SR
     ANONYMOUS_ACCESS_BLOBSERVICE_ONLY = "Anonymous access is only valid for the BlobService."

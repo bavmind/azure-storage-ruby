@@ -142,7 +142,7 @@ module Azure::Storage
     #
     # Returns a Blob
     def append_blob_block(container, blob, content, options = {})
-      query = { "comp" => "appendblock" }
+      query = {"comp" => "appendblock"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)

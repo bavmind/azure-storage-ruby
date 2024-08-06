@@ -48,7 +48,7 @@ module Azure
         # Azure client which contains configuration context and http agents
         # @return [Azure::Client]
         attr_accessor :client
-        
+
         # The http filter
         attr_accessor :has_retry_filter
 
@@ -64,10 +64,10 @@ module Azure
 
           @method = method
           @uri = if uri.is_a?(String)
-                   URI.parse(uri)
-                 else
-                   uri
-                 end
+            URI.parse(uri)
+          else
+            uri
+          end
 
           @client = options[:client] || Azure
 
@@ -97,13 +97,13 @@ module Azure
         # The code block provided must call _next or the filter pipeline
         # will not complete and the HTTP request will never execute
         #
-        def with_filter(filter=nil, options={}, &block)
+        def with_filter(filter = nil, options = {}, &block)
           filter = filter || block
           if filter
             is_retry_policy = filter.is_a?(Azure::Core::Http::RetryPolicy)
             filter.retry_data[:request_options] = options if is_retry_policy
             @has_retry_filter ||= is_retry_policy
-            
+
             original_call = self._method(:call)
 
             # support 1.8.7 (define_singleton_method doesn't exist until 1.9.1)
@@ -111,7 +111,7 @@ module Azure
               filter.call(self, original_call)
             end
             k = class << self;
-              self;
+                  self;
             end
             if k.method_defined? :define_singleton_method
               self.define_singleton_method(:call, filter_call)
@@ -147,7 +147,7 @@ module Azure
         # @return [HttpResponse]
         def call
           conn = http_setup
-          res = set_up_response(method.to_sym, uri, conn, headers ,body)
+          res = set_up_response(method.to_sym, uri, conn, headers, body)
 
           response = HttpResponse.new(res)
           response.uri = uri
@@ -160,7 +160,7 @@ module Azure
         def apply_body_headers
           return headers['Content-Length'] = '0' unless body
 
-          return apply_io_headers        if IO === body || Tempfile === body
+          return apply_io_headers if IO === body || Tempfile === body
           return apply_string_io_headers if StringIO === body
           return apply_miscellaneous_headers
         end
@@ -177,11 +177,11 @@ module Azure
           headers['Content-Length'] = body.size.to_s
           unless headers['Content-MD5']
             headers['Content-MD5'] = Digest::MD5.new.tap do |checksum|
-                                       while chunk = body.read(5242880)
-                                         checksum << chunk
-                                       end
-                                       body.rewind
-                                     end.base64digest
+              while chunk = body.read(5242880)
+                checksum << chunk
+              end
+              body.rewind
+            end.base64digest
           end
         end
 

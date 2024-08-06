@@ -37,7 +37,7 @@ module Azure::Storage::Common::Core::Filter
     end
 
     attr_reader :retry_count,
-                :retry_interval
+      :retry_interval
 
     # Overrides the base class implementation of call to determine
     # whether to retry the operation
@@ -213,8 +213,8 @@ module Azure::Storage::Common::Core::Filter
       # If a request sent to the secondary location fails with 404 (Not Found), it is possible
       # that the resource replication is not finished yet. So, in case of 404 only in the secondary
       # location, the failure should still be retryable.
-      retry_data[:secondary_not_found] = 
-        ((retry_data[:current_location] === Azure::Storage::Common::StorageLocation::SECONDARY) && 
+      retry_data[:secondary_not_found] =
+        ((retry_data[:current_location] === Azure::Storage::Common::StorageLocation::SECONDARY) &&
         response.status_code === 404);
 
       if retry_data[:secondary_not_found]
@@ -295,6 +295,5 @@ module Azure::Storage::Common::Core::Filter
         end
       end
     end
-
   end
 end

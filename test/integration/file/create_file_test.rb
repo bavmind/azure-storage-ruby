@@ -115,7 +115,7 @@ describe Azure::Storage::File::FileService do
     end
 
     it "creates the file with custom metadata" do
-      metadata = { "CustomMetadataProperty" => "CustomMetadataValue" }
+      metadata = {"CustomMetadataProperty" => "CustomMetadataValue"}
       file = subject.create_file share_name, directory_name, file_name, file_length, metadata: metadata
 
       _(file.name).must_equal file_name

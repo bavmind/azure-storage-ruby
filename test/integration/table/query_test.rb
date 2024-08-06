@@ -220,7 +220,6 @@ describe Azure::Storage::Table::TableService do
         "CustomIntegerProperty" => entity_properties["CustomIntegerProperty"] + 1,
         "CustomBooleanProperty" => false)
 
-
       q = Azure::Storage::Table::Query.new
         .from(table_name)
         .select("PartitionKey")

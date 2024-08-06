@@ -93,7 +93,7 @@ describe Azure::Storage::Table::TableService do
 
       assert exists, "cannot verify existing record"
 
-      etag = subject.insert_or_replace_entity table_name,         "PartitionKey" => entity["PartitionKey"],
+      etag = subject.insert_or_replace_entity table_name, "PartitionKey" => entity["PartitionKey"],
         "RowKey" => entity["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
 

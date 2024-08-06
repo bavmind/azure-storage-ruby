@@ -37,7 +37,7 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "creates the container with custom metadata" do
-      metadata = { "CustomMetadataProperty" => "CustomMetadataValue" }
+      metadata = {"CustomMetadataProperty" => "CustomMetadataValue"}
 
       container = subject.create_container container_name, metadata: metadata
 

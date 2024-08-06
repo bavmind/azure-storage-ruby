@@ -44,7 +44,6 @@ module Azure
           signed = OpenSSL::HMAC.digest('sha256', access_key, body)
           Base64.strict_encode64(signed)
         end
-
       end
     end
   end

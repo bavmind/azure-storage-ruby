@@ -17,11 +17,9 @@ require "azure/core/http/http_filter"
 module Azure
   module Core
     module Http
-
       # A HttpFilter implementation that handles retrying based on a
       # specific policy when HTTP layer errors occur
       class RetryPolicy < HttpFilter
-
         def initialize(&block)
           @block = block
           @retry_data = {}
@@ -49,7 +47,7 @@ module Azure
           rescue
             retry_data[:error] = $!
           end while should_retry?(response, retry_data)
-          
+
           # Assign the error when HTTP error is not thrown from the previous filter
           retry_data[:error] = response.error if response && !response.success?
           if retry_data[:error].nil?

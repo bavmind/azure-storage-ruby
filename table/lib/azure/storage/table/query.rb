@@ -91,7 +91,7 @@ module Azure::Storage
       end
 
       def execute
-        @table_service.query_entities(@table,           partition_key: @partition_key,
+        @table_service.query_entities(@table, partition_key: @partition_key,
           row_key: @row_key,
           select: @fields.map { |f| f.to_s },
           filter: _build_filter_string,

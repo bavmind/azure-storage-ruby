@@ -31,7 +31,7 @@ describe Azure::Storage::Blob::BlobService do
     let(:source_container_name) { ContainerNameHelper.name }
     let(:source_blob_name) { "audio+video%25.mp4" }
     let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
-    let(:metadata) { { "custommetadata" => "CustomMetadataValue" } }
+    let(:metadata) { {"custommetadata" => "CustomMetadataValue"} }
 
     let(:dest_container_name) { ContainerNameHelper.name }
     let(:dest_blob_name) { "destaudio+video%25.mp4" }

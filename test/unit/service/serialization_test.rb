@@ -167,7 +167,7 @@ describe Azure::Storage::Common::Service::Serialization do
   end
 
   describe "#metadata_from_headers" do
-    let(:headers) { { "Content-Type" => "application/xml", "Content-Length" => "37" } }
+    let(:headers) { {"Content-Type" => "application/xml", "Content-Length" => "37"} }
 
     let(:metadata_headers) { headers.merge("x-ms-meta-MyMetadata1" => "first value", "x-ms-meta-MyMetadata2" => "second value") }
 
@@ -288,7 +288,6 @@ describe Azure::Storage::Common::Service::Serialization do
       _(metrics.retention_policy).must_equal mock_retention_policy
     end
   end
-
 
   describe "#logging_to_xml" do
     let(:logging) {
@@ -471,7 +470,6 @@ describe Azure::Storage::Common::Service::Serialization do
     let(:non_slop_node) { Nokogiri.parse(xml_data).root }
 
     describe "when passed a String" do
-
       it "parses the string into a Nokogiri::XML::Element node" do
         result = subject.slopify(xml_data)
         _(result).must_be_kind_of Nokogiri::XML::Element

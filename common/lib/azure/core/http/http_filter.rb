@@ -19,7 +19,6 @@ module Azure
       # after requests/responses. Multiple filters can be nested in a
       # "Russian Doll" model to create a compound HTTP pipeline
       class HttpFilter
-
         # Initialize a HttpFilter
         #
         # &block - An inline block which implements the filter.

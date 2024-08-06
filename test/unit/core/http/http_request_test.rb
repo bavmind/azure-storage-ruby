@@ -43,12 +43,12 @@ describe Azure::Core::Http::HttpRequest do
   describe 'when passed custom headers' do
     subject do
       Azure::Core::Http::HttpRequest.new(:get,
-                                         uri,
-                                         body: nil,
-                                         headers: {
-                                             'blah' => 'something',
-                                             'x-ms-version' => '123'
-                                         })
+        uri,
+        body: nil,
+        headers: {
+          'blah' => 'something',
+          'x-ms-version' => '123'
+        })
     end
 
     it 'should have overridden the value of x-ms-version' do
@@ -58,7 +58,6 @@ describe Azure::Core::Http::HttpRequest do
     it 'should have added in the blah = something header' do
       subject.headers['blah'].must_equal 'something'
     end
-
   end
 
   describe ' when passed a body ' do
@@ -121,7 +120,6 @@ describe Azure::Core::Http::HttpRequest do
       end
     end
 
-
     describe ' of type String' do
       subject do
         Azure::Core::Http::HttpRequest.new(:post, uri, body: '<body/>')
@@ -153,7 +151,6 @@ describe Azure::Core::Http::HttpRequest do
   end
 
   describe '#call' do
-
     let(:mock_conn) do
       conn = mock
       conn.expects(:run_request, [uri, nil, nil]).returns(mock_res)
@@ -194,7 +191,7 @@ describe Azure::Core::Http::HttpRequest do
       end
 
       it 'should return a response' do
-       -> { subject.call }.must_raise(Azure::Core::Http::HTTPError)
+        -> { subject.call }.must_raise(Azure::Core::Http::HTTPError)
       end
     end
   end

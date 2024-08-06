@@ -227,7 +227,7 @@ describe "Table GB-18030" do
       counter = counter + 1;
       prop = "prop" + v.encode("UTF-8")
       batch = Azure::Storage::Table::Batch.new table_name, "x"
-      batch.insert k + counter.to_s,       prop => "value"
+      batch.insert k + counter.to_s, prop => "value"
       batch.insert k + counter.to_s + "2", prop => "value2"
       results = subject.execute_batch batch
       _(results[0].properties[prop]).must_equal "value"
@@ -246,7 +246,7 @@ describe "Table GB-18030" do
       counter = counter + 1;
       prop = "prop" + v.encode("GB18030")
       batch = Azure::Storage::Table::Batch.new table_name, "x"
-      batch.insert k + counter.to_s,       prop => "value"
+      batch.insert k + counter.to_s, prop => "value"
       batch.insert k + counter.to_s + "2", prop => "value2"
       results = subject.execute_batch batch
       _(results[0].properties[prop.encode("UTF-8")]).must_equal "value"
@@ -265,7 +265,7 @@ describe "Table GB-18030" do
       value = "value" + v.encode("UTF-8")
       counter = counter + 1;
       batch = Azure::Storage::Table::Batch.new table_name, "x"
-      batch.insert k + counter.to_s,       "key" => value
+      batch.insert k + counter.to_s, "key" => value
       batch.insert k + counter.to_s + "2", "key" => value + "2"
       results = subject.execute_batch batch
       _(results[0].properties["key"]).must_equal value
@@ -282,7 +282,7 @@ describe "Table GB-18030" do
       value = "value" + v.encode("GB18030")
       counter = counter + 1;
       batch = Azure::Storage::Table::Batch.new table_name, "x"
-      batch.insert k + counter.to_s,       "key" => value
+      batch.insert k + counter.to_s, "key" => value
       batch.insert k + counter.to_s + "2", "key" => value + "2"
       results = subject.execute_batch batch
       _(results[0].properties["key"].encode("UTF-8")).must_equal value.encode("UTF-8")

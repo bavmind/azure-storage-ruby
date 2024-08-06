@@ -37,7 +37,7 @@ module Azure::Storage::Common::Core::Filter
     end
 
     attr_reader :min_retry_interval,
-                :max_retry_interval
+      :max_retry_interval
 
     DEFAULT_RETRY_COUNT = 3
     DEFAULT_MIN_RETRY_INTERVAL = 10

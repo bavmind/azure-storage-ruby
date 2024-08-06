@@ -29,7 +29,7 @@ describe Azure::Storage::File::FileService do
 
   describe "#get_share_properties" do
     let(:share_name) { ShareNameHelper.name }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
 
     it "gets properties and custom metadata for the share" do
       share = subject.create_share share_name, metadata: metadata
@@ -57,7 +57,7 @@ describe Azure::Storage::File::FileService do
   describe "#set_share_properties" do
     let(:share_name) { FileNameHelper.name }
     let(:share_quota) { 100 }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
 
     it "sets properties for the share" do
       share = subject.create_share share_name, metadata: metadata

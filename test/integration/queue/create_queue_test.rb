@@ -34,7 +34,7 @@ describe Azure::Storage::Queue::QueueService do
 
   describe "#create_queue" do
     let(:queue_name) { QueueNameHelper.name }
-    let(:metadata) { { "custommetadata" => "CustomMetadataValue" } }
+    let(:metadata) { {"custommetadata" => "CustomMetadataValue"} }
     after { QueueNameHelper.clean }
 
     it "creates a queue with a valid name" do

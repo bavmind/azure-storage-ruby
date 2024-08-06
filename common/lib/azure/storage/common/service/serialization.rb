@@ -115,7 +115,6 @@ module Azure::Storage::Common
           metadata = {}
 
           xml.children.each { |meta_node|
-
             key = meta_node.name.downcase
             if metadata.has_key? key
               metadata[key] = [metadata[key]] unless metadata[key].respond_to? :push
@@ -247,8 +246,8 @@ module Azure::Storage::Common
           expect_node("CorsRule", xml)
 
           CorsRule.new do |cors_rule|
-            cors_rule.allowed_origins =  ary_from_node(xml.AllowedOrigins) if (xml > "AllowedOrigins").any?
-            cors_rule.allowed_methods =  ary_from_node(xml.AllowedMethods) if (xml > "AllowedMethods").any?
+            cors_rule.allowed_origins = ary_from_node(xml.AllowedOrigins) if (xml > "AllowedOrigins").any?
+            cors_rule.allowed_methods = ary_from_node(xml.AllowedMethods) if (xml > "AllowedMethods").any?
             cors_rule.max_age_in_seconds = xml.MaxAgeInSeconds.text.to_i if (xml > "MaxAgeInSeconds").any?
             cors_rule.exposed_headers = ary_from_node(xml.ExposedHeaders) if (xml > "ExposedHeaders").any?
             cors_rule.allowed_headers = ary_from_node(xml.AllowedHeaders) if (xml > "AllowedHeaders").any?

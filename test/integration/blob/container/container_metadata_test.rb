@@ -34,7 +34,7 @@ describe Azure::Storage::Blob::BlobService do
   after { ContainerNameHelper.clean }
 
   describe "#set/get_container_metadata" do
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
 
     it "sets and gets custom metadata for the container" do
       container_name = ContainerNameHelper.name

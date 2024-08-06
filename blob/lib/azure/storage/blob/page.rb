@@ -159,7 +159,7 @@ module Azure::Storage
     #
     # Returns Blob
     def put_blob_pages(container, blob, start_range, end_range, content, options = {})
-      query = { "comp" => "page" }
+      query = {"comp" => "page"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
@@ -218,7 +218,7 @@ module Azure::Storage
     #
     # Returns Blob
     def clear_blob_pages(container, blob, start_range, end_range, options = {})
-      query = { "comp" => "page" }
+      query = {"comp" => "page"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
@@ -294,7 +294,7 @@ module Azure::Storage
     #   e.g. [ [0, 511], [512, 1024], ... ]
     #
     def list_page_blob_ranges(container, blob, options = {})
-      query = { "comp" => "pagelist" }
+      query = {"comp" => "pagelist"}
       query.update("snapshot" => options[:snapshot]) if options[:snapshot]
       query.update("prevsnapshot" => options[:previous_snapshot]) if options[:previous_snapshot]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
@@ -349,7 +349,7 @@ module Azure::Storage
     #
     # Returns nil on success.
     def resize_page_blob(container, blob, size, options = {})
-      options = { content_length: size }.merge(options)
+      options = {content_length: size}.merge(options)
       set_blob_properties container, blob, options
     end
 
@@ -417,7 +417,7 @@ module Azure::Storage
     #
     def incremental_copy_blob(destination_container, destination_blob, source_uri, options = {})
       # query parameters
-      query = { Azure::Storage::Common::QueryStringConstants::COMP => Azure::Storage::Common::QueryStringConstants::INCREMENTAL_COPY }
+      query = {Azure::Storage::Common::QueryStringConstants::COMP => Azure::Storage::Common::QueryStringConstants::INCREMENTAL_COPY}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       # URI
@@ -494,7 +494,7 @@ module Azure::Storage
     #
     # Returns nil on success.
     def set_sequence_number(container, blob, action, number, options = {})
-      options = { sequence_number_action: action, sequence_number: number }.merge(options)
+      options = {sequence_number_action: action, sequence_number: number}.merge(options)
       set_blob_properties container, blob, options
     end
 

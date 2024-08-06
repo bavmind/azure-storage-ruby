@@ -34,7 +34,7 @@ describe Azure::Storage::File::FileService do
 
   describe "#set/get_share_metadata" do
     let(:share_name) { ShareNameHelper.name }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
     before {
       subject.create_share share_name
     }

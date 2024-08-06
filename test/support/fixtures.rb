@@ -62,18 +62,21 @@ module Azure
     def Fixtures.root
       Pathname("../../fixtures").expand_path(__FILE__)
     end
+
     def Fixtures.file?(fixture)
       path = root.join(fixture)
       path.file? && path
     end
+
     def Fixtures.xml?(fixture)
       file?("#{fixture}.xml")
     end
-    
+
     class FixtureRetryPolicy < Azure::Core::Http::RetryPolicy
       def initialize
         super &:should_retry?
       end
+
       def should_retry?(response, retry_data)
         retry_data[:error].inspect.include?('Error: Retry')
       end
@@ -91,6 +94,5 @@ module Azure
         @count >= 0
       end
     end
-
   end
 end

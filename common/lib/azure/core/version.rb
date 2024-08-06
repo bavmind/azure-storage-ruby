@@ -22,7 +22,6 @@ module Azure
       PRE = nil unless defined? PRE
 
       class << self
-
         # @return [String]
         def to_s
           [MAJOR, MINOR, UPDATE].join('.') + (PRE.nil? ? '' : "-#{PRE}")

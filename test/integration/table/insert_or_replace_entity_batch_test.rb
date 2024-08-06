@@ -97,7 +97,7 @@ describe Azure::Storage::Table::TableService do
       assert exists, "cannot verify existing record"
 
       batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
-      batch.insert_or_replace entity["RowKey"],         "PartitionKey" => entity["PartitionKey"],
+      batch.insert_or_replace entity["RowKey"], "PartitionKey" => entity["PartitionKey"],
         "RowKey" => entity["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
       etags = subject.execute_batch batch

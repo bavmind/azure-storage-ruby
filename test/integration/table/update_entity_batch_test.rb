@@ -60,7 +60,7 @@ describe Azure::Storage::Table::TableService do
 
     it "updates an existing entity, removing any properties not included in the update operation" do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
-      batch.update entity_properties["RowKey"],         "PartitionKey" => entity_properties["PartitionKey"],
+      batch.update entity_properties["RowKey"], "PartitionKey" => entity_properties["PartitionKey"],
         "RowKey" => entity_properties["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
       etags = subject.execute_batch batch
@@ -84,7 +84,7 @@ describe Azure::Storage::Table::TableService do
 
     it "updates an existing entity, removing any properties not included in the update operation and adding nil one" do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
-      batch.update entity_properties["RowKey"],         "PartitionKey" => entity_properties["PartitionKey"],
+      batch.update entity_properties["RowKey"], "PartitionKey" => entity_properties["PartitionKey"],
         "RowKey" => entity_properties["RowKey"],
         "NewCustomProperty" => nil
       etags = subject.execute_batch batch

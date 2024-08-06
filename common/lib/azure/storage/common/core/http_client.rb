@@ -49,34 +49,34 @@ module Azure::Storage::Common::Core
 
     private
 
-      # Empties all information that cannot be reused.
-      def reuse_agent!(agent)
-        agent.params.clear
-        agent.headers.clear
-      end
+    # Empties all information that cannot be reused.
+    def reuse_agent!(agent)
+      agent.params.clear
+      agent.headers.clear
+    end
 
-      def build_http(uri)
-        ssl_options = {}
-        if uri.is_a?(URI) && uri.scheme.downcase == "https"
-          ssl_options[:version] = self.ssl_version if self.ssl_version
-          # min_version and max_version only supported in ruby 2.5
-          ssl_options[:min_version] = self.ssl_min_version if self.ssl_min_version
-          ssl_options[:max_version] = self.ssl_max_version if self.ssl_max_version
-          ssl_options[:ca_file] = self.ca_file if self.ca_file
-          ssl_options[:verify] = true
-        end
-        proxy_options = if ENV["HTTP_PROXY"]
-                          URI::parse(ENV["HTTP_PROXY"])
-                        elsif ENV["HTTPS_PROXY"]
-                          URI::parse(ENV["HTTPS_PROXY"])
-                        end || nil
-        Faraday.new(uri, ssl: ssl_options, proxy: proxy_options) do |conn|
-          conn.response :follow_redirects #use Faraday::FollowRedirects::Middleware
-          conn.adapter :net_http_persistent, pool_size: 5 do |http|
-            # yields Net::HTTP::Persistent
-            http.idle_timeout = 100
-          end
+    def build_http(uri)
+      ssl_options = {}
+      if uri.is_a?(URI) && uri.scheme.downcase == "https"
+        ssl_options[:version] = self.ssl_version if self.ssl_version
+        # min_version and max_version only supported in ruby 2.5
+        ssl_options[:min_version] = self.ssl_min_version if self.ssl_min_version
+        ssl_options[:max_version] = self.ssl_max_version if self.ssl_max_version
+        ssl_options[:ca_file] = self.ca_file if self.ca_file
+        ssl_options[:verify] = true
+      end
+      proxy_options = if ENV["HTTP_PROXY"]
+                        URI::parse(ENV["HTTP_PROXY"])
+                      elsif ENV["HTTPS_PROXY"]
+                        URI::parse(ENV["HTTPS_PROXY"])
+                      end || nil
+      Faraday.new(uri, ssl: ssl_options, proxy: proxy_options) do |conn|
+        conn.response :follow_redirects # use Faraday::FollowRedirects::Middleware
+        conn.adapter :net_http_persistent, pool_size: 5 do |http|
+          # yields Net::HTTP::Persistent
+          http.idle_timeout = 100
         end
       end
+    end
   end
 end

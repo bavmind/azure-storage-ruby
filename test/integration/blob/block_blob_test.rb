@@ -107,7 +107,7 @@ describe Azure::Storage::Blob::BlobService do
         content_encoding: "gzip",
         content_language: "en-US",
         cache_control: "max-age=1296000",
-        metadata: { "CustomMetadataProperty" => "CustomMetadataValue" }
+        metadata: {"CustomMetadataProperty" => "CustomMetadataValue"}
       }
 
       blob = subject.create_block_blob container_name, blob_name, content, options
@@ -285,7 +285,6 @@ describe Azure::Storage::Blob::BlobService do
   describe "#list_blob_blocks" do
     let(:blocklist) { [["anyblockid0"], ["anyblockid1"], ["anyblockid2"], ["anyblockid3"]] }
     before {
-
       subject.put_blob_block container_name, blob_name, blocklist[0][0], content
       subject.put_blob_block container_name, blob_name, blocklist[1][0], content
 

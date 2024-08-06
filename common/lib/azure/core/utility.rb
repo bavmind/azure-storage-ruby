@@ -19,7 +19,7 @@ if RUBY_VERSION.to_f < 2.0
   begin
     require 'Win32/Console/ANSI' if RUBY_PLATFORM =~ /win32|mingw32/
   rescue LoadError
-    puts 'WARNING: Output will look weird on Windows unless'\
+    puts 'WARNING: Output will look weird on Windows unless' \
          ' you install the "win32console" gem.'
   end
 end
@@ -27,7 +27,7 @@ end
 module Azure
   module Error
     # Azure Error
-    class Error <  Azure::Core::Error
+    class Error < Azure::Core::Error
       attr_reader :description
       attr_reader :status_code
       attr_reader :type
@@ -88,7 +88,7 @@ module Azure
         name = OpenSSL::X509::Name.new([['CN', 'Azure Management Certificate']])
         cert.subject = cert.issuer = name
         cert.not_before = Time.now
-        cert.not_after = cert.not_before + (60*60*24*365)
+        cert.not_after = cert.not_before + (60 * 60 * 24 * 365)
         cert.public_key = rsa.public_key
         cert.sign(rsa, OpenSSL::Digest::SHA1.new)
         cert
@@ -170,13 +170,14 @@ module Azure
 end
 
 class String
-  { reset:  0,
-    bold:  1,
-    dark:  2,
-    underline:  4,
-    blink:  5,
-    orange:  6,
-    negative:  7,
+  {
+    reset: 0,
+    bold: 1,
+    dark: 2,
+    underline: 4,
+    blink: 5,
+    orange: 6,
+    negative: 7,
     black: 30,
     red: 31,
     green: 32,

@@ -25,7 +25,6 @@ require "unit/test_helper"
 require "azure/storage/common"
 
 describe Azure::Storage::Common::Client do
-
   describe "create client with options" do
     let(:azure_storage_account) { "testStorageAccount" }
     let(:azure_storage_access_key) { "testKey1" }

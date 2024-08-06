@@ -17,7 +17,7 @@ require 'azure/core/http/http_error'
 
 describe Azure::Core::Http::HTTPError do
   let :http_response do
-    stub(body: Azure::Core::Fixtures[:http_error], status_code: 409, uri: 'http://dummy.uri', headers: { 'Content-Type' => 'application/atom+xml' })
+    stub(body: Azure::Core::Fixtures[:http_error], status_code: 409, uri: 'http://dummy.uri', headers: {'Content-Type' => 'application/atom+xml'})
   end
 
   subject do
@@ -61,7 +61,7 @@ describe Azure::Core::Http::HTTPError do
 
   describe 'with invalid headers' do
     let :http_response do
-      stub(body: Azure::Core::Fixtures[:http_invalid_header], status_code: 400, uri: 'http://dummy.uri', headers: { 'Content-Type' => 'application/atom+xml'})
+      stub(body: Azure::Core::Fixtures[:http_invalid_header], status_code: 400, uri: 'http://dummy.uri', headers: {'Content-Type' => 'application/atom+xml'})
     end
 
     it 'sets the invalid header in the error details' do
@@ -76,7 +76,7 @@ describe Azure::Core::Http::HTTPError do
   describe 'with JSON payload' do
     let :http_response do
       body = "{\"odata.error\":{\"code\":\"ErrorCode\",\"message\":{\"lang\":\"en-US\",\"value\":\"ErrorDescription\"}}}"
-      stub(body: body, status_code: 400, uri: 'http://dummy.uri', headers: { 'Content-Type' => 'application/json' })
+      stub(body: body, status_code: 400, uri: 'http://dummy.uri', headers: {'Content-Type' => 'application/json'})
     end
 
     it 'parse error response with JSON payload' do

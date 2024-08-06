@@ -186,7 +186,7 @@ module Azure::Storage
         props[:content_length] = headers["Content-Length"].to_i unless headers["Content-Length"].nil?
         props[:content_length] = headers["x-ms-content-length"].to_i unless headers["x-ms-content-length"].nil?
 
-        props[:content_type] =  headers["Content-Type"]
+        props[:content_type] = headers["Content-Type"]
         props[:content_encoding] = headers["Content-Encoding"]
         props[:content_language] = headers["Content-Language"]
         props[:content_disposition] = headers["Content-Disposition"]

@@ -47,60 +47,60 @@ module Azure::Storage::Common::Core
       }
 
       ACCOUNT_KEY_MAPPINGS = {
-        version:              :sv,
-        service:              :ss,
-        resource:             :srt,
-        permissions:          :sp,
-        start:                :st,
-        expiry:               :se,
-        protocol:             :spr,
-        ip_range:             :sip
+        version: :sv,
+        service: :ss,
+        resource: :srt,
+        permissions: :sp,
+        start: :st,
+        expiry: :se,
+        protocol: :spr,
+        ip_range: :sip
       }
 
       SERVICE_KEY_MAPPINGS = {
-        version:              :sv,
-        permissions:          :sp,
-        start:                :st,
-        expiry:               :se,
-        identifier:           :si,
-        protocol:             :spr,
-        ip_range:             :sip
+        version: :sv,
+        permissions: :sp,
+        start: :st,
+        expiry: :se,
+        identifier: :si,
+        protocol: :spr,
+        ip_range: :sip
       }
 
       USER_DELEGATION_KEY_MAPPINGS = {
-        signed_oid:           :skoid,
-        signed_tid:           :sktid,
-        signed_start:         :skt,
-        signed_expiry:        :ske,
-        signed_service:       :sks,
-        signed_version:       :skv
+        signed_oid: :skoid,
+        signed_tid: :sktid,
+        signed_start: :skt,
+        signed_expiry: :ske,
+        signed_service: :sks,
+        signed_version: :skv
       }
 
       BLOB_KEY_MAPPINGS = {
-        resource:             :sr,
-        timestamp:            :snapshot,
-        cache_control:        :rscc,
-        content_disposition:  :rscd,
-        content_encoding:     :rsce,
-        content_language:     :rscl,
-        content_type:         :rsct
+        resource: :sr,
+        timestamp: :snapshot,
+        cache_control: :rscc,
+        content_disposition: :rscd,
+        content_encoding: :rsce,
+        content_language: :rscl,
+        content_type: :rsct
       }
 
       TABLE_KEY_MAPPINGS = {
-        table_name:           :tn,
-        startpk:              :spk,
-        endpk:                :epk,
-        startrk:              :srk,
-        endrk:                :erk
+        table_name: :tn,
+        startpk: :spk,
+        endpk: :epk,
+        startrk: :srk,
+        endrk: :erk
       }
 
       FILE_KEY_MAPPINGS = {
-        resource:             :sr,
-        cache_control:        :rscc,
-        content_disposition:  :rscd,
-        content_encoding:     :rsce,
-        content_language:     :rscl,
-        content_type:         :rsct
+        resource: :sr,
+        cache_control: :rscc,
+        content_disposition: :rscd,
+        content_encoding: :rsce,
+        content_language: :rscl,
+        content_type: :rsct
       }
 
       SERVICE_OPTIONAL_QUERY_PARAMS = [:sp, :si, :sip, :spr, :rscc, :rscd, :rsce, :rscl, :rsct, :spk, :srk, :epk, :erk]
@@ -208,8 +208,8 @@ module Azure::Storage::Common::Core
         canonicalize_time(options)
 
         query_hash = Hash[options.map { |k, v| [service_key_mappings[k], v] }]
-        .reject { |k, v| SERVICE_OPTIONAL_QUERY_PARAMS.include?(k) && v.to_s == "" }
-        .merge(sig: @signer.sign(signable_string_for_service(service_type, path, options)))
+          .reject { |k, v| SERVICE_OPTIONAL_QUERY_PARAMS.include?(k) && v.to_s == "" }
+          .merge(sig: @signer.sign(signable_string_for_service(service_type, path, options)))
 
         URI.encode_www_form(query_hash)
       end
@@ -220,12 +220,12 @@ module Azure::Storage::Common::Core
         # Order is significant
         # The newlines from empty strings here are required
         signable_fields =
-        [
-          options[:permissions],
-          options[:start],
-          options[:expiry],
-          canonicalized_resource(service_type, path)
-        ]
+          [
+            options[:permissions],
+            options[:start],
+            options[:expiry],
+            canonicalized_resource(service_type, path)
+          ]
 
         if @user_delegation_key.nil?
           signable_fields.push(options[:identifier])
@@ -297,8 +297,8 @@ module Azure::Storage::Common::Core
         canonicalize_time(options)
 
         query_hash = Hash[options.map { |k, v| [ACCOUNT_KEY_MAPPINGS[k], v] }]
-        .reject { |k, v| ACCOUNT_OPTIONAL_QUERY_PARAMS.include?(k) && v.to_s == "" }
-        .merge(sig: @signer.sign(signable_string_for_account(options)))
+          .reject { |k, v| ACCOUNT_OPTIONAL_QUERY_PARAMS.include?(k) && v.to_s == "" }
+          .merge(sig: @signer.sign(signable_string_for_account(options)))
 
         URI.encode_www_form(query_hash)
       end
@@ -388,9 +388,9 @@ module Azure::Storage::Common::Core
 
         sas_params = if use_account_sas
           generate_account_sas_token(options)
-                     else
-                       generate_service_sas_token(uri.path, options)
-                     end
+        else
+          generate_service_sas_token(uri.path, options)
+        end
 
         URI.parse(uri.to_s + (uri.query.nil? ? "?" : "&") + sas_params)
       end

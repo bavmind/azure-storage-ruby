@@ -35,7 +35,7 @@ describe Azure::Storage::File::FileService do
   describe "#set/get_directory_metadata" do
     let(:share_name) { ShareNameHelper.name }
     let(:directory_name) { FileNameHelper.name }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
     before {
       subject.create_share share_name
       subject.create_directory share_name, directory_name

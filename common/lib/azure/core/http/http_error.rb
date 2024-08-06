@@ -21,7 +21,6 @@ module Azure
     module Http
       # Public: Class for handling all HTTP response errors
       class HTTPError < Azure::Core::Error
-
         # Public: Detail of the response
         #
         # Returns an Azure::Core::Http::HttpResponse object
@@ -126,7 +125,7 @@ module Azure
 
         def inspect
           string = "#<#{self.class.name}:#{self.object_id} "
-          fields = self.instance_variables.map{|field| "#{field}: #{self.send(field.to_s.delete("@")).inspect}"}
+          fields = self.instance_variables.map { |field| "#{field}: #{self.send(field.to_s.delete("@")).inspect}" }
           string << fields.join(", ") << ">"
         end
       end

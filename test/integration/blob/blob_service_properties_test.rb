@@ -46,10 +46,10 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "sets the service properties use default values" do
-     properties = Azure::Storage::Common::Service::StorageServiceProperties.new
-     result = subject.set_service_properties properties
-     _(result).must_be_nil
-   end
+      properties = Azure::Storage::Common::Service::StorageServiceProperties.new
+      result = subject.set_service_properties properties
+      _(result).must_be_nil
+    end
 
     describe "#set_service_properties with logging" do
       it "with retention" do
@@ -152,14 +152,14 @@ describe Azure::Storage::Blob::BlobService do
       end
 
       it "sets CORS rules without allowed_origins" do
-       cors_rule.allowed_origins = nil
-       cors_properties.cors.cors_rules.push cors_rule
+        cors_rule.allowed_origins = nil
+        cors_properties.cors.cors_rules.push cors_rule
 
-       exception = assert_raises (Azure::Core::Http::HTTPError) do
-         subject.set_service_properties cors_properties
-       end
-       refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
-     end
+        exception = assert_raises (Azure::Core::Http::HTTPError) do
+          subject.set_service_properties cors_properties
+        end
+        refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
+      end
 
       it "sets CORS rules with empty allowed_origins" do
         cors_rule.allowed_origins = []

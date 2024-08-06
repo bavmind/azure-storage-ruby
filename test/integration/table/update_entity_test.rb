@@ -59,7 +59,7 @@ describe Azure::Storage::Table::TableService do
     after { TableNameHelper.clean }
 
     it "updates an existing entity, removing any properties not included in the update operation" do
-      etag = subject.update_entity table_name,         PartitionKey: entity_properties["PartitionKey"],
+      etag = subject.update_entity table_name, PartitionKey: entity_properties["PartitionKey"],
         RowKey: entity_properties["RowKey"],
         NewCustomProperty: "NewCustomValue"
 
@@ -80,7 +80,7 @@ describe Azure::Storage::Table::TableService do
     end
 
     it "updates an existing entity, removing any properties not included in the update operation and adding nil one" do
-      etag = subject.update_entity table_name,         PartitionKey: entity_properties["PartitionKey"],
+      etag = subject.update_entity table_name, PartitionKey: entity_properties["PartitionKey"],
         RowKey: entity_properties["RowKey"],
         NewCustomProperty: nil
 

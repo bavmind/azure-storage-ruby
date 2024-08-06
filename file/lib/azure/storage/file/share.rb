@@ -100,7 +100,7 @@ module Azure::Storage::File
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
-    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide
     #                                 which location the request should be sent to.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-share-properties
@@ -142,7 +142,7 @@ module Azure::Storage::File
     # Returns nil on success
     def set_share_properties(name, options = {})
       # Query
-      query = { "comp" => "properties" }
+      query = {"comp" => "properties"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Headers
@@ -169,7 +169,7 @@ module Azure::Storage::File
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
-    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide
     #                                 which location the request should be sent to.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-share-metadata
@@ -177,7 +177,7 @@ module Azure::Storage::File
     # Returns a Share
     def get_share_metadata(name, options = {})
       # Query
-      query = { "comp" => "metadata" }
+      query = {"comp" => "metadata"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call
@@ -210,7 +210,7 @@ module Azure::Storage::File
     # Returns nil on success
     def set_share_metadata(name, metadata, options = {})
       # Query
-      query = { "comp" => "metadata" }
+      query = {"comp" => "metadata"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Headers
@@ -266,7 +266,7 @@ module Azure::Storage::File
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
-    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide
     #                                 which location the request should be sent to.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-share-acl
@@ -277,7 +277,7 @@ module Azure::Storage::File
     #
     def get_share_acl(name, options = {})
       # Query
-      query = { "comp" => "acl" }
+      query = {"comp" => "acl"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call
@@ -317,7 +317,7 @@ module Azure::Storage::File
     #
     def set_share_acl(name, options = {})
       # Query
-      query = { "comp" => "acl" }
+      query = {"comp" => "acl"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Scheme + path
@@ -352,7 +352,7 @@ module Azure::Storage::File
     # * +:timeout+                  - Integer. A timeout in seconds.
     # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
     #                                 in the analytics logs when storage analytics logging is enabled.
-    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+    # * +:location_mode+            - LocationMode. Specifies the location mode used to decide
     #                                 which location the request should be sent to.
     #
     # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-share-stats
@@ -360,7 +360,7 @@ module Azure::Storage::File
     # Returns a Share
     def get_share_stats(name, options = {})
       # Query
-      query = { "comp" => "stats" }
+      query = {"comp" => "stats"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Call

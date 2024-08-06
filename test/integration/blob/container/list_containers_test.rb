@@ -30,7 +30,7 @@ describe Azure::Storage::Blob::BlobService do
 
   describe "#list_containers" do
     let(:container_names) { [ContainerNameHelper.name, ContainerNameHelper.name] }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
     let(:public_access_level) { "blob" }
     before {
       container_names.each { |c|

@@ -239,7 +239,7 @@ module Azure::Storage
         props[:content_length] = headers["x-ms-blob-content-length"] || headers["Content-Length"]
         props[:content_length] = props[:content_length].to_i if props[:content_length]
 
-        props[:content_type] =  headers["x-ms-blob-content-type"] || headers["Content-Type"]
+        props[:content_type] = headers["x-ms-blob-content-type"] || headers["Content-Type"]
         props[:content_encoding] = headers["x-ms-blob-content-encoding"] || headers["Content-Encoding"]
         props[:content_language] = headers["x-ms-blob-content-language"] || headers["Content-Language"]
         props[:content_disposition] = headers["x-ms-blob-content-disposition"] || headers["Content-Disposition"]

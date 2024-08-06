@@ -48,11 +48,13 @@ module Azure::Storage::Common
         client_config = options[:client]
         signer = signer || Azure::Storage::Common::Core::Auth::SharedKey.new(
           client_config.storage_account_name,
-          client_config.storage_access_key) if client_config.storage_access_key
+          client_config.storage_access_key
+        ) if client_config.storage_access_key
         signer = signer || Azure::Storage::Common::Core::Auth::SharedAccessSignatureSigner.new(
           client_config.storage_account_name,
-          client_config.storage_sas_token)
-        @storage_service_host = { primary: "", secondary: "" };
+          client_config.storage_sas_token
+        )
+        @storage_service_host = {primary: "", secondary: ""};
         super(signer, account_name, options)
       end
 
@@ -124,7 +126,8 @@ module Azure::Storage::Common
 
         options.update(
           location_mode: LocationMode::SECONDARY_ONLY,
-          request_location_mode: RequestLocationMode::SECONDARY_ONLY)
+          request_location_mode: RequestLocationMode::SECONDARY_ONLY
+        )
         response = call(:get, service_stats_uri(query, options), nil, {}, options)
         Serialization.service_stats_from_xml response.body
       end

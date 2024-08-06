@@ -107,7 +107,7 @@ describe "File GB-18030" do
   it "Read/Write File Metadata UTF-8 key" do
     GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = { "custommetadata" + v.encode("UTF-8") => "CustomMetadataValue" }
+        metadata = {"custommetadata" + v.encode("UTF-8") => "CustomMetadataValue"}
         subject.set_file_metadata share_name, directory_name, file_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -119,7 +119,7 @@ describe "File GB-18030" do
   it "Read/Write File Metadata GB-18030 key" do
     GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = { "custommetadata" + v.encode("GB18030") => "CustomMetadataValue" }
+        metadata = {"custommetadata" + v.encode("GB18030") => "CustomMetadataValue"}
         subject.set_file_metadata share_name, directory_name, file_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -131,7 +131,7 @@ describe "File GB-18030" do
   it "Read/Write File Metadata UTF-8 value" do
     GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = { "custommetadata" => "CustomMetadataValue" + v.encode("UTF-8") }
+        metadata = {"custommetadata" => "CustomMetadataValue" + v.encode("UTF-8")}
         subject.set_file_metadata share_name, directory_name, file_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -144,7 +144,7 @@ describe "File GB-18030" do
   it "Read/Write File Metadata GB-18030 value" do
     GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = { "custommetadata" => "CustomMetadataValue" + v.encode("GB18030") }
+        metadata = {"custommetadata" => "CustomMetadataValue" + v.encode("GB18030")}
         subject.set_file_metadata share_name, directory_name, file_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -170,7 +170,7 @@ describe "File GB-18030" do
     GB18030TestStrings.get.each { |k, v|
       file_name = "Read-Write File Content GB18030 for " + k
       content = v.encode("GB18030")
-      options = { content_type: "text/html; charset=GB18030" }
+      options = {content_type: "text/html; charset=GB18030"}
       subject.create_file share_name, directory_name, file_name, content.bytesize, options
       subject.put_file_range share_name, directory_name, file_name, 0, content.bytesize - 1, content
       file, returned_content = subject.get_file share_name, directory_name, file_name
@@ -183,7 +183,7 @@ describe "File GB-18030" do
   it "Read/Write 512 bytes UTF-8 with explicit charset" do
     GB18030TestStrings.get.each { |k, v|
       file_name = "Read-Write File Content UTF-8 for " + k
-      options = { content_type: "text/html; charset=UTF-8" }
+      options = {content_type: "text/html; charset=UTF-8"}
       content = v.encode("UTF-8")
       while content.bytesize < 512 do
         content << "X"
@@ -200,7 +200,7 @@ describe "File GB-18030" do
   it "Read/Write 512 bytes GB18030 with explicit charset" do
     GB18030TestStrings.get.each { |k, v|
       file_name = "Read-Write File Content GB18030 for " + k
-      options = { content_type: "text/html; charset=GB18030" }
+      options = {content_type: "text/html; charset=GB18030"}
       content = v.encode("GB18030")
       while content.bytesize < 512 do
         content << "X"

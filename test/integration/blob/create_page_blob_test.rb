@@ -31,7 +31,7 @@ describe Azure::Storage::Blob::BlobService do
   describe "#create_page_blob" do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { "blobname" }
-    let(:complex_blob_name) { 'qa-872053-/*"\'&.({[<+ ' + [ 0x7D, 0xEB, 0x8B, 0xA4].pack("U*") + "_" + "0" }
+    let(:complex_blob_name) { 'qa-872053-/*"\'&.({[<+ ' + [0x7D, 0xEB, 0x8B, 0xA4].pack("U*") + "_" + "0" }
     let(:length) { 1024 }
     before {
       subject.create_container container_name
@@ -72,7 +72,7 @@ describe Azure::Storage::Blob::BlobService do
         content_encoding: "gzip",
         content_language: "en-US",
         cache_control: "max-age=1296000",
-        metadata: { "CustomMetadataProperty" => "CustomMetadataValue" }
+        metadata: {"CustomMetadataProperty" => "CustomMetadataValue"}
       }
 
       blob = subject.create_page_blob container_name, blob_name, length, options

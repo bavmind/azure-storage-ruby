@@ -31,29 +31,29 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
   let(:service_type) { "blob" }
   let(:service_options) {
     {
-      service:              "b",
-      permissions:          "rwd",
-      start:                "2020-12-10T00:00:00Z",
-      expiry:               "2020-12-11T00:00:00Z",
-      resource:             "b",
-      protocol:             "https,http",
-      ip_range:             "168.1.5.60-168.1.5.70",
-      cache_control:        "public",
-      content_disposition:  "inline, filename=nyan.cat",
-      content_encoding:     "gzip",
-      content_language:     "English",
-      content_type:         "binary"
+      service: "b",
+      permissions: "rwd",
+      start: "2020-12-10T00:00:00Z",
+      expiry: "2020-12-11T00:00:00Z",
+      resource: "b",
+      protocol: "https,http",
+      ip_range: "168.1.5.60-168.1.5.70",
+      cache_control: "public",
+      content_disposition: "inline, filename=nyan.cat",
+      content_encoding: "gzip",
+      content_language: "English",
+      content_type: "binary"
     }
   }
   let(:account_options) {
     {
-      service:             "b",
-      permissions:         "rwd",
-      start:               "2020-12-10T00:00:00Z",
-      expiry:              "2020-12-11T00:00:00Z",
-      resource:            "b",
-      protocol:            "https,http",
-      ip_range:            "168.1.5.60-168.1.5.70"
+      service: "b",
+      permissions: "rwd",
+      start: "2020-12-10T00:00:00Z",
+      expiry: "2020-12-11T00:00:00Z",
+      resource: "b",
+      protocol: "https,http",
+      ip_range: "168.1.5.60-168.1.5.70"
     }
   }
   let(:access_account_name) { "account-name" }

@@ -27,12 +27,11 @@ require "azure/core/http/http_request"
 require "azure/core/http/signer_filter"
 
 describe Azure::Storage::Common::Service::StorageService do
-
   let(:uri) { URI.parse "http://dummy.uri/resource" }
   let(:verb) { :get }
 
   subject do
-    storage_service = Azure::Storage::Common::Service::StorageService.new(nil, nil, { client: Azure::Storage::Common::Client.create_from_connection_string(ENV["AZURE_STORAGE_CONNECTION_STRING"]) })
+    storage_service = Azure::Storage::Common::Service::StorageService.new(nil, nil, {client: Azure::Storage::Common::Client.create_from_connection_string(ENV["AZURE_STORAGE_CONNECTION_STRING"])})
     storage_service.storage_service_host[:primary] = "http://dumyhost.uri"
     storage_service.storage_service_host[:secondary] = "http://dumyhost-secondary.uri"
     storage_service
@@ -41,11 +40,13 @@ describe Azure::Storage::Common::Service::StorageService do
   describe "#call" do
     let(:mock_request) { mock() }
     let(:mock_signer_filter) { mock() }
-    let(:mock_headers) { {
+    let(:mock_headers) {
+      {
         "Other-Header" => "SomeValue",
         "Custom-Header" => "PreviousValue",
         "connection" => "PreviousValue"
-    } }
+      }
+    }
 
     before do
       Azure::Core::Http::HttpRequest.stubs(:new).with(verb, uri, anything).returns(mock_request)
@@ -56,12 +57,12 @@ describe Azure::Storage::Common::Service::StorageService do
 
     it "adds a client request id" do
       Azure::Core::Http::HttpRequest.stubs(:new).with(verb,
-                                                      uri,
-                                                      body: nil,
-                                                      headers: { "x-ms-client-request-id" => "client-request-id" },
-                                                      client: nil).returns(mock_request)
+        uri,
+        body: nil,
+        headers: {"x-ms-client-request-id" => "client-request-id"},
+        client: nil).returns(mock_request)
       mock_request.expects(:with_filter).with(mock_signer_filter, {})
-      subject.call(verb, uri, nil, { request_id: "client-request-id" })
+      subject.call(verb, uri, nil, {request_id: "client-request-id"})
     end
 
     it "adds a SignerFilter to the HTTP pipeline" do
@@ -72,10 +73,10 @@ describe Azure::Storage::Common::Service::StorageService do
     describe "when passed the optional headers arguement" do
       before do
         Azure::Core::Http::HttpRequest.stubs(:new).with(verb,
-                                                        uri,
-                                                        body: nil,
-                                                        headers: { "Custom-Header" => "CustomValue" },
-                                                        client: nil).returns(mock_request)
+          uri,
+          body: nil,
+          headers: {"Custom-Header" => "CustomValue"},
+          client: nil).returns(mock_request)
         mock_request.expects(:with_filter).with(mock_signer_filter, {})
       end
 
@@ -189,7 +190,7 @@ describe Azure::Storage::Common::Service::StorageService do
       query.update("timeout" => "30")
       subject.expects(:service_properties_uri).with(query).returns(service_properties_uri)
 
-      options = { timeout: 30 }
+      options = {timeout: 30}
       subject.expects(:call).with(:get, service_properties_uri, nil, {}, options).returns(response)
       subject.get_service_properties options
     end
@@ -232,7 +233,7 @@ describe Azure::Storage::Common::Service::StorageService do
       query.update("timeout" => "30")
       subject.expects(:service_properties_uri).with(query).returns(service_properties_uri)
 
-      options = { timeout: 30 }
+      options = {timeout: 30}
       subject.expects(:call).with(:put, service_properties_uri, service_properties_xml, {}, options).returns(response)
       subject.set_service_properties service_properties, options
     end
@@ -304,7 +305,7 @@ describe Azure::Storage::Common::Service::StorageService do
     end
 
     it "modifies the URI query parameters when provided a :timeout value" do
-      timeout_option = { timeout: 30 } 
+      timeout_option = {timeout: 30}
       query.update("timeout" => "30")
       call_options = timeout_option.merge options
       subject.expects(:service_stats_uri).with(query, call_options).returns(service_stats_uri)
@@ -337,14 +338,14 @@ describe Azure::Storage::Common::Service::StorageService do
   describe "#add_metadata_to_headers" do
     it "prefixes header names with x-ms-meta- but does not modify the values" do
       headers = {}
-      Azure::Storage::Common::Service::StorageService.add_metadata_to_headers({ "Foo" => "Bar" }, headers)
+      Azure::Storage::Common::Service::StorageService.add_metadata_to_headers({"Foo" => "Bar"}, headers)
       _(headers.keys).must_include "x-ms-meta-Foo"
       _(headers["x-ms-meta-Foo"]).must_equal "Bar"
     end
 
     it "updates any existing x-ms-meta-* headers with the new values" do
-      headers = { "x-ms-meta-Foo" => "Foo" }
-      Azure::Storage::Common::Service::StorageService.add_metadata_to_headers({ "Foo" => "Bar" }, headers)
+      headers = {"x-ms-meta-Foo" => "Foo"}
+      Azure::Storage::Common::Service::StorageService.add_metadata_to_headers({"Foo" => "Bar"}, headers)
       _(headers["x-ms-meta-Foo"]).must_equal "Bar"
     end
   end
@@ -403,24 +404,24 @@ describe Azure::Storage::Common::Service::StorageService do
       end
 
       it "primary location should work" do
-        _(subject.generate_uri("", nil, { location_mode: Azure::Storage::Common::LocationMode::PRIMARY_ONLY}).to_s).must_equal "http://dumyhost.uri/"
+        _(subject.generate_uri("", nil, {location_mode: Azure::Storage::Common::LocationMode::PRIMARY_ONLY}).to_s).must_equal "http://dumyhost.uri/"
       end
 
       it "secondary location should work" do
-        _(subject.generate_uri("", nil, 
-          { location_mode: Azure::Storage::Common::LocationMode::SECONDARY_ONLY, 
-            request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY}).to_s).must_equal "http://dumyhost-secondary.uri/"
+        _(subject.generate_uri("", nil,
+          {location_mode: Azure::Storage::Common::LocationMode::SECONDARY_ONLY,
+           request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY}).to_s).must_equal "http://dumyhost-secondary.uri/"
       end
 
       it "raise exception when primary only" do
         assert_raises(Azure::Storage::Common::InvalidOptionsError) do
-          subject.generate_uri "", nil, { location_mode: Azure::Storage::Common::LocationMode::PRIMARY_ONLY, request_location_mode: Azure::Storage::Common::RequestLocationMode::SECONDARY_ONLY }
+          subject.generate_uri "", nil, {location_mode: Azure::Storage::Common::LocationMode::PRIMARY_ONLY, request_location_mode: Azure::Storage::Common::RequestLocationMode::SECONDARY_ONLY}
         end
       end
 
       it "raise exception when secondary only" do
         assert_raises(Azure::Storage::Common::InvalidOptionsError) do
-          subject.generate_uri "", nil, { location_mode: Azure::Storage::Common::LocationMode::SECONDARY_ONLY, request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_ONLY }
+          subject.generate_uri "", nil, {location_mode: Azure::Storage::Common::LocationMode::SECONDARY_ONLY, request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_ONLY}
         end
       end
     end

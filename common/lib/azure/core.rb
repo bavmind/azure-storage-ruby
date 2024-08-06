@@ -21,28 +21,28 @@ require 'faraday/net_http_persistent'
 
 module Azure
   module Core
-    autoload :Utility,                        'azure/core/utility'
-    autoload :Logger,                         'azure/core/utility'
-    autoload :Error,                          'azure/core/error'
-    autoload :Service,                        'azure/core/service'
-    autoload :FilteredService,                'azure/core/filtered_service'
-    autoload :SignedService,                  'azure/core/signed_service'
-    autoload :Default,                        'azure/core/default'
+    autoload :Utility, 'azure/core/utility'
+    autoload :Logger, 'azure/core/utility'
+    autoload :Error, 'azure/core/error'
+    autoload :Service, 'azure/core/service'
+    autoload :FilteredService, 'azure/core/filtered_service'
+    autoload :SignedService, 'azure/core/signed_service'
+    autoload :Default, 'azure/core/default'
     module Auth
-      autoload :SharedKey,                    'azure/core/auth/shared_key'
-      autoload :Signer,                       'azure/core/auth/signer'
-      autoload :Authorizer,                   'azure/core/auth/authorizer'
-      autoload :SharedKeyLite,                'azure/core/auth/shared_key_lite'
+      autoload :SharedKey, 'azure/core/auth/shared_key'
+      autoload :Signer, 'azure/core/auth/signer'
+      autoload :Authorizer, 'azure/core/auth/authorizer'
+      autoload :SharedKeyLite, 'azure/core/auth/shared_key_lite'
     end
+
     module Http
-      autoload :DebugFilter,                  'azure/core/http/debug_filter'
-      autoload :HTTPError,                    'azure/core/http/http_error'
-      autoload :HttpFilter,                   'azure/core/http/http_filter'
-      autoload :HttpRequest,                  'azure/core/http/http_request'
-      autoload :HttpResponse,                 'azure/core/http/http_response'
-      autoload :RetryPolicy,                  'azure/core/http/retry_policy'
-      autoload :SignerFilter,                 'azure/core/http/signer_filter'
+      autoload :DebugFilter, 'azure/core/http/debug_filter'
+      autoload :HTTPError, 'azure/core/http/http_error'
+      autoload :HttpFilter, 'azure/core/http/http_filter'
+      autoload :HttpRequest, 'azure/core/http/http_request'
+      autoload :HttpResponse, 'azure/core/http/http_response'
+      autoload :RetryPolicy, 'azure/core/http/retry_policy'
+      autoload :SignerFilter, 'azure/core/http/signer_filter'
     end
   end
-
 end

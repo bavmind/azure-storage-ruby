@@ -59,7 +59,7 @@ task :build_queue do
 end
 
 YARD::Rake::YardocTask.new do |t|
-  t.files   = ["blob/lib/**/*.rb", "table/lib/**/*.rb", "file/lib/**/*.rb", "queue/lib/**/*.rb"]
+  t.files = ["blob/lib/**/*.rb", "table/lib/**/*.rb", "file/lib/**/*.rb", "queue/lib/**/*.rb"]
   t.options = [""]
   t.stats_options = ["--list-undoc"]
 end
@@ -149,7 +149,6 @@ namespace :test do
   end
 
   namespace :storage do
-
     Rake::TestTask.new :unit do |t|
       t.pattern = "test/unit/storage/**/*_test.rb"
       t.verbose = true
@@ -166,7 +165,6 @@ namespace :test do
       abort "[ABORTING] Configure your environment to run the storage integration tests" if unset_environment
     end
 
-
     Rake::TestTask.new :integration do |t|
       t.pattern = "test/integration/storage/**/*_test.rb"
       t.verbose = true
@@ -181,8 +179,8 @@ namespace :test do
     require "azure/storage"
 
     Azure.configure do |config|
-      config.access_key     = ENV.fetch("AZURE_STORAGE_ACCESS_KEY")
-      config.account_name   = ENV.fetch("AZURE_STORAGE_ACCOUNT")
+      config.access_key = ENV.fetch("AZURE_STORAGE_ACCESS_KEY")
+      config.account_name = ENV.fetch("AZURE_STORAGE_ACCOUNT")
     end
   end
 end

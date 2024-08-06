@@ -51,7 +51,7 @@ describe Azure::Storage::Blob::BlobService do
   let(:incremental_content) { SecureRandom.random_bytes(512) }
 
   before do
-    #create a container and a page blob, then set the blob to be public readable.
+    # create a container and a page blob, then set the blob to be public readable.
     subject.create_container container_name
     subject.set_container_acl container_name, "blob"
     subject.create_page_blob container_name, source_page_blob, length

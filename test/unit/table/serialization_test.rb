@@ -51,24 +51,23 @@ describe Azure::Storage::Table::Serialization do
   end
 
   describe "#table_entries_from_json" do
-
     let(:query_tables_json) { Fixtures["query_tables"] }
     let(:table_entries) {
       [
-        { "TableName" => "aapilycmrr" },
-        { "TableName" => "bbfbbpbsmm" },
-        { "TableName" => "dfkvsheskq" },
-        { "TableName" => "ecxataxwrl" },
-        { "TableName" => "edhakjwlho" },
-        { "TableName" => "evsxufolvc" },
-        { "TableName" => "gjbcwdgevl" },
-        { "TableName" => "jwqiijvkcz" },
-        { "TableName" => "lhulazoqvz" },
-        { "TableName" => "lraeudqsxw" },
-        { "TableName" => "lrxqpcdbqb" },
-        { "TableName" => "ndiekmdvwh" },
-        { "TableName" => "soyvdmcffy" },
-        { "TableName" => "zridlgeizl" }
+        {"TableName" => "aapilycmrr"},
+        {"TableName" => "bbfbbpbsmm"},
+        {"TableName" => "dfkvsheskq"},
+        {"TableName" => "ecxataxwrl"},
+        {"TableName" => "edhakjwlho"},
+        {"TableName" => "evsxufolvc"},
+        {"TableName" => "gjbcwdgevl"},
+        {"TableName" => "jwqiijvkcz"},
+        {"TableName" => "lhulazoqvz"},
+        {"TableName" => "lraeudqsxw"},
+        {"TableName" => "lrxqpcdbqb"},
+        {"TableName" => "ndiekmdvwh"},
+        {"TableName" => "soyvdmcffy"},
+        {"TableName" => "zridlgeizl"}
       ]
     }
 
@@ -85,7 +84,7 @@ describe Azure::Storage::Table::Serialization do
       result = subject.entity_from_json(entity_json)
       _(result).must_be_kind_of Azure::Storage::Table::Entity
       _(result.etag).must_equal "sampleetag"
-      _(result.properties).must_equal("PartitionKey" => "abcd321", "RowKey" => "abcd123" , "CustomDoubleProperty" => "3.141592")
+      _(result.properties).must_equal("PartitionKey" => "abcd321", "RowKey" => "abcd123", "CustomDoubleProperty" => "3.141592")
     end
   end
 

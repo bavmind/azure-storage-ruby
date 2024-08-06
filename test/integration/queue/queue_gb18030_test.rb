@@ -64,7 +64,7 @@ describe "Queue GB-18030" do
   it "Read/Write Queue Metadata UTF-8 key" do
     GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = { "custommetadata" + v.encode("UTF-8") => "CustomMetadataValue" }
+        metadata = {"custommetadata" + v.encode("UTF-8") => "CustomMetadataValue"}
         subject.set_queue_metadata queue_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -76,7 +76,7 @@ describe "Queue GB-18030" do
   it "Read/Write Queue Metadata GB-18030 key" do
     GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = { "custommetadata" + v.encode("GB18030") => "CustomMetadataValue" }
+        metadata = {"custommetadata" + v.encode("GB18030") => "CustomMetadataValue"}
         subject.set_queue_metadata queue_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -88,7 +88,7 @@ describe "Queue GB-18030" do
   it "Read/Write Queue Metadata UTF-8 value" do
     GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = { "custommetadata" => "CustomMetadataValue" + v.encode("UTF-8") }
+        metadata = {"custommetadata" => "CustomMetadataValue" + v.encode("UTF-8")}
         subject.set_queue_metadata queue_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -101,7 +101,7 @@ describe "Queue GB-18030" do
   it "Read/Write Queue Metadata GB-18030 value" do
     GB18030TestStrings.get.each { |k, v|
       begin
-        metadata = { "custommetadata" => "CustomMetadataValue" + v.encode("GB18030") }
+        metadata = {"custommetadata" => "CustomMetadataValue" + v.encode("GB18030")}
         subject.set_queue_metadata queue_name, metadata
         flunk "No exception"
       rescue Azure::Core::Http::HTTPError => error
@@ -136,5 +136,4 @@ describe "Queue GB-18030" do
       subject.delete_message queue_name, message.id, message.pop_receipt
     }
   end
-
 end

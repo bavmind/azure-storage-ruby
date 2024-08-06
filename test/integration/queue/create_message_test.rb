@@ -48,7 +48,6 @@ describe Azure::Storage::Queue::QueueService do
       _(result[0].message_text).must_equal message_text
     end
 
-
     describe "when the options hash is used" do
       let(:visibility_timeout) { 3 }
       let(:message_ttl) { 600 }

@@ -50,7 +50,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
 
   it "reads a message in the queue with a SAS" do
     sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "r", protocol: "https,http"
-    client = Azure::Storage::Queue::QueueService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
+    client = Azure::Storage::Queue::QueueService.new({storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token})
     message = client.peek_messages queue_name, number_of_messages: 2
     _(message).wont_be_nil
     assert message.length > 1
@@ -58,7 +58,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
 
   it "adds a message to the queue with a SAS" do
     sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "a", protocol: "https"
-    client = Azure::Storage::Queue::QueueService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
+    client = Azure::Storage::Queue::QueueService.new({storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token})
     result = client.create_message queue_name, message_3
     _(result).wont_be_nil
     result.wont_be_empty
@@ -70,7 +70,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
 
   it "processes and updates a message to the queue with a SAS" do
     sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "up", protocol: "https,http"
-    client = Azure::Storage::Queue::QueueService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
+    client = Azure::Storage::Queue::QueueService.new({storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token})
     message = client.list_messages queue_name, 10
     new_pop_receipt, time_next_visible = client.update_message queue_name, message[0].id, message[0].pop_receipt, "updated message", 10
     _(new_pop_receipt).wont_be_nil
@@ -79,7 +79,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
 
   it "deletes a message in the queue with a SAS" do
     sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "p", protocol: "https,http"
-    client = Azure::Storage::Queue::QueueService.new({ storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token })
+    client = Azure::Storage::Queue::QueueService.new({storage_account_name: SERVICE_CREATE_OPTIONS()[:storage_account_name], storage_sas_token: sas_token})
     message = client.list_messages queue_name, 10
     client.delete_message queue_name, message[0].id, message[0].pop_receipt
   end

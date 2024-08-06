@@ -72,9 +72,9 @@ describe Azure::Storage::Table::TableService do
       batch.delete entity["RowKey"]
 
       # Uncomment when issue 145 (Cannot use GB-18030 characters in strings) is fixed
-      #entity["RowKey"] = "keyWithUnicode" + 0xE.chr + 0x8B.chr + 0xA4.chr
-      #subject.insert_entity table_name, entity
-      #batch.delete entity["RowKey"]
+      # entity["RowKey"] = "keyWithUnicode" + 0xE.chr + 0x8B.chr + 0xA4.chr
+      # subject.insert_entity table_name, entity
+      # batch.delete entity["RowKey"]
 
       entity["RowKey"] = "Qbert_Says=.!@%^&"
       subject.insert_entity table_name, entity

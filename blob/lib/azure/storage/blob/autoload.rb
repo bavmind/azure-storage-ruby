@@ -33,15 +33,15 @@ require "azure/storage/common"
 module Azure
   module Storage
     module Blob
-      autoload :Default,       "azure/storage/blob/default"
-      autoload :Version,       "azure/storage/blob/version"
-      autoload :Blob,          "azure/storage/blob/blob"
-      autoload :Block,         "azure/storage/blob/block"
-      autoload :Page,          "azure/storage/blob/page"
-      autoload :Append,        "azure/storage/blob/append"
-      autoload :Container,     "azure/storage/blob/container"
+      autoload :Default, "azure/storage/blob/default"
+      autoload :Version, "azure/storage/blob/version"
+      autoload :Blob, "azure/storage/blob/blob"
+      autoload :Block, "azure/storage/blob/block"
+      autoload :Page, "azure/storage/blob/page"
+      autoload :Append, "azure/storage/blob/append"
+      autoload :Container, "azure/storage/blob/container"
       autoload :Serialization, "azure/storage/blob/serialization"
-      autoload :BlobService,   "azure/storage/blob/blob_service"
+      autoload :BlobService, "azure/storage/blob/blob_service"
     end
   end
 end

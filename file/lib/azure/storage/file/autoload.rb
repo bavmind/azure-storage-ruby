@@ -33,13 +33,13 @@ require "azure/storage/common"
 module Azure
   module Storage
     module File
-      autoload :Default,                  "azure/storage/file/default"
-      autoload :Version,                  "azure/storage/file/version"
-      autoload :FileService,              "azure/storage/file/file_service"
-      autoload :Share,                    "azure/storage/file/share"
-      autoload :Directory,                "azure/storage/file/directory"
-      autoload :File,                     "azure/storage/file/file"
-      autoload :Serialization,            "azure/storage/file/serialization"
+      autoload :Default, "azure/storage/file/default"
+      autoload :Version, "azure/storage/file/version"
+      autoload :FileService, "azure/storage/file/file_service"
+      autoload :Share, "azure/storage/file/share"
+      autoload :Directory, "azure/storage/file/directory"
+      autoload :File, "azure/storage/file/file"
+      autoload :Serialization, "azure/storage/file/serialization"
     end
   end
 end

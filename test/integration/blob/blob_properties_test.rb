@@ -36,12 +36,14 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_container container_name
       subject.create_page_blob container_name, blob_name, length
     }
-    let(:options) { {
+    let(:options) {
+      {
         content_type: "application/my-special-format",
         content_encoding: "gzip",
         content_language: "klingon",
         cache_control: "max-age=1296000",
-      }}
+      }
+    }
 
     it "sets and gets properties for a blob" do
       result = subject.set_blob_properties container_name, blob_name, options

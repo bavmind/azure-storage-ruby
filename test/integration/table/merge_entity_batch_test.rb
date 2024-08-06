@@ -61,7 +61,7 @@ describe Azure::Storage::Table::TableService do
 
     it "updates an existing entity, merging the properties" do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
-      batch.merge entity_properties["RowKey"],         "PartitionKey" => entity_properties["PartitionKey"],
+      batch.merge entity_properties["RowKey"], "PartitionKey" => entity_properties["PartitionKey"],
         "RowKey" => entity_properties["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
       etags = subject.execute_batch batch

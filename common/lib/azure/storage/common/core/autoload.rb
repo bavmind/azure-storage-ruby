@@ -28,23 +28,23 @@ module Azure
   module Storage
     module Common
       module Core
-        autoload :HttpClient,                     "azure/storage/common/core/http_client"
-        autoload :Utility,                        "azure/storage/common/core/utility"
-        autoload :Logger,                         "azure/storage/common/core/utility"
-        autoload :Error,                          "azure/storage/common/core/error"
-        autoload :TokenCredential,                "azure/storage/common/core/token_credential.rb"
+        autoload :HttpClient, "azure/storage/common/core/http_client"
+        autoload :Utility, "azure/storage/common/core/utility"
+        autoload :Logger, "azure/storage/common/core/utility"
+        autoload :Error, "azure/storage/common/core/error"
+        autoload :TokenCredential, "azure/storage/common/core/token_credential.rb"
 
         module Auth
-          autoload :SharedKey,                    "azure/storage/common/core/auth/shared_key.rb"
-          autoload :SharedAccessSignature,        "azure/storage/common/core/auth/shared_access_signature_generator.rb"
-          autoload :SharedAccessSignatureSigner,  "azure/storage/common/core/auth/shared_access_signature_signer.rb"
-          autoload :AnonymousSigner,              "azure/storage/common/core/auth/anonymous_signer.rb"
-          autoload :TokenSigner,                  "azure/storage/common/core/auth/token_signer.rb"
+          autoload :SharedKey, "azure/storage/common/core/auth/shared_key.rb"
+          autoload :SharedAccessSignature, "azure/storage/common/core/auth/shared_access_signature_generator.rb"
+          autoload :SharedAccessSignatureSigner, "azure/storage/common/core/auth/shared_access_signature_signer.rb"
+          autoload :AnonymousSigner, "azure/storage/common/core/auth/anonymous_signer.rb"
+          autoload :TokenSigner, "azure/storage/common/core/auth/token_signer.rb"
         end
 
         module Filter
-          autoload :RetryPolicyFilter,            "azure/storage/common/core/filter/retry_filter"
-          autoload :LinearRetryPolicyFilter,      "azure/storage/common/core/filter/linear_retry_filter"
+          autoload :RetryPolicyFilter, "azure/storage/common/core/filter/retry_filter"
+          autoload :LinearRetryPolicyFilter, "azure/storage/common/core/filter/linear_retry_filter"
           autoload :ExponentialRetryPolicyFilter, "azure/storage/common/core/filter/exponential_retry_filter"
         end
       end
