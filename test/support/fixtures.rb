@@ -78,7 +78,7 @@ module Azure
       end
 
       def should_retry?(response, retry_data)
-        retry_data[:error].inspect.include?('Error: Retry')
+        retry_data[:error].inspect.include?("Error: Retry")
       end
     end
 

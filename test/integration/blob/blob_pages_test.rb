@@ -24,7 +24,7 @@
 require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 require "securerandom"
-require 'digest/md5'
+require "digest/md5"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }

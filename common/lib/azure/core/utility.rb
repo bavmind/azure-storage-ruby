@@ -13,13 +13,13 @@
 # limitations under the License.
 #--------------------------------------------------------------------------
 
-require 'ipaddr'
+require "ipaddr"
 
 if RUBY_VERSION.to_f < 2.0
   begin
-    require 'Win32/Console/ANSI' if RUBY_PLATFORM =~ /win32|mingw32/
+    require "Win32/Console/ANSI" if RUBY_PLATFORM =~ /win32|mingw32/
   rescue LoadError
-    puts 'WARNING: Output will look weird on Windows unless' \
+    puts "WARNING: Output will look weird on Windows unless" \
          ' you install the "win32console" gem.'
   end
 end
@@ -43,11 +43,11 @@ module Azure
 
   module Core
     module Utility
-      def random_string(str = 'azure', no_of_char = 5)
-        str + (0...no_of_char).map { ('a'..'z').to_a[rand(26)] }.join
+      def random_string(str = "azure", no_of_char = 5)
+        str + (0...no_of_char).map { ("a".."z").to_a[rand(26)] }.join
       end
 
-      def xml_content(xml, key, default = '')
+      def xml_content(xml, key, default = "")
         content = default
         node = xml.at_css(key)
         content = node.text if node
@@ -57,8 +57,8 @@ module Azure
       def locate_file(name)
         if File.exist? name
           name
-        elsif File.exist?(File.join(ENV['HOME'], name))
-          File.join(ENV['HOME'], name)
+        elsif File.exist?(File.join(ENV["HOME"], name))
+          File.join(ENV["HOME"], name)
         else
           Azure::Loggerx.error_with_exit "Unable to find #{name} file  "
         end
@@ -77,7 +77,7 @@ module Azure
       end
 
       def enable_winrm?(winrm_transport)
-        (!winrm_transport.nil? && (winrm_transport.select { |x| x.downcase == 'http' || x.downcase == 'https' }.size > 0))
+        (!winrm_transport.nil? && (winrm_transport.select { |x| x.downcase == "http" || x.downcase == "https" }.size > 0))
       end
 
       def get_certificate(private_key_file)
@@ -85,7 +85,7 @@ module Azure
         cert = OpenSSL::X509::Certificate.new
         cert.version = 2
         cert.serial = 0
-        name = OpenSSL::X509::Name.new([['CN', 'Azure Management Certificate']])
+        name = OpenSSL::X509::Name.new([["CN", "Azure Management Certificate"]])
         cert.subject = cert.issuer = name
         cert.not_before = Time.now
         cert.not_after = cert.not_before + (60 * 60 * 24 * 365)
@@ -196,9 +196,9 @@ end
 # Code validate private/public IP acceptable ranges.
 class IPAddr
   PRIVATE_RANGES = [
-    IPAddr.new('10.0.0.0/8'),
-    IPAddr.new('172.16.0.0/12'),
-    IPAddr.new('192.168.0.0/16')
+    IPAddr.new("10.0.0.0/8"),
+    IPAddr.new("172.16.0.0/12"),
+    IPAddr.new("192.168.0.0/16")
   ]
 
   def private?
@@ -225,7 +225,7 @@ class IPAddr
     end
 
     def validate_address_space(ip)
-      if ip.split('/').size != 2
+      if ip.split("/").size != 2
         raise "Cidr is invalid for IP #{ip}."
       elsif valid?(ip)
         raise "Address space '#{ip}' is invalid."
@@ -233,7 +233,7 @@ class IPAddr
     end
 
     def address_prefix(ip, cidr)
-      ip + '/' + cidr.to_s
+      ip + "/" + cidr.to_s
     end
 
     def valid?(ip)

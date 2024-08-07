@@ -34,7 +34,7 @@ module Azure::Storage::Common::Core
     BATCH_ONE_RETRIEVE = "If a retrieve operation is part of a batch, it must be the only operation in the batch."
     BATCH_TOO_LARGE = "Batches must not contain more than 100 operations."
     BLOB_INVALID_SEQUENCE_NUMBER = "The sequence number may not be specified for an increment operation."
-    BLOB_TYPE_MISMATCH = 'Blob type of the blob reference doesn\'t match blob type of the blob.'
+    BLOB_TYPE_MISMATCH = "Blob type of the blob reference doesn't match blob type of the blob."
     CANNOT_CREATE_SAS_WITHOUT_ACCOUNT_KEY = "Cannot create Shared Access Signature unless the Account Name and Key are used to create the ServiceClient."
     CONTENT_LENGTH_MISMATCH = "An incorrect number of bytes was read from the connection. The connection may have been closed."
     CONTENT_TYPE_MISSING = "Content-Type response header is missing or invalid."
@@ -49,7 +49,7 @@ module Azure::Storage::Common::Core
     INVALID_CONNECTION_STRING_EMPTY_KEY = "Connection strings must not contain empty keys."
     INVALID_CLIENT_OPTIONS = "Storage client options are invalid"
     INVALID_DELETE_SNAPSHOT_OPTION = "The deleteSnapshots option cannot be included when deleting a specific snapshot using the snapshotId option."
-    INVALID_EDM_TYPE = 'The value \'%s\' does not match the type \'%s\'.'
+    INVALID_EDM_TYPE = "The value '%s' does not match the type '%s'."
     INVALID_FILE_LENGTH = "createFileFromText requires the size of text to be less than 4MB. Please use createFileFromLocalFile or createFileFromStream to upload large files."
     INVALID_FILE_RANGE_FOR_UPDATE = "Range size should be less than 4MB for a file range update operation."
     INVALID_HEADERS = "Headers are not supported in the 2012-02-12 version."
@@ -77,7 +77,7 @@ module Azure::Storage::Common::Core
     QUERY_OPERATOR_REQUIRES_WHERE = "%s operator needs to be used after where."
     SECONDARY_ONLY_COMMAND = "This operation can only be executed against the secondary storage location."
     STORAGE_HOST_LOCATION_REQUIRED = "The host for the storage service must be specified."
-    STORAGE_HOST_MISSING_LOCATION = 'The host for the target storage location is not specified. Please consider changing the request\'s location mode.'
+    STORAGE_HOST_MISSING_LOCATION = "The host for the target storage location is not specified. Please consider changing the request's location mode."
     TYPE_NOT_SUPPORTED = "Type not supported when sending data to the service: "
     MAX_BLOB_SIZE_CONDITION_NOT_MEET = "The max blob size condition specified was not met."
   end

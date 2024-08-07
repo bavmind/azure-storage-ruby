@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/core/filtered_service'
-require 'azure/core/http/signer_filter'
-require 'azure/core/auth/shared_key'
+require "azure/core/filtered_service"
+require "azure/core/http/signer_filter"
+require "azure/core/auth/shared_key"
 
 module Azure
   module Core
@@ -26,7 +26,7 @@ module Azure
       # @param account_name   [String] The account name (optional, Default=Azure.config.storage_account_name)
       # @param options        [Hash] options
       def initialize(signer = nil, account_name = nil, options = {})
-        super('', options)
+        super("", options)
         signer ||= Core::Auth::SharedKey.new(client.storage_account_name, client.storage_access_key)
         @account_name = account_name || client.storage_account_name
         @signer = signer

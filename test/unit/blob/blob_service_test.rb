@@ -1510,7 +1510,7 @@ describe Azure::Storage::Blob::BlobService do
           subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
         }
 
-        it 'set the page blob\'s sequence number' do
+        it "set the page blob's sequence number" do
           options = {sequence_number_action: action, sequence_number: number}
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           request_headers["x-ms-sequence-number-action"] = action.to_s
@@ -1518,7 +1518,7 @@ describe Azure::Storage::Blob::BlobService do
           subject.set_sequence_number container_name, blob_name, action, number
         end
 
-        it 'set the page blob\'s sequence number to the higher of current or the value in the request' do
+        it "set the page blob's sequence number to the higher of current or the value in the request" do
           action = :max
           options = {sequence_number_action: action, sequence_number: number}
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
@@ -1527,7 +1527,7 @@ describe Azure::Storage::Blob::BlobService do
           subject.set_sequence_number container_name, blob_name, action, number
         end
 
-        it 'increase the page blob\'s sequence number by 1' do
+        it "increase the page blob's sequence number by 1" do
           action = :increment
           options = {sequence_number_action: action, sequence_number: nil}
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
@@ -1535,7 +1535,7 @@ describe Azure::Storage::Blob::BlobService do
           subject.set_sequence_number container_name, blob_name, action, nil
         end
 
-        it 'increase the page blob\'s sequence number should ignore the number' do
+        it "increase the page blob's sequence number should ignore the number" do
           action = :increment
           options = {sequence_number_action: action, sequence_number: number}
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)

@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'openssl'
-require 'base64'
+require "openssl"
+require "base64"
 
 module Azure
   module Core
@@ -29,7 +29,7 @@ module Azure
         # @param access_key [String] The access_key encoded in Base64.
         def initialize(access_key)
           if access_key.nil?
-            raise ArgumentError, 'Signing key must be provided'
+            raise ArgumentError, "Signing key must be provided"
           end
 
           @access_key = Base64.decode64(access_key)
@@ -41,7 +41,7 @@ module Azure
         #
         # @return [String] a Base64 String signed with HMAC.
         def sign(body)
-          signed = OpenSSL::HMAC.digest('sha256', access_key, body)
+          signed = OpenSSL::HMAC.digest("sha256", access_key, body)
           Base64.strict_encode64(signed)
         end
       end

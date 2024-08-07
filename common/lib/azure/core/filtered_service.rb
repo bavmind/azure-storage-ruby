@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/core/service'
+require "azure/core/service"
 
 module Azure
   module Core
@@ -22,7 +22,7 @@ module Azure
       #
       # @param host     [String] The hostname. (optional, Default empty)
       # @param options  [Hash] options including {:client} (optional, Default {})
-      def initialize(host = '', options = {})
+      def initialize(host = "", options = {})
         super
         @filters = []
       end

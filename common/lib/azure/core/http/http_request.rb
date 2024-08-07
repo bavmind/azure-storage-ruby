@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'digest/md5'
-require 'base64'
-require 'net/http'
-require 'time'
-require 'tempfile'
+require "digest/md5"
+require "base64"
+require "net/http"
+require "time"
+require "tempfile"
 
-require 'azure/core/version'
-require 'azure/core/http/http_response'
-require 'azure/core/http/retry_policy'
-require 'azure/core/default'
-require 'azure/http_response_helper'
+require "azure/core/version"
+require "azure/core/http/http_response"
+require "azure/core/http/retry_policy"
+require "azure/core/default"
+require "azure/http_response_helper"
 
 module Azure
   module Core
@@ -124,12 +124,12 @@ module Azure
         # Build a default headers Hash
         def default_headers(current_time)
           {}.tap do |def_headers|
-            def_headers['User-Agent'] = Azure::Core::Default::USER_AGENT
-            def_headers['x-ms-date'] = current_time
-            def_headers['x-ms-version'] = '2014-02-14'
-            def_headers['DataServiceVersion'] = '1.0;NetFx'
-            def_headers['MaxDataServiceVersion'] = '3.0;NetFx'
-            def_headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
+            def_headers["User-Agent"] = Azure::Core::Default::USER_AGENT
+            def_headers["x-ms-date"] = current_time
+            def_headers["x-ms-version"] = "2014-02-14"
+            def_headers["DataServiceVersion"] = "1.0;NetFx"
+            def_headers["MaxDataServiceVersion"] = "3.0;NetFx"
+            def_headers["Content-Type"] = "application/atom+xml; charset=utf-8"
           end
         end
 
@@ -158,7 +158,7 @@ module Azure
         private
 
         def apply_body_headers
-          return headers['Content-Length'] = '0' unless body
+          return headers["Content-Length"] = "0" unless body
 
           return apply_io_headers if IO === body || Tempfile === body
           return apply_string_io_headers if StringIO === body
@@ -166,17 +166,17 @@ module Azure
         end
 
         def apply_io_headers
-          headers['Content-Length'] = body.size.to_s if body.respond_to?('size')
-          if headers['Content-Length'].nil?
-            raise ArgumentError, '\'Content-Length\' must be defined if size cannot be obtained from body IO.'
+          headers["Content-Length"] = body.size.to_s if body.respond_to?("size")
+          if headers["Content-Length"].nil?
+            raise ArgumentError, "'Content-Length' must be defined if size cannot be obtained from body IO."
           end
-          headers['Content-MD5'] = Digest::MD5.file(body.path).base64digest unless headers['Content-MD5']
+          headers["Content-MD5"] = Digest::MD5.file(body.path).base64digest unless headers["Content-MD5"]
         end
 
         def apply_string_io_headers
-          headers['Content-Length'] = body.size.to_s
-          unless headers['Content-MD5']
-            headers['Content-MD5'] = Digest::MD5.new.tap do |checksum|
+          headers["Content-Length"] = body.size.to_s
+          unless headers["Content-MD5"]
+            headers["Content-MD5"] = Digest::MD5.new.tap do |checksum|
               while chunk = body.read(5242880)
                 checksum << chunk
               end
@@ -186,8 +186,8 @@ module Azure
         end
 
         def apply_miscellaneous_headers
-          headers['Content-Length'] = body.size.to_s
-          headers['Content-MD5'] = Base64.strict_encode64(Digest::MD5.digest(body.to_s)) unless headers['Content-MD5']
+          headers["Content-Length"] = body.size.to_s
+          headers["Content-MD5"] = Base64.strict_encode64(Digest::MD5.digest(body.to_s)) unless headers["Content-MD5"]
         end
       end
     end

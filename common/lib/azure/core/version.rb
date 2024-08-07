@@ -24,7 +24,7 @@ module Azure
       class << self
         # @return [String]
         def to_s
-          [MAJOR, MINOR, UPDATE].join('.') + (PRE.nil? ? '' : "-#{PRE}")
+          [MAJOR, MINOR, UPDATE].join(".") + (PRE.nil? ? "" : "-#{PRE}")
         end
       end
     end

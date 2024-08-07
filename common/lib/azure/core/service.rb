@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/core/http/http_request'
+require "azure/core/http/http_request"
 
 module Azure
   module Core
@@ -22,7 +22,7 @@ module Azure
       #
       # @param host     [String] The hostname. (optional, Default empty)
       # @param options  [Hash] options including {:client} (optional, Default {})
-      def initialize(host = '', options = {})
+      def initialize(host = "", options = {})
         @host = host
         @client = options[:client] || Azure
       end
@@ -35,7 +35,7 @@ module Azure
         request.call
       end
 
-      def generate_uri(path = '', query = {})
+      def generate_uri(path = "", query = {})
         uri = URI.parse(File.join(host, path))
         uri.query = URI.encode_www_form(query) unless query == nil or query.empty?
         uri

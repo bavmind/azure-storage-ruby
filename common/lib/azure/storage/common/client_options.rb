@@ -296,7 +296,7 @@ module Azure::Storage::Common
     end
 
     def validated_options(opts, requirements = {})
-      raise InvalidOptionsError, 'nil is not allowed for option\'s value' if opts.values.any? { |v| v == nil }
+      raise InvalidOptionsError, "nil is not allowed for option's value" if opts.values.any? { |v| v == nil }
       required = requirements[:required] || []
       at_least_one = requirements[:at_least_one] || []
       only_one = requirements[:only_one] || []

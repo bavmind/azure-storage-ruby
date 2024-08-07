@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'test_helper'
-require 'azure/core/utility'
+require "test_helper"
+require "azure/core/utility"
 
 describe Azure::Core::Logger do
   subject { Azure::Core::Logger }
