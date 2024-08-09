@@ -67,7 +67,6 @@ ignore:
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Lint/AmbiguousOperator
   - Naming/VariableName
-  - Style/IfInsideElse
 - common/lib/azure/storage/common/core/http_client.rb:
   - Style/UnlessElse
 - common/lib/azure/storage/common/core/utility.rb:

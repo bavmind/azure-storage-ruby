@@ -282,12 +282,10 @@ module Azure::Storage::Common::Core::Filter
           Azure::Storage::Common::StorageLocation::PRIMARY
         elsif @request_options[:request_location_mode] == Azure::Storage::Common::RequestLocationMode::SECONDARY_ONLY
           Azure::Storage::Common::StorageLocation::SECONDARY
+        elsif retry_data[:current_location] === Azure::Storage::Common::StorageLocation::PRIMARY
+          Azure::Storage::Common::StorageLocation::SECONDARY
         else
-          if retry_data[:current_location] === Azure::Storage::Common::StorageLocation::PRIMARY
-            Azure::Storage::Common::StorageLocation::SECONDARY
-          else
-            Azure::Storage::Common::StorageLocation::PRIMARY
-          end
+          Azure::Storage::Common::StorageLocation::PRIMARY
         end
       end
     end
