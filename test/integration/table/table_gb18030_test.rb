@@ -79,7 +79,7 @@ describe "Table GB-18030" do
       result = subject.insert_entity table_name, entity_properties
       subject.insert_entity table_name, entity_properties2
       _(result.properties[prop]).must_equal "value"
-      if (k != "Chinese_2B5" && k != "Tibetan") then
+      if (k != "Chinese_2B5" && k != "Tibetan")
         filter = prop + " eq 'value'"
         result = subject.query_entities table_name, filter: filter
         _(result.length).must_equal 1
@@ -107,7 +107,7 @@ describe "Table GB-18030" do
       result = subject.insert_entity table_name, entity_properties
       subject.insert_entity table_name, entity_properties2
       _(result.properties[prop.encode("UTF-8")]).must_equal "value"
-      if (k != "Chinese_2B5" && k != "Tibetan") then
+      if (k != "Chinese_2B5" && k != "Tibetan")
         filter = prop + " eq 'value'"
         result = subject.query_entities table_name, filter: filter
         _(result.length).must_equal 1
@@ -176,7 +176,7 @@ describe "Table GB-18030" do
       result = subject.insert_entity table_name, entity_properties
       _(result.properties["PartitionKey"]).must_equal value
       _(result.properties["RowKey"]).must_equal value
-      if k != "ChineseExtB" then
+      if k != "ChineseExtB"
         # Service does not support surrogates in key in URL
         result = subject.get_entity(table_name, value, value)
         _(result.properties["PartitionKey"]).must_equal value
@@ -203,7 +203,7 @@ describe "Table GB-18030" do
       result = subject.insert_entity table_name, entity_properties
       _(result.properties["PartitionKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
       _(result.properties["RowKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
-      if k != "ChineseExtB" then
+      if k != "ChineseExtB"
         result = subject.get_entity(table_name, value, value)
         _(result.properties["PartitionKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
         _(result.properties["RowKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
@@ -231,7 +231,7 @@ describe "Table GB-18030" do
       batch.insert k + counter.to_s + "2", prop => "value2"
       results = subject.execute_batch batch
       _(results[0].properties[prop]).must_equal "value"
-      if (k != "Chinese_2B5" && k != "Tibetan") then
+      if (k != "Chinese_2B5" && k != "Tibetan")
         filter = prop + " eq 'value'"
         result = subject.query_entities table_name, filter: filter
         _(result.length).must_equal 1
@@ -250,7 +250,7 @@ describe "Table GB-18030" do
       batch.insert k + counter.to_s + "2", prop => "value2"
       results = subject.execute_batch batch
       _(results[0].properties[prop.encode("UTF-8")]).must_equal "value"
-      if (k != "Chinese_2B5" && k != "Tibetan") then
+      if (k != "Chinese_2B5" && k != "Tibetan")
         filter = prop + " eq 'value'"
         result = subject.query_entities table_name, filter: filter
         _(result.length).must_equal 1
@@ -304,7 +304,7 @@ describe "Table GB-18030" do
       results = subject.execute_batch batch
       _(results[0].properties["PartitionKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
       _(results[0].properties["RowKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
-      if k != "ChineseExtB" then
+      if k != "ChineseExtB"
         # Service does not support surrogates in key in URL
         result = subject.get_entity(table_name, value, value)
         _(result.properties["PartitionKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
@@ -314,7 +314,7 @@ describe "Table GB-18030" do
       batch.delete value
       batch.delete value + "2"
       results = subject.execute_batch batch
-      if k != "ChineseExtB" then
+      if k != "ChineseExtB"
         # Service does not support surrogates in key in URL
         begin
           # Expect error because the entity should be gone
@@ -338,7 +338,7 @@ describe "Table GB-18030" do
       results = subject.execute_batch batch
       _(results[0].properties["PartitionKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
       _(results[0].properties["RowKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
-      if k != "ChineseExtB" then
+      if k != "ChineseExtB"
         # Service does not support surrogates in key in URL
         result = subject.get_entity(table_name, value, value)
         _(result.properties["PartitionKey"].encode("UTF-8")).must_equal value.encode("UTF-8")
@@ -348,7 +348,7 @@ describe "Table GB-18030" do
       batch.delete value
       batch.delete value + "2"
       results = subject.execute_batch batch
-      if k != "ChineseExtB" then
+      if k != "ChineseExtB"
         # Service does not support surrogates in key in URL
         begin
           # Expect error because the entity should be gone

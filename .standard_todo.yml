@@ -50,7 +50,6 @@ ignore:
   - Style/RedundantCurrentDirectoryInPath
   - Style/ParenthesesAroundCondition
   - Style/RedundantParentheses
-  - Style/MultilineIfThen
 - common/lib/azure/core/filtered_service.rb:
   - Style/SafeNavigation
   - Performance/ReverseEach
@@ -290,7 +289,6 @@ ignore:
   - Style/Semicolon
   - Lint/UselessAssignment
 - test/integration/blob/blob_gb18030_test.rb:
-  - Style/MultilineIfThen
   - Lint/UselessAssignment
   - Style/WhileUntilDo
 - test/integration/blob/blob_metadata_test.rb:
@@ -353,7 +351,6 @@ ignore:
   - Style/Not
   - Style/NestedParenthesizedCalls
 - test/integration/file/file_gb18030_test.rb:
-  - Style/MultilineIfThen
   - Style/WhileUntilDo
 - test/integration/file/file_metadata_test.rb:
   - Style/StringLiteralsInInterpolation
@@ -424,7 +421,6 @@ ignore:
   - Style/TrailingCommaInHashLiteral
   - Style/ParenthesesAroundCondition
   - Style/RedundantParentheses
-  - Style/MultilineIfThen
   - Lint/UselessAssignment
 - test/integration/table/update_entity_batch_test.rb:
   - Lint/UselessAssignment

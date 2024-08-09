@@ -124,8 +124,8 @@ module Azure
         end
 
         def inspect
-          string = "#<#{self.class.name}:#{self.object_id} "
-          fields = self.instance_variables.map { |field| "#{field}: #{self.send(field.to_s.delete("@")).inspect}" }
+          string = "#<#{self.class.name}:#{object_id} "
+          fields = instance_variables.map { |field| "#{field}: #{send(field.to_s.delete("@")).inspect}" }
           string << fields.join(", ") << ">"
         end
       end

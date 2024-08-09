@@ -73,7 +73,7 @@ describe "File GB-18030" do
 
     GB18030TestStrings.get.each { |k, v|
       # The File service does not support characters from extended plains.
-      if k != ("ChineseExtB") && k != ("Chinese2B5") then
+      if k != ("ChineseExtB") && k != ("Chinese2B5")
         test_name = share_name + v.encode("UTF-8")
         subject.create_file share_name, directory_name, test_name, file_length
         files = subject.list_directories_and_files share_name, directory_name
@@ -92,7 +92,7 @@ describe "File GB-18030" do
     subject.create_directory share_name, directory_name
     GB18030TestStrings.get.each { |k, v|
       # The File service does not support characters from extended plains.
-      if k != ("ChineseExtB") && k != ("Chinese2B5") then
+      if k != ("ChineseExtB") && k != ("Chinese2B5")
         test_name = share_name + v.encode("GB18030")
         subject.create_file share_name, directory_name, test_name, file_length
         files = subject.list_directories_and_files share_name, directory_name

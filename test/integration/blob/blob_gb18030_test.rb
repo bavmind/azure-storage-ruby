@@ -70,7 +70,7 @@ describe "Blob GB-18030" do
     subject.create_container container_name
     GB18030TestStrings.get.each { |k, v|
       # The Blob service does not support characters from extended plains.
-      if k != "ChineseExtB" then
+      if k != "ChineseExtB"
         test_name = container_name + v.encode("UTF-8")
         subject.create_block_blob container_name, test_name, "hi"
         blobs = subject.list_blobs container_name
@@ -88,7 +88,7 @@ describe "Blob GB-18030" do
     subject.create_container container_name
     GB18030TestStrings.get.each { |k, v|
       # The Blob service does not support characters from extended plains.
-      if k != "ChineseExtB" then
+      if k != "ChineseExtB"
         test_name = container_name + v.encode("GB18030")
         subject.create_block_blob container_name, test_name, "hi"
         blobs = subject.list_blobs container_name
