@@ -63,7 +63,6 @@ ignore:
   - Style/MixinUsage
 - common/lib/azure/storage/common/core/auth/shared_access_signature_generator.rb:
   - Performance/RedundantMerge
-  - Style/HashConversion
   - Style/EachWithObject
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Lint/AmbiguousOperator
@@ -79,7 +78,6 @@ ignore:
   - Performance/FixedSize
   - Style/RescueModifier
 - common/lib/azure/storage/common/default.rb:
-  - Style/HashConversion
   - Naming/ConstantName
 - common/lib/azure/storage/common/service/serialization.rb:
   - Lint/AssignmentInCondition
@@ -217,8 +215,6 @@ ignore:
   - Naming/VariableName
 - test/unit/config/client_test.rb:
   - Style/For
-- test/unit/core/auth/shared_access_signature_test.rb:
-  - Style/HashConversion
 - test/unit/core/http/retry_policy_test.rb:
   - Standard/BlockSingleLineBraces
 - test/unit/core/utility_test.rb:

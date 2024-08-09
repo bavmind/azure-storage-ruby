@@ -207,7 +207,7 @@ module Azure::Storage::Common::Core
 
         canonicalize_time(options)
 
-        query_hash = Hash[options.map { |k, v| [service_key_mappings[k], v] }]
+        query_hash = options.map { |k, v| [service_key_mappings[k], v] }.to_h
           .reject { |k, v| SERVICE_OPTIONAL_QUERY_PARAMS.include?(k) && v.to_s == "" }
           .merge(sig: @signer.sign(signable_string_for_service(service_type, path, options)))
 
@@ -302,7 +302,7 @@ module Azure::Storage::Common::Core
 
         canonicalize_time(options)
 
-        query_hash = Hash[options.map { |k, v| [ACCOUNT_KEY_MAPPINGS[k], v] }]
+        query_hash = options.map { |k, v| [ACCOUNT_KEY_MAPPINGS[k], v] }.to_h
           .reject { |k, v| ACCOUNT_OPTIONAL_QUERY_PARAMS.include?(k) && v.to_s == "" }
           .merge(sig: @signer.sign(signable_string_for_account(options)))
 

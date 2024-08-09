@@ -76,7 +76,7 @@ module Azure::Storage::Common
 
     class << self
       def options
-        Hash[Azure::Storage::Common::Configurable.keys.map { |key| [key, send(key)] }]
+        Azure::Storage::Common::Configurable.keys.map { |key| [key, send(key)] }.to_h
       end
 
       # Default storage access key
