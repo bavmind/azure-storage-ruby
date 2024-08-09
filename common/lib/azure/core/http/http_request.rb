@@ -104,7 +104,7 @@ module Azure
             filter.retry_data[:request_options] = options if is_retry_policy
             @has_retry_filter ||= is_retry_policy
 
-            original_call = self._method(:call)
+            original_call = _method(:call)
 
             # support 1.8.7 (define_singleton_method doesn't exist until 1.9.1)
             filter_call = Proc.new do
@@ -114,7 +114,7 @@ module Azure
                   self
             end
             if k.method_defined? :define_singleton_method
-              self.define_singleton_method(:call, filter_call)
+              define_singleton_method(:call, filter_call)
             else
               k.send(:define_method, :call, filter_call)
             end

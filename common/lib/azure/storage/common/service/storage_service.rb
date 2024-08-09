@@ -184,7 +184,7 @@ module Azure::Storage::Common
 
         location = StorageService.get_location location_mode, request_location_mode
 
-        if self.client.is_a?(Azure::Storage::Common::Client) && self.client.options[:use_path_style_uri]
+        if client.is_a?(Azure::Storage::Common::Client) && client.options[:use_path_style_uri]
           account_path = get_account_path location
           path = path.length > 0 ? account_path + "/" + path : account_path
         end
@@ -225,9 +225,9 @@ module Azure::Storage::Common
       # Returns the account path
       def get_account_path(location)
         if location == StorageLocation::PRIMARY
-          self.client.options[:storage_account_name]
+          client.options[:storage_account_name]
         else
-          self.client.options[:storage_account_name] + "-secondary"
+          client.options[:storage_account_name] + "-secondary"
         end
       end
 

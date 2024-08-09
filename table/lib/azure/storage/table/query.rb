@@ -34,7 +34,7 @@ module Azure::Storage
         @filters = []
         @top_n = nil
         @table_service = Azure::Storage::Table::TableService.create_from_env
-        self.instance_eval(&block) if block_given?
+        instance_eval(&block) if block_given?
       end
 
       attr_reader :table

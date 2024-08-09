@@ -102,7 +102,7 @@ module Azure::Storage::Common
           if self == Azure::Storage::Common
             Azure::Storage::Common::Default.options[key]
           else
-            self.send(key)
+            send(key)
           end
         instance_variable_set(:"@#{key}", options.fetch(key, value))
 
@@ -111,7 +111,7 @@ module Azure::Storage::Common
           instance_variable_set(:"@#{key}_secondary", secondary_endpoint(options.fetch(key, value)))
         end
       end
-      self.send(:reset_agents!) if self.respond_to?(:reset_agents!)
+      send(:reset_agents!) if respond_to?(:reset_agents!)
       setup_signer_for_service(options[:api_version])
       self
     end
@@ -167,7 +167,7 @@ module Azure::Storage::Common
     def setup_options
       opts = {}
       Azure::Storage::Common::Configurable.keys.map do |key|
-        opts[key] = self.send(key) if self.send(key)
+        opts[key] = send(key) if send(key)
       end
       opts
     end

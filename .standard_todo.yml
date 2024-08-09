@@ -51,7 +51,6 @@ ignore:
 - common/lib/azure/core/http/http_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/http/http_request.rb:
-  - Style/RedundantSelf
   - Style/Proc
   - Lint/DuplicateMethods
   - Style/RedundantReturn
@@ -74,13 +73,11 @@ ignore:
   - Lint/RescueException
   - Performance/Count
   - Lint/DeprecatedOpenSSLConstant
-  - Style/RedundantSelf
   - Style/RescueModifier
 - common/lib/azure/storage/common/client.rb:
   - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
 - common/lib/azure/storage/common/client_options.rb:
-  - Style/RedundantSelf
   - Style/MissingRespondToMissing
   - Performance/RegexpMatch
   - Style/Proc
@@ -89,7 +86,6 @@ ignore:
 - common/lib/azure/storage/common/client_options_error.rb:
   - Style/SuperArguments
 - common/lib/azure/storage/common/configurable.rb:
-  - Style/RedundantSelf
   - Style/Alias
   - Naming/VariableName
 - common/lib/azure/storage/common/core/auth/anonymous_signer.rb:
@@ -121,14 +117,12 @@ ignore:
   - Style/IfInsideElse
 - common/lib/azure/storage/common/core/http_client.rb:
   - Style/UnlessElse
-  - Style/RedundantSelf
 - common/lib/azure/storage/common/core/utility.rb:
   - Performance/RegexpMatch
   - Lint/RescueException
   - Performance/Count
   - Lint/DeprecatedOpenSSLConstant
   - Performance/FixedSize
-  - Style/RedundantSelf
   - Style/RescueModifier
 - common/lib/azure/storage/common/default.rb:
   - Style/HashConversion
@@ -144,7 +138,6 @@ ignore:
   - Performance/BlockGivenWithExplicitBlock
   - Style/MultilineIfModifier
   - Lint/UselessAssignment
-  - Style/RedundantSelf
   - Style/TernaryParentheses
   - Style/RedundantRegexpArgument
   - Style/SuperWithArgsParentheses
@@ -184,7 +177,6 @@ ignore:
   - Style/RedundantCurrentDirectoryInPath
 - table/lib/azure/storage/table/batch.rb:
   - Style/ArgumentsForwarding
-  - Style/RedundantSelf
   - Performance/BlockGivenWithExplicitBlock
   - Standard/BlockSingleLineBraces
   - Style/SafeNavigation
@@ -201,7 +193,6 @@ ignore:
   - Style/IfWithBooleanLiteralBranches
 - table/lib/azure/storage/table/query.rb:
   - Style/ArgumentsForwarding
-  - Style/RedundantSelf
   - Performance/BlockGivenWithExplicitBlock
 - table/lib/azure/storage/table/table_service.rb:
   - Style/ArgumentsForwarding

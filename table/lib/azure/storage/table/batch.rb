@@ -47,7 +47,7 @@ module Azure::Storage
         @batch_id = "batch_" + SecureRandom.uuid
         @changeset_id = "changeset_" + SecureRandom.uuid
 
-        self.instance_eval(&block) if block_given?
+        instance_eval(&block) if block_given?
       end
 
       private

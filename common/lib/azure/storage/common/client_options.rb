@@ -92,7 +92,7 @@ module Azure::Storage::Common
       @ssl_min_version = options.delete(:ssl_min_version)
       @ssl_max_version = options.delete(:ssl_max_version)
       @options = filter(options)
-      self.send(:reset_config!, @options) if self.respond_to?(:reset_config!)
+      send(:reset_config!, @options) if respond_to?(:reset_config!)
       self
     end
 

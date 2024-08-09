@@ -202,7 +202,7 @@ class IPAddr
   ]
 
   def private?
-    return false unless self.ipv4?
+    return false unless ipv4?
     PRIVATE_RANGES.each do |ipr|
       return true if ipr.include?(self)
     end
