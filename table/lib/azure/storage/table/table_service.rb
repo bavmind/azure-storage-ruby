@@ -687,7 +687,7 @@ module Azure::Storage
       public
 
       def table_uri(name, query = {}, options = {})
-        return name if name.kind_of? ::URI
+        return name if name.is_a? ::URI
         generate_uri("Tables('#{name}')", query, options)
       end
 
@@ -705,7 +705,7 @@ module Azure::Storage
       public
 
       def entities_uri(table_name, partition_key = nil, row_key = nil, query = {}, options = {})
-        return table_name if table_name.kind_of? ::URI
+        return table_name if table_name.is_a? ::URI
 
         path = if partition_key && row_key
           "%s(PartitionKey='%s',RowKey='%s')" % [

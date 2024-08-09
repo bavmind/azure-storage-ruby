@@ -17,7 +17,6 @@ ignore:
   - Style/ArgumentsForwarding
   - Style/RedundantCondition
   - Style/ConditionalAssignment
-  - Style/ClassCheck
   - Style/OrAssignment
 - blob/lib/azure/storage/blob/block.rb:
   - Style/Alias
@@ -142,7 +141,6 @@ ignore:
 - file/lib/azure/storage/file/file_service.rb:
   - Style/ArgumentsForwarding
   - Style/RedundantCondition
-  - Style/ClassCheck
   - Style/ConditionalAssignment
   - Style/OrAssignment
 - file/lib/azure/storage/file/serialization.rb:
@@ -155,7 +153,6 @@ ignore:
 - queue/lib/azure/storage/queue/queue_service.rb:
   - Style/ArgumentsForwarding
   - Style/RedundantAssignment
-  - Style/ClassCheck
   - Style/RedundantCondition
 - queue/lib/azure/storage/queue/serialization.rb:
   - Style/ConditionalAssignment
@@ -172,7 +169,6 @@ ignore:
   - Style/NestedTernaryOperator
 - table/lib/azure/storage/table/edmtype.rb:
   - Style/TernaryParentheses
-  - Style/ClassCheck
   - Style/NonNilCheck
   - Style/IfWithBooleanLiteralBranches
 - table/lib/azure/storage/table/query.rb:
@@ -185,7 +181,6 @@ ignore:
   - Style/IfUnlessModifierOfIfUnless
   - Style/MultilineIfModifier
   - Style/TernaryParentheses
-  - Style/ClassCheck
   - Style/SafeNavigation
   - Style/RedundantAssignment
   - Style/RedundantCondition

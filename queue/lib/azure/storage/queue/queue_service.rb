@@ -713,7 +713,7 @@ module Azure::Storage
       protected
 
       def queue_uri(queue_name, query = {}, options = {})
-        return queue_name if queue_name.kind_of? ::URI
+        return queue_name if queue_name.is_a? ::URI
         generate_uri(queue_name, query, options)
       end
 

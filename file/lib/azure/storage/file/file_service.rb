@@ -272,7 +272,7 @@ module Azure::Storage
       protected
 
       def share_uri(name, query = {}, options = {})
-        return name if name.kind_of? ::URI
+        return name if name.is_a? ::URI
         query = {restype: "share"}.merge(query)
         generate_uri(name, query, options)
       end

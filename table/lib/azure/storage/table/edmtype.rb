@@ -51,7 +51,7 @@ module Azure::Storage
         when String
           value.encoding.names.include?("BINARY") ? "Edm.Binary" : ""
         else
-          value.kind_of?(IO) ? "Edm.Binary" : ""
+          value.is_a?(IO) ? "Edm.Binary" : ""
         end
       end
 

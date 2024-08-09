@@ -637,7 +637,7 @@ module Azure::Storage
       protected
 
       def container_uri(name, query = {}, options = {})
-        return name if name.kind_of? ::URI
+        return name if name.is_a? ::URI
         query = {"restype" => "container"}.merge(query)
         generate_uri(name, query, options)
       end
