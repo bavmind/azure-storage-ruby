@@ -28,7 +28,7 @@ require "azure/storage/common"
 
 describe Azure::Core::Http::RetryPolicy do
   it "uses blocks as retry logic" do
-    retry_policy = Azure::Core::Http::RetryPolicy.new do |a, b| true end
+    retry_policy = Azure::Core::Http::RetryPolicy.new { |a, b| true }
     _(retry_policy.should_retry?(nil, nil)).must_equal true
   end
 

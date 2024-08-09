@@ -105,7 +105,6 @@ ignore:
   - Style/RedundantCurrentDirectoryInPath
 - table/lib/azure/storage/table/batch.rb:
   - Performance/BlockGivenWithExplicitBlock
-  - Standard/BlockSingleLineBraces
 - table/lib/azure/storage/table/batch_response.rb:
   - Style/IdenticalConditionalBranches
   - Style/Not
@@ -214,8 +213,6 @@ ignore:
   - Naming/VariableName
 - test/unit/config/client_test.rb:
   - Style/For
-- test/unit/core/http/retry_policy_test.rb:
-  - Standard/BlockSingleLineBraces
 - test/unit/core/utility_test.rb:
   - Lint/UselessAssignment
 - test/unit/file/file_service_test.rb:

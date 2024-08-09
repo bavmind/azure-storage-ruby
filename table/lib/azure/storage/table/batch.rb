@@ -148,7 +148,7 @@ module Azure::Storage
 
       def to_body(table_service)
         body = ""
-        body.define_singleton_method(:add_line) do |a| self << (a || nil) + "\n" end
+        body.define_singleton_method(:add_line) { |a| self << (a || nil) + "\n" }
 
         is_get = true if !operations.empty? && operations[0][:method] == :get
 
