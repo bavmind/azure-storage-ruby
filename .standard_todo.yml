@@ -19,7 +19,6 @@ ignore:
   - Style/For
   - Naming/VariableName
 - blob/lib/azure/storage/blob/container.rb:
-  - Performance/StringReplacement
   - Style/RedundantRegexpArgument
 - blob/lib/azure/storage/blob/default.rb:
   - Naming/ConstantName
