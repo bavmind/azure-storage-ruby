@@ -292,7 +292,7 @@ module Azure::Storage::Common
     end
 
     def is_non_empty_string
-      Proc.new { |i| i && i.is_a?(String) && i.strip.length }
+      Proc.new { |i| i&.is_a?(String) && i.strip.length }
     end
 
     def validated_options(opts, requirements = {})

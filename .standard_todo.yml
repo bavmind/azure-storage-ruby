@@ -34,7 +34,6 @@ ignore:
 - common/azure-storage-common.gemspec:
   - Style/RedundantCurrentDirectoryInPath
 - common/lib/azure/core/filtered_service.rb:
-  - Style/SafeNavigation
   - Performance/ReverseEach
 - common/lib/azure/core/http/debug_filter.rb:
   - Lint/UnderscorePrefixedVariableName
@@ -70,7 +69,6 @@ ignore:
   - Style/MissingRespondToMissing
   - Performance/RegexpMatch
   - Style/Proc
-  - Style/SafeNavigation
   - Style/NilComparison
 - common/lib/azure/storage/common/client_options_error.rb:
   - Style/SuperArguments
@@ -93,7 +91,6 @@ ignore:
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Style/SuperWithArgsParentheses
   - Lint/AmbiguousOperator
-  - Style/SafeNavigation
   - Performance/StringIdentifierArgument
   - Naming/VariableName
   - Style/ConditionalAssignment
@@ -120,7 +117,6 @@ ignore:
   - Lint/UselessAssignment
   - Style/RedundantRegexpArgument
   - Style/SuperWithArgsParentheses
-  - Style/SafeNavigation
   - Performance/RedundantMerge
 - file/azure-storage-file.gemspec:
   - Style/RedundantCurrentDirectoryInPath
@@ -132,8 +128,6 @@ ignore:
   - Style/RedundantCondition
   - Style/ConditionalAssignment
   - Style/OrAssignment
-- file/lib/azure/storage/file/serialization.rb:
-  - Style/SafeNavigation
 - file/lib/azure/storage/file/share.rb:
   - Style/NonNilCheck
   - Style/RedundantCondition
@@ -151,7 +145,6 @@ ignore:
   - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
   - Standard/BlockSingleLineBraces
-  - Style/SafeNavigation
 - table/lib/azure/storage/table/batch_response.rb:
   - Style/IdenticalConditionalBranches
   - Style/Not
@@ -166,7 +159,6 @@ ignore:
   - Style/NilComparison
   - Style/NestedModifier
   - Style/IfUnlessModifierOfIfUnless
-  - Style/SafeNavigation
   - Style/RedundantAssignment
   - Style/RedundantCondition
 - test/integration/auth/file_shared_access_signature_test.rb:
@@ -259,7 +251,6 @@ ignore:
 - test/integration/test_helper.rb:
   - Style/DefWithParentheses
   - Lint/UnderscorePrefixedVariableName
-  - Style/SafeNavigation
   - Lint/UselessAssignment
 - test/support/env.rb:
   - Performance/RegexpMatch

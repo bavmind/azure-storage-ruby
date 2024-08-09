@@ -48,7 +48,7 @@ module Azure::Storage
         r = _next.call
       rescue Azure::Core::Http::HTTPError
       end
-      @callable.call(req, r) if @callable
+      @callable&.call(req, r)
       r = _next.call
     end
   end

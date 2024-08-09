@@ -719,16 +719,14 @@ module Azure::Storage
 
         uri = generate_uri(path, query, options)
         qs = []
-        if query
-          query.each do |key, val|
-            key = key.encode("UTF-8")
-            val = val.encode("UTF-8")
+        query&.each do |key, val|
+          key = key.encode("UTF-8")
+          val = val.encode("UTF-8")
 
-            if key[0] == "$"
-              qs.push "#{key}#{::URI.encode_www_form("" => val)}"
-            else
-              qs.push ::URI.encode_www_form(key => val)
-            end
+          if key[0] == "$"
+            qs.push "#{key}#{::URI.encode_www_form("" => val)}"
+          else
+            qs.push ::URI.encode_www_form(key => val)
           end
         end
         uri.query = qs.join "&" if qs.length > 0

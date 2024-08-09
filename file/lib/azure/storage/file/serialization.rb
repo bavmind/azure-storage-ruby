@@ -87,7 +87,7 @@ module Azure::Storage
       end
 
       def self.quota_from_headers(headers)
-        headers["x-ms-share-quota"] ? headers["x-ms-share-quota"].to_i : nil
+        headers["x-ms-share-quota"]&.to_i
       end
 
       def self.share_stats_from_xml(xml)

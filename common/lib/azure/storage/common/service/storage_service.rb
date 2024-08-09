@@ -284,10 +284,8 @@ module Azure::Storage::Common
         # * +:metadata+  - A Hash of metadata name/value pairs
         # * +:headers+   - A Hash of HTTP headers
         def add_metadata_to_headers(metadata, headers)
-          if metadata
-            metadata.each do |key, value|
-              headers["x-ms-meta-#{key}"] = value
-            end
+          metadata&.each do |key, value|
+            headers["x-ms-meta-#{key}"] = value
           end
         end
 
@@ -318,7 +316,7 @@ module Azure::Storage::Common
         def common_headers(options = {}, body = nil)
           headers = {}
           headers.merge!("x-ms-client-request-id" => options[:request_id]) if options[:request_id]
-          @request_callback.call(headers) if @request_callback
+          @request_callback&.call(headers)
           headers
         end
       end

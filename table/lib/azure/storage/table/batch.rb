@@ -164,11 +164,9 @@ module Azure::Storage
           body.add_line ""
           body.add_line "#{op[:method].to_s.upcase} #{uri} HTTP/1.1"
 
-          if op[:headers]
-            op[:headers].each { |k, v|
-              body.add_line "#{k}: #{v}"
-            }
-          end
+          op[:headers]&.each { |k, v|
+            body.add_line "#{k}: #{v}"
+          }
 
           if op[:body]
             body.add_line "Content-Length: #{op[:body].bytesize}"
