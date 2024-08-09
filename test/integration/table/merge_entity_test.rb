@@ -74,10 +74,10 @@ describe Azure::Storage::Table::TableService do
 
       # retained all existing props
       entity_properties.each { |k, v|
-        unless entity_properties[k].instance_of?(Time)
-          _(result.properties[k]).must_equal entity_properties[k]
-        else
+        if entity_properties[k].instance_of?(Time)
           _(result.properties[k].to_i).must_equal entity_properties[k].to_i
+        else
+          _(result.properties[k]).must_equal entity_properties[k]
         end
       }
 

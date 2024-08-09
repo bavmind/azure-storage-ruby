@@ -34,10 +34,10 @@ module Azure::Storage::Common::Core
       key = uri.host
 
       @agents ||= {}
-      unless @agents.key?(key)
-        @agents[key] = build_http(uri)
-      else
+      if @agents.key?(key)
         reuse_agent!(@agents[key])
+      else
+        @agents[key] = build_http(uri)
       end
       @agents[key]
     end
