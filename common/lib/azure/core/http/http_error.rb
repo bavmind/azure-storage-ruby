@@ -24,44 +24,44 @@ module Azure
         # Public: Detail of the response
         #
         # Returns an Azure::Core::Http::HttpResponse object
-        attr :http_response
+        attr_reader :http_response
 
         # Public: The request URI
         #
         # Returns a String
-        attr :uri
+        attr_reader :uri
 
         # Public: The HTTP status code of this error
         #
         # Returns a Fixnum
-        attr :status_code
+        attr_reader :status_code
 
         # Public: The type of error
         #
         # http://msdn.microsoft.com/en-us/library/azure/dd179357
         #
         # Returns a String
-        attr :type
+        attr_reader :type
 
         # Public: Description of the error
         #
         # Returns a String
-        attr :description
+        attr_reader :description
 
         # Public: Detail of the error
         #
         # Returns a String
-        attr :detail
+        attr_reader :detail
 
         # Public: The header name whose value is invalid
         #
         # Returns a String
-        attr :header
+        attr_reader :header
 
         # Public: The invalid header value
         #
         # Returns a String
-        attr :header_value
+        attr_reader :header_value
 
         # Public: Initialize an error
         #

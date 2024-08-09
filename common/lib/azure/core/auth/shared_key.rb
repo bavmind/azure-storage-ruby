@@ -20,7 +20,7 @@ module Azure
     module Auth
       class SharedKey < Signer
         # The Azure account's name.
-        attr :account_name
+        attr_reader :account_name
 
         # Initialize the Signer.
         #

@@ -31,7 +31,7 @@ module Azure::Storage
     module Auth
       class SharedKey < Azure::Storage::Common::Core::Auth::SharedKey
         # The account name
-        attr :account_name
+        attr_reader :account_name
 
         # Generate the string to sign.
         #

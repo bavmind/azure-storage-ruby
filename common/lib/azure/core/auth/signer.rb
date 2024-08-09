@@ -22,7 +22,7 @@ module Azure
       # signed string using Base64.
       class Signer
         # The access key for the account
-        attr :access_key
+        attr_reader :access_key
 
         # Initialize the Signer.
         #

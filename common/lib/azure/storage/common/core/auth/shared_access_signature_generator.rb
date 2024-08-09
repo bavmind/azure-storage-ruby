@@ -107,7 +107,7 @@ module Azure::Storage::Common::Core
 
       ACCOUNT_OPTIONAL_QUERY_PARAMS = [:st, :sip, :spr]
 
-      attr :account_name
+      attr_reader :account_name
 
       # Public: Initialize the SharedAccessSignature generator
       #
