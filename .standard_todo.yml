@@ -77,12 +77,7 @@ ignore:
   - Performance/RedundantMerge
   - Style/HashConversion
   - Style/EachWithObject
-- common/lib/azure/storage/common/core/filter/exponential_retry_filter.rb:
-  - Style/SuperWithArgsParentheses
-- common/lib/azure/storage/common/core/filter/linear_retry_filter.rb:
-  - Style/SuperWithArgsParentheses
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
-  - Style/SuperWithArgsParentheses
   - Lint/AmbiguousOperator
   - Performance/StringIdentifierArgument
   - Naming/VariableName
@@ -107,7 +102,6 @@ ignore:
   - Performance/BlockGivenWithExplicitBlock
   - Lint/UselessAssignment
   - Style/RedundantRegexpArgument
-  - Style/SuperWithArgsParentheses
   - Performance/RedundantMerge
 - file/azure-storage-file.gemspec:
   - Style/RedundantCurrentDirectoryInPath
@@ -236,7 +230,6 @@ ignore:
 - test/support/fixtures.rb:
   - Lint/AssignmentInCondition
   - Lint/DuplicateMethods
-  - Style/SuperWithArgsParentheses
   - Lint/AmbiguousOperator
 - test/support/stubs.rb:
   - Style/ArgumentsForwarding

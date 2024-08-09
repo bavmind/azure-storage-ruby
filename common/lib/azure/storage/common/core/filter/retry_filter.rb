@@ -33,7 +33,7 @@ module Azure::Storage::Common::Core::Filter
       @retry_interval = retry_interval
       @request_options = {}
 
-      super &:should_retry?
+      super(&:should_retry?)
     end
 
     attr_reader :retry_count,

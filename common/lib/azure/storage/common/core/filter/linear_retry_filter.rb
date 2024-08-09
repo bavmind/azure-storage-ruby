@@ -32,7 +32,7 @@ module Azure::Storage::Common::Core::Filter
       @retry_count = retry_count || LinearRetryPolicyFilter::DEFAULT_RETRY_COUNT
       @retry_interval = retry_interval || LinearRetryPolicyFilter::DEFAULT_RETRY_INTERVAL
 
-      super @retry_count, @retry_interval
+      super(@retry_count, @retry_interval)
     end
 
     DEFAULT_RETRY_COUNT = 3

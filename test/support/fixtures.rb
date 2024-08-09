@@ -74,7 +74,7 @@ module Azure
 
     class FixtureRetryPolicy < Azure::Core::Http::RetryPolicy
       def initialize
-        super &:should_retry?
+        super(&:should_retry?)
       end
 
       def should_retry?(response, retry_data)
@@ -85,7 +85,7 @@ module Azure
     class NewUriRetryPolicy < Azure::Core::Http::RetryPolicy
       def initialize
         @count = 1
-        super &:should_retry?
+        super(&:should_retry?)
       end
 
       def should_retry?(response, retry_data)

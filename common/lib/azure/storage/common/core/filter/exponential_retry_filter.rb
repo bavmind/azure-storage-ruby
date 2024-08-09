@@ -33,7 +33,7 @@ module Azure::Storage::Common::Core::Filter
       @min_retry_interval = min_retry_interval || ExponentialRetryPolicyFilter::DEFAULT_MIN_RETRY_INTERVAL
       @max_retry_interval = max_retry_interval || ExponentialRetryPolicyFilter::DEFAULT_MAX_RETRY_INTERVAL
 
-      super @retry_count, @min_retry_interval
+      super(@retry_count, @min_retry_interval)
     end
 
     attr_reader :min_retry_interval,

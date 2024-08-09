@@ -206,10 +206,10 @@ module Azure::Storage::Common
         end
 
         @host = storage_service_host[:primary]
-        options[:primary_uri] = super path, query
+        options[:primary_uri] = super(path, query)
 
         @host = storage_service_host[:secondary]
-        options[:secondary_uri] = super path, query
+        options[:secondary_uri] = super(path, query)
 
         if location == StorageLocation::PRIMARY
           @host = @storage_service_host[:primary]
