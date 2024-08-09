@@ -243,7 +243,7 @@ module Azure::Storage::Blob
       signed_identifiers = nil
       signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) if response.body != nil && response.body.length > 0
 
-      return container, signed_identifiers
+      [container, signed_identifiers]
     end
 
     # Public: Sets the ACL and any container-level access policies for the container.
@@ -298,7 +298,7 @@ module Azure::Storage::Blob
       container.name = name
       container.public_access_level = public_access_level
 
-      return container, signed_identifiers || []
+      [container, signed_identifiers || []]
     end
 
     # Public: Deletes a container.

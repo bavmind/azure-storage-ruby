@@ -291,7 +291,7 @@ module Azure::Storage::File
       signed_identifiers = nil
       signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) if response.body != nil && response.body.length > 0
 
-      return share, signed_identifiers
+      [share, signed_identifiers]
     end
 
     # Public: Sets stored access policies the share.
@@ -336,7 +336,7 @@ module Azure::Storage::File
       share = Serialization.share_from_headers(response.headers)
       share.name = name
 
-      return share, signed_identifiers || []
+      [share, signed_identifiers || []]
     end
 
     # Public: Retrieves statistics related to the share.

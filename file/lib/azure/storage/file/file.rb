@@ -154,7 +154,7 @@ module Azure::Storage::File
     result = Serialization.file_from_headers(response.headers)
     result.name = file
 
-    return result, response.body
+    [result, response.body]
   end
 
   # Public: Returns all properties and metadata on the file.
@@ -395,7 +395,7 @@ module Azure::Storage::File
     result = Serialization.file_from_headers(response.headers)
     result.name = file
     rangelist = Serialization.range_list_from_xml(response.body)
-    return result, rangelist
+    [result, rangelist]
   end
 
   # Public: Returns only user-defined metadata for the specified file.
@@ -542,7 +542,7 @@ module Azure::Storage::File
     StorageService.add_metadata_to_headers options[:metadata], headers unless options.empty?
 
     response = call(:put, uri, nil, headers, options)
-    return response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]
+    [response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]]
   end
 
   # Public: Copies a source file to a destination file within the same storage account.
@@ -581,7 +581,7 @@ module Azure::Storage::File
   def copy_file(destination_share, destination_directory_path, destination_file, source_share, source_directory_path, source_file, options = {})
     source_file_uri = file_uri(source_share, source_directory_path, source_file, {}).to_s
 
-    return copy_file_from_uri(destination_share, destination_directory_path, destination_file, source_file_uri, options)
+    copy_file_from_uri(destination_share, destination_directory_path, destination_file, source_file_uri, options)
   end
 
   # Public: Aborts a pending Copy File operation and leaves a destination file with zero length and full metadata.

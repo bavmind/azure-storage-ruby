@@ -107,7 +107,7 @@ module Azure::Storage
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob unless result.name
 
-      return result, response.body
+      [result, response.body]
     end
 
     # Public: Returns all properties and metadata on the blob.
@@ -760,7 +760,7 @@ module Azure::Storage
       end
 
       response = call(:put, uri, nil, headers, options)
-      return response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]
+      [response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]]
     end
 
     # Public: Copies a source blob to a destination blob within the same storage account.
@@ -829,7 +829,7 @@ module Azure::Storage
     def copy_blob(destination_container, destination_blob, source_container, source_blob, options = {})
       source_blob_uri = blob_uri(source_container, source_blob, options[:source_snapshot] ? {"snapshot" => options[:source_snapshot]} : {}).to_s
 
-      return copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options)
+      copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options)
     end
 
     # Public: Aborts a pending Copy Blob operation and leaves a destination blob with zero length and full metadata.

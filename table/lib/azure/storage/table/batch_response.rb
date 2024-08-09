@@ -65,11 +65,11 @@ module Azure::Storage
         if end_of_body
           context[:responses].last[:body] ||= ""
           context[:responses].last[:body] << current_line(context)
-          return context[:responses].last[:body]
+          context[:responses].last[:body]
         else
           context[:responses].last[:body] ||= ""
           context[:responses].last[:body] << current_line(context)
-          return nil
+          nil
         end
       end
 
@@ -78,13 +78,11 @@ module Azure::Storage
 
         if context[:responses].last[:headers] && (not match)
           context[:index] += 1
-          return context[:responses].last[:headers]
+          context[:responses].last[:headers]
         elsif match
           context[:responses].last[:headers] ||= {}
           context[:responses].last[:headers][match[1].downcase] = match[2].strip
-          return nil
-        else
-          return nil
+          nil
         end
       end
 
@@ -110,13 +108,11 @@ module Azure::Storage
         match = /(.*): (.*)/.match(current_line(context))
 
         if context[:batch_headers] && (not match)
-          return context[:batch_headers]
+          context[:batch_headers]
         elsif match
           context[:batch_headers] ||= {}
           context[:batch_headers][match[1].downcase] = match[2]
-          return nil
-        else
-          return nil
+          nil
         end
       end
 

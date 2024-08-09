@@ -433,7 +433,7 @@ module Azure::Storage
       end
 
       response = call(:put, uri, nil, headers, options)
-      return response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]
+      [response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]]
     end
 
     # Public: Sets a page blob's sequence number.

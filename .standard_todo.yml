@@ -15,7 +15,6 @@ ignore:
   - Style/NegatedWhile
 - blob/lib/azure/storage/blob/blob.rb:
   - Style/Not
-  - Style/RedundantReturn
   - Style/NilComparison
 - blob/lib/azure/storage/blob/blob_service.rb:
   - Style/ArgumentsForwarding
@@ -29,7 +28,6 @@ ignore:
   - Naming/VariableName
 - blob/lib/azure/storage/blob/container.rb:
   - Style/NonNilCheck
-  - Style/RedundantReturn
   - Performance/StringReplacement
   - Style/RedundantRegexpArgument
 - blob/lib/azure/storage/blob/default.rb:
@@ -37,7 +35,6 @@ ignore:
 - blob/lib/azure/storage/blob/page.rb:
   - Style/Not
   - Style/RedundantAssignment
-  - Style/RedundantReturn
   - Style/For
 - common/azure-storage-common.gemspec:
   - Style/RedundantCurrentDirectoryInPath
@@ -53,7 +50,6 @@ ignore:
 - common/lib/azure/core/http/http_request.rb:
   - Style/Proc
   - Lint/DuplicateMethods
-  - Style/RedundantReturn
   - Performance/StringIdentifierArgument
   - Lint/AssignmentInCondition
 - common/lib/azure/core/http/http_response.rb:
@@ -141,7 +137,6 @@ ignore:
   - Style/TernaryParentheses
   - Style/RedundantRegexpArgument
   - Style/SuperWithArgsParentheses
-  - Style/RedundantReturn
   - Style/SafeNavigation
   - Style/Alias
   - Performance/RedundantMerge
@@ -149,7 +144,6 @@ ignore:
   - Style/RedundantCurrentDirectoryInPath
 - file/lib/azure/storage/file/file.rb:
   - Style/Not
-  - Style/RedundantReturn
   - Style/For
 - file/lib/azure/storage/file/file_service.rb:
   - Style/ArgumentsForwarding
@@ -161,13 +155,11 @@ ignore:
   - Style/SafeNavigation
 - file/lib/azure/storage/file/share.rb:
   - Style/NonNilCheck
-  - Style/RedundantReturn
   - Style/RedundantCondition
 - queue/azure-storage-queue.gemspec:
   - Style/RedundantCurrentDirectoryInPath
 - queue/lib/azure/storage/queue/queue_service.rb:
   - Style/ArgumentsForwarding
-  - Style/RedundantReturn
   - Style/RedundantAssignment
   - Style/ClassCheck
   - Style/RedundantCondition
@@ -182,7 +174,6 @@ ignore:
   - Style/SafeNavigation
 - table/lib/azure/storage/table/batch_response.rb:
   - Style/IdenticalConditionalBranches
-  - Style/RedundantReturn
   - Style/Not
   - Style/NestedTernaryOperator
 - table/lib/azure/storage/table/edmtype.rb:

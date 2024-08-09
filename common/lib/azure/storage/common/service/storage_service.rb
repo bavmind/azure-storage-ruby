@@ -211,10 +211,10 @@ module Azure::Storage::Common
 
         if location == StorageLocation::PRIMARY
           @host = @storage_service_host[:primary]
-          return options[:primary_uri]
+          options[:primary_uri]
         else
           @host = @storage_service_host[:secondary]
-          return options[:secondary_uri]
+          options[:secondary_uri]
         end
       end
 

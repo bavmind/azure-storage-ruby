@@ -346,7 +346,7 @@ module Azure::Storage
         approximate_messages_count = response.headers["x-ms-approximate-messages-count"]
         metadata = Serialization.metadata_from_headers(response.headers)
 
-        return approximate_messages_count.to_i, metadata
+        [approximate_messages_count.to_i, metadata]
       end
 
       # Public: Sets user-defined metadata on the queue. To delete queue metadata, call
@@ -685,7 +685,7 @@ module Azure::Storage
         response = call(:put, uri, body, {}, options)
         new_pop_receipt = response.headers["x-ms-popreceipt"]
         time_next_visible = response.headers["x-ms-time-next-visible"]
-        return new_pop_receipt, time_next_visible
+        [new_pop_receipt, time_next_visible]
       end
 
       # Protected: Generate the URI for the collection of queues.
