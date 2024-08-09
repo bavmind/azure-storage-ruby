@@ -37,7 +37,7 @@ module Azure
       attr_accessor :signer
 
       def call(method, uri, body = nil, headers = nil, options = {})
-        super(method, uri, body, headers, options)
+        super
       end
     end
   end

@@ -50,8 +50,6 @@ ignore:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/service.rb:
   - Style/AndOr
-- common/lib/azure/core/signed_service.rb:
-  - Style/SuperArguments
 - common/lib/azure/core/utility.rb:
   - Performance/RegexpMatch
   - Lint/RescueException
@@ -65,8 +63,6 @@ ignore:
   - Style/MissingRespondToMissing
   - Performance/RegexpMatch
   - Style/Proc
-- common/lib/azure/storage/common/client_options_error.rb:
-  - Style/SuperArguments
 - common/lib/azure/storage/common/configurable.rb:
   - Naming/VariableName
 - common/lib/azure/storage/common/core/auth/anonymous_signer.rb:
