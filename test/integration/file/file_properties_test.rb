@@ -44,7 +44,7 @@ describe Azure::Storage::File::FileService do
         content_language: "klingon",
         content_md5: "5e1f7f9c28345d2b",
         content_disposition: "attachment",
-        cache_control: "max-age=1296000",
+        cache_control: "max-age=1296000"
       }
     }
 

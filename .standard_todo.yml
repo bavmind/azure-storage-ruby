@@ -76,7 +76,6 @@ ignore:
   - Lint/RescueException
   - Performance/Count
   - Lint/DeprecatedOpenSSLConstant
-  - Style/TrailingCommaInHashLiteral
   - Style/RedundantSelf
   - Style/RescueModifier
 - common/lib/azure/storage/common/client.rb:
@@ -132,7 +131,6 @@ ignore:
   - Performance/Count
   - Lint/DeprecatedOpenSSLConstant
   - Performance/FixedSize
-  - Style/TrailingCommaInHashLiteral
   - Style/RedundantSelf
   - Style/RescueModifier
 - common/lib/azure/storage/common/default.rb:
@@ -212,7 +210,6 @@ ignore:
   - Performance/BlockGivenWithExplicitBlock
 - table/lib/azure/storage/table/table_service.rb:
   - Style/ArgumentsForwarding
-  - Style/TrailingCommaInHashLiteral
   - Style/NilComparison
   - Style/NestedModifier
   - Style/IfUnlessModifierOfIfUnless
@@ -245,7 +242,6 @@ ignore:
   - Lint/UselessAssignment
   - Naming/VariableName
 - test/integration/blob/blob_properties_test.rb:
-  - Style/TrailingCommaInHashLiteral
   - Lint/UselessAssignment
 - test/integration/blob/blob_service_properties_test.rb:
   - Lint/ParenthesesAsGroupedExpression
@@ -290,8 +286,6 @@ ignore:
   - Style/WhileUntilDo
 - test/integration/file/file_metadata_test.rb:
   - Style/StringLiteralsInInterpolation
-- test/integration/file/file_properties_test.rb:
-  - Style/TrailingCommaInHashLiteral
 - test/integration/file/file_range_test.rb:
   - Lint/UselessAssignment
 - test/integration/file/share_metadata_test.rb:
@@ -351,7 +345,6 @@ ignore:
   - Style/StringLiteralsInInterpolation
 - test/integration/table/table_gb18030_test.rb:
   - Style/SelfAssignment
-  - Style/TrailingCommaInHashLiteral
   - Lint/UselessAssignment
 - test/integration/table/update_entity_batch_test.rb:
   - Lint/UselessAssignment
@@ -368,8 +361,6 @@ ignore:
   - Style/SuperWithArgsParentheses
   - Lint/AmbiguousOperator
   - Style/SelfAssignment
-- test/support/name_generator.rb:
-  - Style/TrailingCommaInHashLiteral
 - test/support/stubs.rb:
   - Style/ArgumentsForwarding
 - test/unit/blob/blob_service_test.rb:

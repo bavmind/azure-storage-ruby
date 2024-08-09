@@ -69,12 +69,12 @@ describe "Table GB-18030" do
       entity_properties = {
         "PartitionKey" => "x",
         "RowKey" => k + counter.to_s,
-        prop => "value",
+        prop => "value"
       }
       entity_properties2 = {
         "PartitionKey" => "x",
         "RowKey" => k + counter.to_s + "2",
-        prop => "value2",
+        prop => "value2"
       }
       result = subject.insert_entity table_name, entity_properties
       subject.insert_entity table_name, entity_properties2
@@ -124,7 +124,7 @@ describe "Table GB-18030" do
       entity_properties = {
         "PartitionKey" => "x",
         "RowKey" => k + counter.to_s,
-        "Value" => value,
+        "Value" => value
       }
       entity_properties2 = {
         "PartitionKey" => "x",
@@ -149,7 +149,7 @@ describe "Table GB-18030" do
       entity_properties = {
         "PartitionKey" => "x",
         "RowKey" => k + counter.to_s,
-        "Value" => value,
+        "Value" => value
       }
       entity_properties2 = {
         "PartitionKey" => "x",
@@ -171,7 +171,7 @@ describe "Table GB-18030" do
       value = "value" + v.encode("UTF-8")
       entity_properties = {
         "PartitionKey" => value,
-        "RowKey" => value,
+        "RowKey" => value
       }
       result = subject.insert_entity table_name, entity_properties
       _(result.properties["PartitionKey"]).must_equal value

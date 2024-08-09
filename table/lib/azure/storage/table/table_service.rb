@@ -190,7 +190,7 @@ module Azure::Storage
       # @return [nil] on success
       def create_table(table_name, options = {})
         headers = {
-          Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept]),
+          Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept])
         }
         headers[Azure::Storage::Common::HeaderConstants::PREFER] = options[:prefer] unless options[:prefer].nil?
         body = Serialization.hash_to_json("TableName" => table_name)
@@ -240,7 +240,7 @@ module Azure::Storage
       # Returns the last updated time for the table
       def get_table(table_name, options = {})
         headers = {
-          Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(:full_meta),
+          Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(:full_meta)
         }
         options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
         response = call(:get, table_uri(table_name, new_query(options), options), nil, headers, options)
@@ -281,7 +281,7 @@ module Azure::Storage
         uri = collection_uri(query, options)
 
         headers = {
-          Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept]),
+          Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept])
         }
 
         response = call(:get, uri, nil, headers, options)

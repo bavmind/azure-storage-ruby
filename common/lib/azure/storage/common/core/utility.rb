@@ -204,7 +204,7 @@ class String
     blue: 34,
     magenta: 35,
     cyan: 36,
-    white: 37,
+    white: 37
   }.each do |key, value|
     define_method key do
       "\e[#{value}m" + self + "\e[0m"

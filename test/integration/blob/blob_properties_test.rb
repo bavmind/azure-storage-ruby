@@ -41,7 +41,7 @@ describe Azure::Storage::Blob::BlobService do
         content_type: "application/my-special-format",
         content_encoding: "gzip",
         content_language: "klingon",
-        cache_control: "max-age=1296000",
+        cache_control: "max-age=1296000"
       }
     }
 
