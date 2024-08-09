@@ -43,8 +43,8 @@ module Azure::Storage::Common
       #                                                   (optional, Default=Azure::Storage::CommonAuth::SharedKey.new)
       # @param account_name   [String] The account name (optional, Default=Azure::Storage.storage_account_name)
       # @param options        [Azure::Storage::CommonConfigurable] the client configuration context
-      def initialize(signer = nil, account_name = nil, options = {}, &block)
-        StorageService.register_request_callback(&block) if block_given?
+      def initialize(signer = nil, account_name = nil, options = {}, &)
+        StorageService.register_request_callback(&) if block_given?
         client_config = options[:client]
         if client_config.storage_access_key
           signer ||= Azure::Storage::Common::Core::Auth::SharedKey.new(

@@ -13,7 +13,6 @@ ignore:
 - blob/lib/azure/storage/blob/blob.rb:
   - Style/Not
 - blob/lib/azure/storage/blob/blob_service.rb:
-  - Style/ArgumentsForwarding
   - Style/RedundantCondition
   - Style/OrAssignment
 - blob/lib/azure/storage/blob/block.rb:
@@ -57,7 +56,6 @@ ignore:
   - Lint/DeprecatedOpenSSLConstant
   - Style/RescueModifier
 - common/lib/azure/storage/common/client.rb:
-  - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
 - common/lib/azure/storage/common/client_options.rb:
   - Style/MissingRespondToMissing
@@ -94,7 +92,6 @@ ignore:
   - Lint/AssignmentInCondition
   - Style/NestedModifier
 - common/lib/azure/storage/common/service/storage_service.rb:
-  - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
   - Lint/UselessAssignment
   - Style/RedundantRegexpArgument
@@ -105,7 +102,6 @@ ignore:
   - Style/Not
   - Style/For
 - file/lib/azure/storage/file/file_service.rb:
-  - Style/ArgumentsForwarding
   - Style/RedundantCondition
   - Style/OrAssignment
 - file/lib/azure/storage/file/share.rb:
@@ -113,13 +109,11 @@ ignore:
 - queue/azure-storage-queue.gemspec:
   - Style/RedundantCurrentDirectoryInPath
 - queue/lib/azure/storage/queue/queue_service.rb:
-  - Style/ArgumentsForwarding
   - Style/RedundantAssignment
   - Style/RedundantCondition
 - table/azure-storage-table.gemspec:
   - Style/RedundantCurrentDirectoryInPath
 - table/lib/azure/storage/table/batch.rb:
-  - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
   - Standard/BlockSingleLineBraces
 - table/lib/azure/storage/table/batch_response.rb:
@@ -128,10 +122,8 @@ ignore:
 - table/lib/azure/storage/table/edmtype.rb:
   - Style/IfWithBooleanLiteralBranches
 - table/lib/azure/storage/table/query.rb:
-  - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
 - table/lib/azure/storage/table/table_service.rb:
-  - Style/ArgumentsForwarding
   - Style/NestedModifier
   - Style/RedundantAssignment
   - Style/RedundantCondition
@@ -227,8 +219,6 @@ ignore:
   - Lint/AssignmentInCondition
   - Lint/DuplicateMethods
   - Lint/AmbiguousOperator
-- test/support/stubs.rb:
-  - Style/ArgumentsForwarding
 - test/unit/blob/blob_service_test.rb:
   - Style/MethodCallWithoutArgsParentheses
   - Lint/ConstantDefinitionInBlock

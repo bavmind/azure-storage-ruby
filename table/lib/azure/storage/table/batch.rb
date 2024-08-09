@@ -39,7 +39,7 @@ module Azure::Storage
     # results = svc.execute_batch batch
     #
     class Batch
-      def initialize(table, partition, &block)
+      def initialize(table, partition, &)
         @table = table
         @partition = partition
         @operations = []
@@ -47,7 +47,7 @@ module Azure::Storage
         @batch_id = "batch_" + SecureRandom.uuid
         @changeset_id = "changeset_" + SecureRandom.uuid
 
-        instance_eval(&block) if block_given?
+        instance_eval(&) if block_given?
       end
 
       private
