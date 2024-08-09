@@ -110,8 +110,8 @@ module Azure
             filter_call = Proc.new do
               filter.call(self, original_call)
             end
-            k = class << self;
-                  self;
+            k = class << self
+                  self
             end
             if k.method_defined? :define_singleton_method
               self.define_singleton_method(:call, filter_call)

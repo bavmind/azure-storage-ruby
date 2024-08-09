@@ -33,7 +33,11 @@ describe Azure::Storage::Blob::BlobService do
   describe "#get_blob" do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { "blobname" }
-    let(:content) { content = ""; 1024.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      1024.times.each { |i| content << "@" }
+      content
+    }
     let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
     let(:options) { {content_type: "application/foo", metadata: metadata} }
 

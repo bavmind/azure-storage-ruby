@@ -102,7 +102,7 @@ module Azure::Storage::Common
           xml = slopify(xml)
           expect_node("EnumerationResults", xml)
 
-          results = results || Service::EnumerationResults.new;
+          results = results || Service::EnumerationResults.new
 
           results.continuation_token = xml.NextMarker.text if (xml > "NextMarker").any?
           results

@@ -32,7 +32,12 @@ describe Azure::Storage::Blob::BlobService do
 
   let(:container_name) { ContainerNameHelper.name }
   let(:blob_name) { "blobname" }
-  let(:content) { content = ""; 512.times.each { |i| content << "@" }; content.force_encoding "utf-8"; content }
+  let(:content) {
+    content = ""
+    512.times.each { |i| content << "@" }
+    content.force_encoding "utf-8"
+    content
+  }
   before {
     subject.create_container container_name
   }

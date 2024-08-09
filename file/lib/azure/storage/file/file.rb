@@ -609,9 +609,9 @@ module Azure::Storage::File
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
     StorageService.with_query query, "copyid", copy_id
 
-    uri = file_uri(share, directory_path, file, query);
+    uri = file_uri(share, directory_path, file, query)
     headers = {}
-    StorageService.with_header headers, "x-ms-copy-action", "abort";
+    StorageService.with_header headers, "x-ms-copy-action", "abort"
 
     call(:put, uri, nil, headers, options)
     nil

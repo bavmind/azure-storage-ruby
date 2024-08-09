@@ -29,7 +29,11 @@ describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
 
   let(:public_access_level) { :container.to_s }
-  let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
+  let(:content) {
+    content = ""
+    512.times.each { |i| content << "@" }
+    content
+  }
   let(:blob_endpoint) { "blob.core.windows.net" }
   let(:schema) { "https" }
   let(:storage_account_name) {}

@@ -33,7 +33,11 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     let(:block_blob_name) { BlobNameHelper.name }
     let(:append_blob_name) { BlobNameHelper.name }
     let(:page_blob_name) { BlobNameHelper.name }
-    let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      512.times.each { |i| content << "@" }
+      content
+    }
     before {
       subject.create_container container_name
       subject.create_block_blob container_name, block_blob_name, content

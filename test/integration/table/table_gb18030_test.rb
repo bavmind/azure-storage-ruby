@@ -65,7 +65,7 @@ describe "Table GB-18030" do
     counter = 1
     GB18030TestStrings.get_xml_10_fourth_ed_identifiers.each { |k, v|
       prop = "prop" + v.encode("UTF-8")
-      counter = counter + 1;
+      counter = counter + 1
       entity_properties = {
         "PartitionKey" => "x",
         "RowKey" => k + counter.to_s,
@@ -92,7 +92,7 @@ describe "Table GB-18030" do
     counter = 1
     GB18030TestStrings.get_xml_10_fourth_ed_identifiers.each { |k, v|
       prop = ("prop" + v).encode("GB18030")
-      counter = counter + 1;
+      counter = counter + 1
       entity_properties = {
         "PartitionKey" => "x",
         "RowKey" => k + counter.to_s
@@ -120,7 +120,7 @@ describe "Table GB-18030" do
     counter = 1
     GB18030TestStrings.get.each { |k, v|
       value = "value" + v.encode("UTF-8")
-      counter = counter + 1;
+      counter = counter + 1
       entity_properties = {
         "PartitionKey" => "x",
         "RowKey" => k + counter.to_s,
@@ -145,7 +145,7 @@ describe "Table GB-18030" do
     counter = 1
     GB18030TestStrings.get.each { |k, v|
       value = "value" + v.encode("GB18030")
-      counter = counter + 1;
+      counter = counter + 1
       entity_properties = {
         "PartitionKey" => "x",
         "RowKey" => k + counter.to_s,
@@ -224,7 +224,7 @@ describe "Table GB-18030" do
   it "Batch Property Names UTF-8" do
     counter = 1
     GB18030TestStrings.get_xml_10_fourth_ed_identifiers.each { |k, v|
-      counter = counter + 1;
+      counter = counter + 1
       prop = "prop" + v.encode("UTF-8")
       batch = Azure::Storage::Table::Batch.new table_name, "x"
       batch.insert k + counter.to_s, prop => "value"
@@ -243,7 +243,7 @@ describe "Table GB-18030" do
   it "Batch Property Names GB18030" do
     counter = 1
     GB18030TestStrings.get_xml_10_fourth_ed_identifiers.each { |k, v|
-      counter = counter + 1;
+      counter = counter + 1
       prop = "prop" + v.encode("GB18030")
       batch = Azure::Storage::Table::Batch.new table_name, "x"
       batch.insert k + counter.to_s, prop => "value"
@@ -263,7 +263,7 @@ describe "Table GB-18030" do
     counter = 1
     GB18030TestStrings.get.each { |k, v|
       value = "value" + v.encode("UTF-8")
-      counter = counter + 1;
+      counter = counter + 1
       batch = Azure::Storage::Table::Batch.new table_name, "x"
       batch.insert k + counter.to_s, "key" => value
       batch.insert k + counter.to_s + "2", "key" => value + "2"
@@ -280,7 +280,7 @@ describe "Table GB-18030" do
     counter = 1
     GB18030TestStrings.get.each { |k, v|
       value = "value" + v.encode("GB18030")
-      counter = counter + 1;
+      counter = counter + 1
       batch = Azure::Storage::Table::Batch.new table_name, "x"
       batch.insert k + counter.to_s, "key" => value
       batch.insert k + counter.to_s + "2", "key" => value + "2"
@@ -297,7 +297,7 @@ describe "Table GB-18030" do
     counter = 1
     GB18030TestStrings.get.each { |k, v|
       value = "value" + v.encode("UTF-8")
-      counter = counter + 1;
+      counter = counter + 1
       batch = Azure::Storage::Table::Batch.new table_name, value
       batch.insert value, {}
       batch.insert value + "2", {}
@@ -331,7 +331,7 @@ describe "Table GB-18030" do
     counter = 1
     GB18030TestStrings.get.each { |k, v|
       value = ("value" + v).encode("GB18030")
-      counter = counter + 1;
+      counter = counter + 1
       batch = Azure::Storage::Table::Batch.new table_name, value
       batch.insert value, {}
       batch.insert value + "2", {}

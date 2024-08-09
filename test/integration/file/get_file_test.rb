@@ -33,7 +33,11 @@ describe Azure::Storage::File::FileService do
     let(:directory_name) { FileNameHelper.name }
     let(:file_name) { "filename" }
     let(:file_length) { 1024 }
-    let(:content) { content = ""; file_length.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      file_length.times.each { |i| content << "@" }
+      content
+    }
     let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
     let(:full_md5) { Digest::MD5.base64digest(content) }
     let(:options) { {content_type: "application/foo", metadata: metadata, content_md5: full_md5} }

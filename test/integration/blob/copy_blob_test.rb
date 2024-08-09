@@ -30,7 +30,11 @@ describe Azure::Storage::Blob::BlobService do
   describe "#copy_blob" do
     let(:source_container_name) { ContainerNameHelper.name }
     let(:source_blob_name) { "audio+video%25.mp4" }
-    let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      512.times.each { |i| content << "@" }
+      content
+    }
     let(:metadata) { {"custommetadata" => "CustomMetadataValue"} }
 
     let(:dest_container_name) { ContainerNameHelper.name }

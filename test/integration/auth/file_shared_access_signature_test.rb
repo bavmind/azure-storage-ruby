@@ -33,7 +33,11 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     let(:directory_name) { FileNameHelper.name }
     let(:file_name) { FileNameHelper.name }
     let(:file_length) { 1024 }
-    let(:content) { content = ""; file_length.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      file_length.times.each { |i| content << "@" }
+      content
+    }
     before {
       subject.create_share share_name
       subject.create_directory share_name, directory_name

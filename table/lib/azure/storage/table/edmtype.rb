@@ -95,7 +95,7 @@ module Azure::Storage
             "X'" + value.to_s.unpack("H*").join("") + "'"
           else
             # NULL also is treated as EdmType::STRING
-            value.to_s.gsub("'", "''");
+            value.to_s.gsub("'", "''")
           end
         end
       end

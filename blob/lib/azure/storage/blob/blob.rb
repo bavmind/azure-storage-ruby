@@ -857,9 +857,9 @@ module Azure::Storage
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
       StorageService.with_query query, "copyid", copy_id
 
-      uri = blob_uri(container, blob, query);
+      uri = blob_uri(container, blob, query)
       headers = {}
-      StorageService.with_header headers, "x-ms-copy-action", "abort";
+      StorageService.with_header headers, "x-ms-copy-action", "abort"
 
       unless options.empty?
         StorageService.with_header headers, "x-ms-lease-id", options[:lease_id]

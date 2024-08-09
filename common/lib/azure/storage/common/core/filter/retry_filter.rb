@@ -95,7 +95,7 @@ module Azure::Storage::Common::Core::Filter
     # will be the same instance throughout the lifetime of the request.
     def should_retry_on_local_error?(retry_data)
       unless retry_data[:error]
-        retry_data[:retryable] = true;
+        retry_data[:retryable] = true
         return true
       end
 
@@ -107,18 +107,18 @@ module Azure::Storage::Common::Core::Filter
         # Reference:
         #  https://makandracards.com/ninjaconcept/30815-fixing-socketerror-getaddrinfo-name-or-service-not-known-with-ruby-s-resolv-replace-rb
         #  http://www.subelsky.com/2014/05/fixing-socketerror-getaddrinfo-name-or.html
-        retry_data[:retryable] = true;
+        retry_data[:retryable] = true
       elsif error_message.include?("getaddrinfo: Name or service not known")
         # When uses the default resolver
-        retry_data[:retryable] = true;
+        retry_data[:retryable] = true
       elsif error_message.downcase.include?("timeout")
-        retry_data[:retryable] = true;
+        retry_data[:retryable] = true
       elsif error_message.include?("Errno::ECONNRESET")
-        retry_data[:retryable] = true;
+        retry_data[:retryable] = true
       elsif error_message.include?("Errno::EACCES")
-        retry_data[:retryable] = false;
+        retry_data[:retryable] = false
       elsif error_message.include?("NOSUPPORT")
-        retry_data[:retryable] = false;
+        retry_data[:retryable] = false
       end
 
       retry_data[:retryable]
@@ -215,7 +215,7 @@ module Azure::Storage::Common::Core::Filter
       # location, the failure should still be retryable.
       retry_data[:secondary_not_found] =
         ((retry_data[:current_location] === Azure::Storage::Common::StorageLocation::SECONDARY) &&
-        response.status_code === 404);
+        response.status_code === 404)
 
       if retry_data[:secondary_not_found]
         retry_data[:status_code] = 500
@@ -233,12 +233,12 @@ module Azure::Storage::Common::Core::Filter
     # retry_data - Hash. Stores stateful retry data
     def check_status_code(retry_data)
       if retry_data[:status_code] < 400
-        retry_data[:retryable] = false;
+        retry_data[:retryable] = false
       # Non-timeout Cases
       elsif retry_data[:status_code] != 408
         # Always no retry on "not implemented" and "version not supported"
         if retry_data[:status_code] == 501 || retry_data[:status_code] == 505
-          retry_data[:retryable] = false;
+          retry_data[:retryable] = false
         end
 
         # When absorb_conditional_errors_on_retry is set (for append blob)
@@ -246,19 +246,19 @@ module Azure::Storage::Common::Core::Filter
           if retry_data[:status_code] == 412
             # When appending block with precondition failure and their was a server error before, we ignore the error.
             if retry_data[:last_server_error]
-              retry_data[:error] = nil;
-              retry_data[:retryable] = true;
+              retry_data[:error] = nil
+              retry_data[:retryable] = true
             else
-              retry_data[:retryable] = false;
+              retry_data[:retryable] = false
             end
           elsif retry_data[:retryable] && retry_data[:status_code] >= 500 && retry_data[:status_code] < 600
             # Retry on the server error
-            retry_data[:retryable] = true;
-            retry_data[:last_server_error] = true;
+            retry_data[:retryable] = true
+            retry_data[:last_server_error] = true
           end
         elsif retry_data[:status_code] < 500
           # No retry on the client error
-          retry_data[:retryable] = false;
+          retry_data[:retryable] = false
         end
       end
     end
@@ -271,7 +271,7 @@ module Azure::Storage::Common::Core::Filter
       # secondary, further requests should be sent only to the primary location, as it most
       # probably has a higher chance of succeeding there.
       if retry_data[:secondary_not_found] && @request_options[:location_mode] != Azure::Storage::Common::LocationMode::SECONDARY_ONLY
-        @request_options[:location_mode] = Azure::Storage::Common::LocationMode::PRIMARY_ONLY;
+        @request_options[:location_mode] = Azure::Storage::Common::LocationMode::PRIMARY_ONLY
         return Azure::Storage::Common::StorageLocation::PRIMARY
       end
 

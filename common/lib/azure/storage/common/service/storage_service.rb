@@ -54,7 +54,7 @@ module Azure::Storage::Common
           client_config.storage_account_name,
           client_config.storage_sas_token
         )
-        @storage_service_host = {primary: "", secondary: ""};
+        @storage_service_host = {primary: "", secondary: ""}
         super(signer, account_name, options)
       end
 

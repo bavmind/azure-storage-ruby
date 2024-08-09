@@ -225,7 +225,11 @@ describe Azure::Storage::Blob::BlobService do
   end
 
   describe "#append_blob_block" do
-    let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      512.times.each { |i| content << "@" }
+      content
+    }
     let(:blob_name) { BlobNameHelper.name }
 
     before {

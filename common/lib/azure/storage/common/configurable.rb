@@ -188,7 +188,7 @@ module Azure::Storage::Common
     def determine_account_name
       if instance_variable_get(:@storage_account_name).nil?
         hosts = [@storage_blob_host, @storage_table_host, @storage_queue_host, @storage_file_host]
-        account_name = nil;
+        account_name = nil
         hosts.each do |host|
           parsed = account_name_from_endpoint host
           if account_name.nil?

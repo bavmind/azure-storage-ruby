@@ -32,7 +32,11 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { BlobNameHelper.name }
     let(:api_ver) { Azure::Storage::Blob::Default::STG_VERSION }
-    let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      512.times.each { |i| content << "@" }
+      content
+    }
     before {
       subject.create_container container_name
       subject.create_block_blob container_name, blob_name, content
@@ -116,7 +120,11 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     let(:api_ver) { Azure::Storage::File::Default::STG_VERSION }
     let(:file_name) { FileNameHelper.name }
     let(:file_length) { 1024 }
-    let(:content) { content = ""; file_length.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      file_length.times.each { |i| content << "@" }
+      content
+    }
     before {
       subject.create_share share_name
       subject.create_directory share_name, directory_name

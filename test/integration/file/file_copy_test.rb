@@ -32,7 +32,11 @@ describe Azure::Storage::File::FileService do
     let(:source_file_name) { "audio+video%25.mp4" }
     let(:source_file_uri) { "https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.file.core.windows.net/#{source_share_name}/#{source_directory_name}/#{CGI.escape(source_file_name).encode('UTF-8')}" }
     let(:file_length) { 1024 }
-    let(:content) { content = ""; file_length.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      file_length.times.each { |i| content << "@" }
+      content
+    }
     let(:metadata) { {"custommetadata" => "CustomMetadataValue"} }
 
     let(:dest_share_name) { ShareNameHelper.name }

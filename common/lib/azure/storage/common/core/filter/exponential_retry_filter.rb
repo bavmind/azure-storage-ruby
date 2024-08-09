@@ -57,8 +57,8 @@ module Azure::Storage::Common::Core::Filter
       retry_data[:count] = retry_data[:count] === nil ? 1 : retry_data[:count] + 1
 
       # Adjust retry interval
-      increment_delta = (@max_retry_interval - @min_retry_interval).fdiv(2**(@retry_count - 1)) * (2**(retry_data[:count] - 1));
-      retry_data[:interval] = retry_data[:interval] === nil ? @min_retry_interval : [@min_retry_interval + increment_delta, @max_retry_interval].min;
+      increment_delta = (@max_retry_interval - @min_retry_interval).fdiv(2**(@retry_count - 1)) * (2**(retry_data[:count] - 1))
+      retry_data[:interval] = retry_data[:interval] === nil ? @min_retry_interval : [@min_retry_interval + increment_delta, @max_retry_interval].min
     end
   end
 end
