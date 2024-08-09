@@ -112,7 +112,7 @@ describe Azure::Storage::File::FileService do
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.abort_copy_file dest_share_name, dest_directory_name, dest_file_name, copy_id
       end
-      refute_nil(exception.message.index "NoPendingCopyOperation (409): There is currently no pending copy operation")
+      refute_nil(exception.message.index("NoPendingCopyOperation (409): There is currently no pending copy operation"))
     end
 
     describe "when a options hash is used" do

@@ -96,7 +96,7 @@ describe Azure::Storage::Blob::BlobService do
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.abort_copy_blob dest_container_name, dest_blob_name, copy_id
       end
-      refute_nil(exception.message.index "NoPendingCopyOperation (409): There is currently no pending copy operation")
+      refute_nil(exception.message.index("NoPendingCopyOperation (409): There is currently no pending copy operation"))
     end
 
     describe "when a snapshot is specified" do

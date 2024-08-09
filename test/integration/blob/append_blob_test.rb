@@ -265,7 +265,7 @@ describe Azure::Storage::Blob::BlobService do
         options = {content_md5: "aaaaaa=="}
         subject.append_blob_block container_name, blob_name, content, options
       end
-      refute_nil(exception.message.index "InvalidMd5 (400): The MD5 value specified in the request is invalid")
+      refute_nil(exception.message.index("InvalidMd5 (400): The MD5 value specified in the request is invalid"))
     end
 
     it "appends a block as part of an append blob with maximum size" do
@@ -281,7 +281,7 @@ describe Azure::Storage::Blob::BlobService do
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.append_blob_block container_name, blob_name, content, options
       end
-      refute_nil(exception.message.index "MaxBlobSizeConditionNotMet (412): The max blob size condition specified was not met")
+      refute_nil(exception.message.index("MaxBlobSizeConditionNotMet (412): The max blob size condition specified was not met"))
     end
 
     it "appends a block as part of an append blob with append postion" do
@@ -302,7 +302,7 @@ describe Azure::Storage::Blob::BlobService do
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.append_blob_block container_name, blob_name, content, options
       end
-      refute_nil(exception.message.index "AppendPositionConditionNotMet (412): The append position condition specified was not met")
+      refute_nil(exception.message.index("AppendPositionConditionNotMet (412): The append position condition specified was not met"))
     end
 
     it "lease id works for append_blob_block" do

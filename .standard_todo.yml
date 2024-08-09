@@ -177,7 +177,6 @@ ignore:
 - test/integration/blob/append_blob_test.rb:
   - Naming/VariableName
   - Lint/ConstantDefinitionInBlock
-  - Style/NestedParenthesizedCalls
 - test/integration/blob/blob_anonymous_access_test.rb:
   - Lint/UselessAssignment
 - test/integration/blob/blob_gb18030_test.rb:
@@ -192,7 +191,6 @@ ignore:
   - Lint/UselessAssignment
 - test/integration/blob/blob_service_properties_test.rb:
   - Lint/ParenthesesAsGroupedExpression
-  - Style/NestedParenthesizedCalls
 - test/integration/blob/block_blob_test.rb:
   - Lint/UselessAssignment
   - Lint/ParenthesesAsGroupedExpression
@@ -203,7 +201,6 @@ ignore:
 - test/integration/blob/copy_blob_test.rb:
   - Lint/UselessAssignment
   - Style/Not
-  - Style/NestedParenthesizedCalls
 - test/integration/blob/create_blob_snapshot_test.rb:
   - Lint/UselessAssignment
 - test/integration/blob/create_page_blob_test.rb:
@@ -219,7 +216,6 @@ ignore:
 - test/integration/file/file_copy_test.rb:
   - Lint/UselessAssignment
   - Style/Not
-  - Style/NestedParenthesizedCalls
 - test/integration/file/file_gb18030_test.rb:
   - Style/WhileUntilDo
 - test/integration/file/file_range_test.rb:

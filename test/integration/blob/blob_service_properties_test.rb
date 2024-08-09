@@ -158,7 +158,7 @@ describe Azure::Storage::Blob::BlobService do
         exception = assert_raises (Azure::Core::Http::HTTPError) do
           subject.set_service_properties cors_properties
         end
-        refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
+        refute_nil(exception.message.index("InvalidXmlDocument (400): XML specified is not syntactically valid"))
       end
 
       it "sets CORS rules with empty allowed_origins" do
@@ -168,7 +168,7 @@ describe Azure::Storage::Blob::BlobService do
         exception = assert_raises (Azure::Core::Http::HTTPError) do
           subject.set_service_properties cors_properties
         end
-        refute_nil(exception.message.index "InvalidXmlNodeValue (400): The value for one of the XML nodes is not in the correct format")
+        refute_nil(exception.message.index("InvalidXmlNodeValue (400): The value for one of the XML nodes is not in the correct format"))
       end
 
       it "sets CORS rules without allowed_methods" do
@@ -178,7 +178,7 @@ describe Azure::Storage::Blob::BlobService do
         exception = assert_raises (Azure::Core::Http::HTTPError) do
           subject.set_service_properties cors_properties
         end
-        refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
+        refute_nil(exception.message.index("InvalidXmlDocument (400): XML specified is not syntactically valid"))
       end
 
       it "sets CORS rules with empty allowed_methods" do
@@ -188,7 +188,7 @@ describe Azure::Storage::Blob::BlobService do
         exception = assert_raises (Azure::Core::Http::HTTPError) do
           subject.set_service_properties cors_properties
         end
-        refute_nil(exception.message.index "InvalidXmlNodeValue (400): The value for one of the XML nodes is not in the correct format")
+        refute_nil(exception.message.index("InvalidXmlNodeValue (400): The value for one of the XML nodes is not in the correct format"))
       end
 
       it "sets CORS rules without exposed_headers" do
@@ -198,7 +198,7 @@ describe Azure::Storage::Blob::BlobService do
         exception = assert_raises (Azure::Core::Http::HTTPError) do
           subject.set_service_properties cors_properties
         end
-        refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
+        refute_nil(exception.message.index("InvalidXmlDocument (400): XML specified is not syntactically valid"))
       end
 
       it "sets CORS rules with empty exposed_headers" do
@@ -216,7 +216,7 @@ describe Azure::Storage::Blob::BlobService do
         exception = assert_raises (Azure::Core::Http::HTTPError) do
           subject.set_service_properties cors_properties
         end
-        refute_nil(exception.message.index "InvalidXmlDocument (400): XML specified is not syntactically valid")
+        refute_nil(exception.message.index("InvalidXmlDocument (400): XML specified is not syntactically valid"))
       end
 
       it "sets CORS rules with default allowed_headers" do
