@@ -48,7 +48,7 @@ module Azure::Storage::Common::Core::Filter
     # incrementing counter, timestamp, etc). The retry_data object
     # will be the same instance throughout the lifetime of the request
     def apply_retry_policy(retry_data)
-      retry_data[:count] = (retry_data[:count] == nil) ? 1 : retry_data[:count] + 1
+      retry_data[:count] = retry_data[:count].nil? ? 1 : retry_data[:count] + 1
       retry_data[:interval] = @retry_interval
     end
   end

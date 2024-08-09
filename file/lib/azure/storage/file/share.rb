@@ -289,7 +289,7 @@ module Azure::Storage::File
       share.name = name
 
       signed_identifiers = nil
-      signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) if response.body != nil && response.body.length > 0
+      signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) if !response.body.nil? && response.body.length > 0
 
       [share, signed_identifiers]
     end

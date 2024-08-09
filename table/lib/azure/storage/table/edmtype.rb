@@ -91,7 +91,7 @@ module Azure::Storage
         when IO, File
           "X'" + value.to_s.unpack("H*").join("") + "'"
         else
-          if value != nil && value.encoding.names.include?("BINARY")
+          if !value.nil? && value.encoding.names.include?("BINARY")
             "X'" + value.to_s.unpack("H*").join("") + "'"
           else
             # NULL also is treated as EdmType::STRING

@@ -54,11 +54,11 @@ module Azure::Storage::Common::Core::Filter
     # will be the same instance throughout the lifetime of the request
     def apply_retry_policy(retry_data)
       # Adjust retry count
-      retry_data[:count] = (retry_data[:count] === nil) ? 1 : retry_data[:count] + 1
+      retry_data[:count] = retry_data[:count].nil? ? 1 : retry_data[:count] + 1
 
       # Adjust retry interval
       increment_delta = (@max_retry_interval - @min_retry_interval).fdiv(2**(@retry_count - 1)) * (2**(retry_data[:count] - 1))
-      retry_data[:interval] = (retry_data[:interval] === nil) ? @min_retry_interval : [@min_retry_interval + increment_delta, @max_retry_interval].min
+      retry_data[:interval] = retry_data[:interval].nil? ? @min_retry_interval : [@min_retry_interval + increment_delta, @max_retry_interval].min
     end
   end
 end

@@ -921,7 +921,7 @@ module Azure::Storage
       options[:delete_snapshots] = :include unless options[:delete_snapshots]
 
       headers = {}
-      StorageService.with_header headers, "x-ms-delete-snapshots", options[:delete_snapshots].to_s if options[:delete_snapshots] && options[:snapshot] == nil
+      StorageService.with_header headers, "x-ms-delete-snapshots", options[:delete_snapshots].to_s if options[:delete_snapshots] && options[:snapshot].nil?
       add_blob_conditional_headers options, headers
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 

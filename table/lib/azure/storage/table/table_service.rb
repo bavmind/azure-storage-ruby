@@ -320,7 +320,7 @@ module Azure::Storage
         response = call(:get, generate_uri(table_name, query, options), nil, {"x-ms-version" => "2012-02-12"}, options)
 
         signed_identifiers = []
-        signed_identifiers = Serialization.signed_identifiers_from_xml response.body unless response.body == nil || response.body.length < 1
+        signed_identifiers = Serialization.signed_identifiers_from_xml response.body unless response.body.nil? || response.body.length < 1
         signed_identifiers
       rescue => e
         raise_with_response(e, response)

@@ -12,7 +12,6 @@ ignore:
   - Style/NegatedWhile
 - blob/lib/azure/storage/blob/blob.rb:
   - Style/Not
-  - Style/NilComparison
 - blob/lib/azure/storage/blob/blob_service.rb:
   - Style/ArgumentsForwarding
   - Style/RedundantCondition
@@ -21,7 +20,6 @@ ignore:
   - Style/For
   - Naming/VariableName
 - blob/lib/azure/storage/blob/container.rb:
-  - Style/NonNilCheck
   - Performance/StringReplacement
   - Style/RedundantRegexpArgument
 - blob/lib/azure/storage/blob/default.rb:
@@ -51,7 +49,6 @@ ignore:
 - common/lib/azure/core/http/signer_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/service.rb:
-  - Style/NilComparison
   - Style/AndOr
 - common/lib/azure/core/signed_service.rb:
   - Style/SuperArguments
@@ -68,7 +65,6 @@ ignore:
   - Style/MissingRespondToMissing
   - Performance/RegexpMatch
   - Style/Proc
-  - Style/NilComparison
 - common/lib/azure/storage/common/client_options_error.rb:
   - Style/SuperArguments
 - common/lib/azure/storage/common/configurable.rb:
@@ -83,10 +79,8 @@ ignore:
   - Style/EachWithObject
 - common/lib/azure/storage/common/core/filter/exponential_retry_filter.rb:
   - Style/SuperWithArgsParentheses
-  - Style/NilComparison
 - common/lib/azure/storage/common/core/filter/linear_retry_filter.rb:
   - Style/SuperWithArgsParentheses
-  - Style/NilComparison
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Style/SuperWithArgsParentheses
   - Lint/AmbiguousOperator
@@ -126,7 +120,6 @@ ignore:
   - Style/RedundantCondition
   - Style/OrAssignment
 - file/lib/azure/storage/file/share.rb:
-  - Style/NonNilCheck
   - Style/RedundantCondition
 - queue/azure-storage-queue.gemspec:
   - Style/RedundantCurrentDirectoryInPath
@@ -144,14 +137,12 @@ ignore:
   - Style/IdenticalConditionalBranches
   - Style/Not
 - table/lib/azure/storage/table/edmtype.rb:
-  - Style/NonNilCheck
   - Style/IfWithBooleanLiteralBranches
 - table/lib/azure/storage/table/query.rb:
   - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
 - table/lib/azure/storage/table/table_service.rb:
   - Style/ArgumentsForwarding
-  - Style/NilComparison
   - Style/NestedModifier
   - Style/IfUnlessModifierOfIfUnless
   - Style/RedundantAssignment
