@@ -49,8 +49,8 @@ ignore:
   - Style/SelfAssignment
 - common/lib/azure/core/http/debug_filter.rb:
   - Lint/UnderscorePrefixedVariableName
+- common/lib/azure/core/http/http_error.rb:
   - Style/RedundantInterpolation
-  - Style/RedundantSelf
 - common/lib/azure/core/http/http_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/http/http_request.rb:
@@ -70,8 +70,8 @@ ignore:
 - common/lib/azure/core/http/signer_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/service.rb:
-  - Style/AndOr
   - Style/NilComparison
+  - Style/AndOr
 - common/lib/azure/core/signed_service.rb:
   - Style/SuperArguments
 - common/lib/azure/core/utility.rb:
@@ -132,8 +132,6 @@ ignore:
   - Style/TernaryParentheses
   - Style/ConditionalAssignment
   - Style/IfInsideElse
-  - Style/RedundantCondition
-  - Style/EmptyElse
 - common/lib/azure/storage/common/core/http_client.rb:
   - Style/UnlessElse
   - Style/RedundantSelf
@@ -155,17 +153,17 @@ ignore:
   - Style/Semicolon
   - Lint/AssignmentInCondition
   - Style/MultilineIfModifier
+  - Style/TernaryParentheses
   - Style/NestedModifier
   - Style/IfUnlessModifierOfIfUnless
-  - Style/TernaryParentheses
 - common/lib/azure/storage/common/service/storage_service.rb:
   - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
   - Style/MultilineIfModifier
   - Style/SelfAssignment
   - Style/Semicolon
-  - Style/RedundantSelf
   - Lint/UselessAssignment
+  - Style/RedundantSelf
   - Style/TernaryParentheses
   - Style/RedundantRegexpArgument
   - Style/SuperWithArgsParentheses
@@ -216,7 +214,6 @@ ignore:
   - Style/IdenticalConditionalBranches
   - Style/RedundantReturn
   - Style/Not
-  - Style/EmptyElse
   - Style/NestedTernaryOperator
 - table/lib/azure/storage/table/edmtype.rb:
   - Style/TernaryParentheses
