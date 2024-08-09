@@ -119,7 +119,7 @@ module Azure
         def parse_unknown_response
           @type = "Unknown"
           if @http_response.body
-            @description = "#{@http_response.body.strip}"
+            @description = @http_response.body.strip.to_s
           end
         end
 

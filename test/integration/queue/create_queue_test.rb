@@ -28,7 +28,7 @@ describe Azure::Storage::Queue::QueueService do
   let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
   subject {
     Azure::Storage::Queue::QueueService.create(SERVICE_CREATE_OPTIONS()) { |headers|
-      headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+      headers["User-Agent"] = "#{user_agent_prefix}; #{headers["User-Agent"]}"
     }
   }
 

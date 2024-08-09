@@ -142,7 +142,7 @@ describe Azure::Storage::Table::TableService do
 
       q = Azure::Storage::Table::Query.new
         .from(table_name)
-        .where("CustomIntegerProperty gt #{entity_properties['CustomIntegerProperty']}")
+        .where("CustomIntegerProperty gt #{entity_properties["CustomIntegerProperty"]}")
         .where("CustomBooleanProperty eq false")
 
       result = q.execute
@@ -152,7 +152,7 @@ describe Azure::Storage::Table::TableService do
 
       q = Azure::Storage::Table::Query.new
         .from(table_name)
-        .where("CustomIntegerProperty gt #{entity_properties['CustomIntegerProperty']}")
+        .where("CustomIntegerProperty gt #{entity_properties["CustomIntegerProperty"]}")
         .where("CustomBooleanProperty eq true")
       result = q.execute
       _(result).must_be_kind_of Array
@@ -224,7 +224,7 @@ describe Azure::Storage::Table::TableService do
         .from(table_name)
         .select("PartitionKey")
         .select("CustomIntegerProperty")
-        .where("CustomIntegerProperty eq #{entity_properties['CustomIntegerProperty']}")
+        .where("CustomIntegerProperty eq #{entity_properties["CustomIntegerProperty"]}")
         .top(3)
 
       result = q.execute

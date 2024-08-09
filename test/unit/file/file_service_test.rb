@@ -969,7 +969,7 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=#{start_range}-" }
 
         it "modifies the request headers with the desired range" do
-          local_call_options = {start_range: "#{start_range}".to_i}.merge options
+          local_call_options = {start_range: start_range.to_s.to_i}.merge options
           subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_call_options).returns(uri)
           subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
           subject.list_file_ranges share_name, directory_path, file_name, start_range: start_range
@@ -981,8 +981,8 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=0-#{end_range}" }
 
         it "modifies the request headers with the desired range" do
-          local_call_options = {start_range: 0, end_range: "#{end_range}".to_i}.merge options
-          local_uri_options = {start_range: nil, end_range: "#{end_range}".to_i}.merge options
+          local_call_options = {start_range: 0, end_range: end_range.to_s.to_i}.merge options
+          local_uri_options = {start_range: nil, end_range: end_range.to_s.to_i}.merge options
 
           subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_uri_options).returns(uri)
           subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)

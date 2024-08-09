@@ -325,7 +325,7 @@ module Azure::Storage::Common::Core
       # Return the cononicalized resource representation of the blob resource
       # @return [String]
       def canonicalized_resource(service_type, path)
-        "/#{service_type}/#{account_name}#{path.start_with?('/') ? '' : '/'}#{path}"
+        "/#{service_type}/#{account_name}#{path.start_with?("/") ? "" : "/"}#{path}"
       end
 
       def canonicalize_time(options)
