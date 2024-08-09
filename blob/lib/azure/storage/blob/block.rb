@@ -332,7 +332,7 @@ module Azure::Storage
     # See http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx
     #
     # Returns a Blob
-    alias create_block_blob_from_content create_block_blob
+    alias_method :create_block_blob_from_content, :create_block_blob
 
     # Protected: Creates a new block blob or updates the content of an existing block blob with single API call
     #

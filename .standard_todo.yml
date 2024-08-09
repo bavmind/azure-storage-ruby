@@ -19,7 +19,6 @@ ignore:
   - Style/ConditionalAssignment
   - Style/OrAssignment
 - blob/lib/azure/storage/blob/block.rb:
-  - Style/Alias
   - Style/For
   - Naming/VariableName
 - blob/lib/azure/storage/blob/container.rb:
@@ -76,7 +75,6 @@ ignore:
 - common/lib/azure/storage/common/client_options_error.rb:
   - Style/SuperArguments
 - common/lib/azure/storage/common/configurable.rb:
-  - Style/Alias
   - Naming/VariableName
 - common/lib/azure/storage/common/core/auth/anonymous_signer.rb:
   - Style/DefWithParentheses
@@ -123,7 +121,6 @@ ignore:
   - Style/RedundantRegexpArgument
   - Style/SuperWithArgsParentheses
   - Style/SafeNavigation
-  - Style/Alias
   - Performance/RedundantMerge
 - file/azure-storage-file.gemspec:
   - Style/RedundantCurrentDirectoryInPath

@@ -305,14 +305,14 @@ module Azure::Storage::Common
         # * +:headers+    - A Hash of HTTP headers
         # * +:name+       - The header name
         # * +:value+      - The value
-        alias with_header with_value
+        alias_method :with_header, :with_value
 
         # Adds a query parameter
         #
         # * +:query+      - A Hash of HTTP query
         # * +:name+       - The parameter name
         # * +:value+      - The value
-        alias with_query with_value
+        alias_method :with_query, :with_value
 
         # Declares a default hash object for request headers
         def common_headers(options = {}, body = nil)

@@ -116,7 +116,7 @@ module Azure::Storage::Common
       self
     end
 
-    alias setup reset_config!
+    alias_method :setup, :reset_config!
 
     # Storage queue host
     # @return [String]
