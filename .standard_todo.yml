@@ -10,7 +10,6 @@ ignore:
   - Style/RedundantInterpolation
   - Style/StringLiteralsInInterpolation
   - Style/FileWrite
-  - Style/PercentLiteralDelimiters
 - blob/azure-storage-blob.gemspec:
   - Style/RedundantCurrentDirectoryInPath
 - blob/lib/azure/storage/blob/append.rb:

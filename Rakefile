@@ -109,7 +109,7 @@ namespace :test do
   Rake::TestTask.new :unit do |t|
     t.pattern = "test/unit/**/*_test.rb"
     t.verbose = true
-    t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+    t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
   end
 
   namespace :unit do
@@ -117,7 +117,7 @@ namespace :test do
       Rake::TestTask.new component do |t|
         t.pattern = "test/unit/#{component}/**/*_test.rb"
         t.verbose = true
-        t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+        t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
       end
     end
 
@@ -129,7 +129,7 @@ namespace :test do
       path.include?("database")
     end
     t.verbose = true
-    t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+    t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
   end
 
   task integration: :require_environment
@@ -139,7 +139,7 @@ namespace :test do
       Rake::TestTask.new component do |t|
         t.pattern = "test/integration/#{component}/**/*_test.rb"
         t.verbose = true
-        t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+        t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
       end
 
       task component => "test:require_environment"
@@ -152,7 +152,7 @@ namespace :test do
     Rake::TestTask.new :unit do |t|
       t.pattern = "test/unit/storage/**/*_test.rb"
       t.verbose = true
-      t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+      t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
     end
 
     task require_storage_env: :dotenv do
@@ -168,7 +168,7 @@ namespace :test do
     Rake::TestTask.new :integration do |t|
       t.pattern = "test/integration/storage/**/*_test.rb"
       t.verbose = true
-      t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+      t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
     end
 
     task integration: :require_storage_env
@@ -185,7 +185,7 @@ namespace :test do
   end
 end
 
-task test: %w(test:unit test:integration)
+task test: %w[test:unit test:integration]
 
 task :sanity_check do
   abort "[ABORTING] build common gem failed" unless system "rake build_common"
