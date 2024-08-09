@@ -426,7 +426,9 @@ module Azure::Storage
         query = new_query(options)
         query[Azure::Storage::Common::QueryStringConstants::SELECT] = options[:select].join "," if options[:select]
         query[Azure::Storage::Common::QueryStringConstants::FILTER] = options[:filter] if options[:filter]
-        query[Azure::Storage::Common::QueryStringConstants::TOP] = options[:top].to_s if options[:top] unless options[:partition_key] && options[:row_key]
+        unless options[:partition_key] && options[:row_key]
+          query[Azure::Storage::Common::QueryStringConstants::TOP] = options[:top].to_s if options[:top]
+        end
         query[Azure::Storage::Common::QueryStringConstants::NEXT_PARTITION_KEY] = options[:continuation_token][:next_partition_key] if options[:continuation_token] && options[:continuation_token][:next_partition_key]
         query[Azure::Storage::Common::QueryStringConstants::NEXT_ROW_KEY] = options[:continuation_token][:next_row_key] if options[:continuation_token] && options[:continuation_token][:next_row_key]
 
