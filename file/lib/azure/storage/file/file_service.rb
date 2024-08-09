@@ -311,10 +311,10 @@ module Azure::Storage
       protected
 
       def file_uri(share, directory_path, file, query = {}, options = {})
-        if directory_path.nil?
-          path = ::File.join(share, file)
+        path = if directory_path.nil?
+          ::File.join(share, file)
         else
-          path = ::File.join(share, directory_path, file)
+          ::File.join(share, directory_path, file)
         end
         options = {encode: true}.merge(options)
         generate_uri(path, query, options)

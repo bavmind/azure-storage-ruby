@@ -64,12 +64,12 @@ module Azure::Storage
       end
 
       def self.message_to_xml(message_text, encode)
-        if encode
-          builder = Nokogiri::XML::Builder.new do |xml|
+        builder = if encode
+          Nokogiri::XML::Builder.new do |xml|
             xml.QueueMessage { xml.MessageText Base64.strict_encode64(message_text) }
           end
         else
-          builder = Nokogiri::XML::Builder.new(encoding: "utf-8") do |xml|
+          Nokogiri::XML::Builder.new(encoding: "utf-8") do |xml|
             xml.QueueMessage { xml.MessageText message_text.encode("utf-8") }
           end
         end

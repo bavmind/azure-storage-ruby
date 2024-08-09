@@ -217,14 +217,10 @@ module Azure::Storage::Common::Core::Filter
         ((retry_data[:current_location] === Azure::Storage::Common::StorageLocation::SECONDARY) &&
         response.status_code === 404)
 
-      if retry_data[:secondary_not_found]
-        retry_data[:status_code] = 500
+      retry_data[:status_code] = if retry_data[:secondary_not_found]
+        500
       else
-        if response.status_code
-          retry_data[:status_code] = response.status_code
-        else
-          retry_data[:status_code] = nil
-        end
+        response.status_code || nil
       end
     end
 

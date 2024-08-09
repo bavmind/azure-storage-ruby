@@ -16,7 +16,6 @@ ignore:
 - blob/lib/azure/storage/blob/blob_service.rb:
   - Style/ArgumentsForwarding
   - Style/RedundantCondition
-  - Style/ConditionalAssignment
   - Style/OrAssignment
 - blob/lib/azure/storage/blob/block.rb:
   - Style/For
@@ -93,7 +92,6 @@ ignore:
   - Lint/AmbiguousOperator
   - Performance/StringIdentifierArgument
   - Naming/VariableName
-  - Style/ConditionalAssignment
   - Style/IfInsideElse
 - common/lib/azure/storage/common/core/http_client.rb:
   - Style/UnlessElse
@@ -126,7 +124,6 @@ ignore:
 - file/lib/azure/storage/file/file_service.rb:
   - Style/ArgumentsForwarding
   - Style/RedundantCondition
-  - Style/ConditionalAssignment
   - Style/OrAssignment
 - file/lib/azure/storage/file/share.rb:
   - Style/NonNilCheck
@@ -137,8 +134,6 @@ ignore:
   - Style/ArgumentsForwarding
   - Style/RedundantAssignment
   - Style/RedundantCondition
-- queue/lib/azure/storage/queue/serialization.rb:
-  - Style/ConditionalAssignment
 - table/azure-storage-table.gemspec:
   - Style/RedundantCurrentDirectoryInPath
 - table/lib/azure/storage/table/batch.rb:

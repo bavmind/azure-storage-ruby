@@ -326,10 +326,10 @@ module Azure::Storage
         query = {"comp" => "lease"}
         StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-        if blob
-          uri = blob_uri(container, blob, query)
+        uri = if blob
+          blob_uri(container, blob, query)
         else
-          uri = container_uri(container, query)
+          container_uri(container, query)
         end
 
         duration = -1
@@ -389,10 +389,10 @@ module Azure::Storage
         query = {"comp" => "lease"}
         StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-        if blob
-          uri = blob_uri(container, blob, query)
+        uri = if blob
+          blob_uri(container, blob, query)
         else
-          uri = container_uri(container, query)
+          container_uri(container, query)
         end
 
         headers = {}
@@ -448,10 +448,10 @@ module Azure::Storage
         query = {"comp" => "lease"}
         StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-        if blob
-          uri = blob_uri(container, blob, query)
+        uri = if blob
+          blob_uri(container, blob, query)
         else
-          uri = container_uri(container, query)
+          container_uri(container, query)
         end
 
         headers = {}
@@ -507,10 +507,10 @@ module Azure::Storage
         query = {"comp" => "lease"}
         StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-        if blob
-          uri = blob_uri(container, blob, query)
+        uri = if blob
+          blob_uri(container, blob, query)
         else
-          uri = container_uri(container, query)
+          container_uri(container, query)
         end
 
         headers = {}
@@ -579,10 +579,10 @@ module Azure::Storage
         query = {"comp" => "lease"}
         StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-        if blob
-          uri = blob_uri(container, blob, query)
+        uri = if blob
+          blob_uri(container, blob, query)
         else
-          uri = container_uri(container, query)
+          container_uri(container, query)
         end
 
         headers = {}
@@ -655,10 +655,10 @@ module Azure::Storage
       protected
 
       def blob_uri(container_name, blob_name, query = {}, options = {})
-        if container_name.nil? || container_name.empty?
-          path = blob_name
+        path = if container_name.nil? || container_name.empty?
+          blob_name
         else
-          path = ::File.join(container_name, blob_name)
+          ::File.join(container_name, blob_name)
         end
         options = {encode: true}.merge(options)
         generate_uri(path, query, options)
