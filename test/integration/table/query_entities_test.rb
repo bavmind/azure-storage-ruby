@@ -67,7 +67,7 @@ describe Azure::Storage::Table::TableService do
     it "Queries a table for list of entities" do
       result = subject.query_entities table_name
       _(result).must_be_kind_of Array
-      _(result.length).must_equal ((partitions.length + 1) * entities_per_partition)
+      _(result.length).must_equal((partitions.length + 1) * entities_per_partition)
 
       result.each { |e|
         _(entities[e.properties["PartitionKey"]]).must_include e.properties["RowKey"]
@@ -106,7 +106,7 @@ describe Azure::Storage::Table::TableService do
       puts "#########################################"
       result = subject.query_entities table_name, select: projection
       _(result).must_be_kind_of Array
-      _(result.length).must_equal ((partitions.length + 1) * entities_per_partition)
+      _(result.length).must_equal((partitions.length + 1) * entities_per_partition)
 
       result.each { |e|
         _(e.properties.length).must_equal projection.length

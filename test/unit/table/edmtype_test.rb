@@ -73,7 +73,7 @@ describe Azure::Storage::Table::EdmType do
     it "correctly deserializes int64 query values" do
       value = "340282366920938463463374607431769467687"
       deserializedValue = Azure::Storage::Table::EdmType.deserialize_value(value, "Edm.Int64")
-      _(deserializedValue).must_equal (2**128 + 1256231)
+      _(deserializedValue).must_equal(2**128 + 1256231)
     end
 
     it "correctly deserializes int32 query values" do

@@ -178,11 +178,8 @@ ignore:
   - Naming/VariableName
 - test/integration/blob/blob_properties_test.rb:
   - Lint/UselessAssignment
-- test/integration/blob/blob_service_properties_test.rb:
-  - Lint/ParenthesesAsGroupedExpression
 - test/integration/blob/block_blob_test.rb:
   - Lint/UselessAssignment
-  - Lint/ParenthesesAsGroupedExpression
 - test/integration/blob/container/container_acl_test.rb:
   - Lint/UselessAssignment
 - test/integration/blob/container/container_metadata_test.rb:
@@ -239,10 +236,8 @@ ignore:
 - test/integration/table/merge_entity_test.rb:
   - Style/UnlessElse
 - test/integration/table/query_entities_test.rb:
-  - Lint/ParenthesesAsGroupedExpression
   - Style/UnlessElse
 - test/integration/table/query_test.rb:
-  - Lint/ParenthesesAsGroupedExpression
   - Style/UnlessElse
 - test/integration/table/table_gb18030_test.rb:
   - Lint/UselessAssignment
@@ -263,7 +258,6 @@ ignore:
   - Style/ArgumentsForwarding
 - test/unit/blob/blob_service_test.rb:
   - Style/MethodCallWithoutArgsParentheses
-  - Lint/ParenthesesAsGroupedExpression
   - Lint/ConstantDefinitionInBlock
 - test/unit/config/client_services_test.rb:
   - Naming/VariableName
@@ -285,4 +279,3 @@ ignore:
   - Style/MethodCallWithoutArgsParentheses
 - test/unit/table/edmtype_test.rb:
   - Naming/VariableName
-  - Lint/ParenthesesAsGroupedExpression

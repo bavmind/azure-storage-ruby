@@ -239,9 +239,9 @@ describe Azure::Storage::Blob::BlobService do
 
       blob, returned_content = subject.get_blob container_name, blob_name
       _(is_boolean(blob.encrypted)).must_equal true
-      _(blob.properties[:content_length]).must_equal (content.length * 2)
+      _(blob.properties[:content_length]).must_equal(content.length * 2)
       _(blob.properties[:content_type]).must_equal "application/octet-stream"
-      _(returned_content).must_equal (content + content)
+      _(returned_content).must_equal(content + content)
     end
 
     it "lease id works for commit_blob_blocks" do
@@ -280,8 +280,8 @@ describe Azure::Storage::Blob::BlobService do
 
       blob, returned_content = subject.get_blob container_name, block_blob_name
       _(is_boolean(blob.encrypted)).must_equal true
-      _(blob.properties[:content_length]).must_equal (content.length * 2)
-      _(returned_content).must_equal (content + content)
+      _(blob.properties[:content_length]).must_equal(content.length * 2)
+      _(returned_content).must_equal(content + content)
     end
   end
 

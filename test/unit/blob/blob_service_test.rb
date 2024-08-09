@@ -2537,7 +2537,7 @@ describe Azure::Storage::Blob::BlobService do
         end
 
         describe "#change_blob_lease" do
-          let (:proposed_lease_id) { "proposed-lease-id" }
+          let(:proposed_lease_id) { "proposed-lease-id" }
           before {
             request_headers["x-ms-lease-action"] = "change"
             request_headers["x-ms-lease-id"] = lease_id
