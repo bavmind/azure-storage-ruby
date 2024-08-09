@@ -339,7 +339,7 @@ module Azure::Storage
           else
             # It is either that the body is not a string, or that the body's encoding is ASCII_8BIT, which is a binary
             # In this case, set the content type to be default content-type
-            content_type = Default::CONTENT_TYPE_VALUE unless content_type
+            content_type ||= Default::CONTENT_TYPE_VALUE
           end
         end
         content_type

@@ -12,7 +12,6 @@ ignore:
   - Style/Not
 - blob/lib/azure/storage/blob/blob_service.rb:
   - Style/RedundantCondition
-  - Style/OrAssignment
 - blob/lib/azure/storage/blob/block.rb:
   - Style/For
   - Naming/VariableName
@@ -78,7 +77,6 @@ ignore:
   - Style/For
 - file/lib/azure/storage/file/file_service.rb:
   - Style/RedundantCondition
-  - Style/OrAssignment
 - file/lib/azure/storage/file/share.rb:
   - Style/RedundantCondition
 - queue/lib/azure/storage/queue/queue_service.rb:
