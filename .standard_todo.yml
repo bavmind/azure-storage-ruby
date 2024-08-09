@@ -270,7 +270,6 @@ ignore:
 - test/unit/config/client_test.rb:
   - Style/For
 - test/unit/core/auth/shared_access_signature_test.rb:
-  - Style/LineEndConcatenation
   - Style/HashConversion
 - test/unit/core/http/retry_policy_test.rb:
   - Standard/BlockSingleLineBraces
