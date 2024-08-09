@@ -179,7 +179,6 @@ ignore:
 - table/lib/azure/storage/table/edmtype.rb:
   - Style/TernaryParentheses
   - Style/ClassCheck
-  - Lint/RedundantStringCoercion
   - Style/NonNilCheck
   - Style/IfWithBooleanLiteralBranches
 - table/lib/azure/storage/table/query.rb:

@@ -87,7 +87,7 @@ module Azure::Storage
         when Float, Integer
           value.abs < 2**31 ? value.to_s : value.to_s + "L"
         when GUID
-          "guid'#{value.to_s}'"
+          "guid'#{value}'"
         when IO, File
           "X'" + value.to_s.unpack("H*").join("") + "'"
         else
