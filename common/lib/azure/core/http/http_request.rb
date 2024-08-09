@@ -166,7 +166,7 @@ module Azure
         end
 
         def apply_io_headers
-          headers["Content-Length"] = body.size.to_s if body.respond_to?("size")
+          headers["Content-Length"] = body.size.to_s if body.respond_to?(:size)
           if headers["Content-Length"].nil?
             raise ArgumentError, "'Content-Length' must be defined if size cannot be obtained from body IO."
           end

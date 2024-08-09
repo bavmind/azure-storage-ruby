@@ -37,10 +37,7 @@ ignore:
 - common/lib/azure/core/http/http_request.rb:
   - Style/Proc
   - Lint/DuplicateMethods
-  - Performance/StringIdentifierArgument
   - Lint/AssignmentInCondition
-- common/lib/azure/core/http/http_response.rb:
-  - Performance/StringIdentifierArgument
 - common/lib/azure/core/http/retry_policy.rb:
   - Lint/UnderscorePrefixedVariableName
   - Lint/Loop
@@ -70,7 +67,6 @@ ignore:
   - Style/EachWithObject
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Lint/AmbiguousOperator
-  - Performance/StringIdentifierArgument
   - Naming/VariableName
   - Style/IfInsideElse
 - common/lib/azure/storage/common/core/http_client.rb:
