@@ -90,7 +90,7 @@ module Azure
 
       def should_retry?(response, retry_data)
         retry_data[:uri] = URI.parse "http://bar.com"
-        @count = @count - 1
+        @count -= 1
         @count >= 0
       end
     end

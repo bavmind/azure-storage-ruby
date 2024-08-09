@@ -36,7 +36,7 @@ module Azure
       end
 
       def with_filter(filter = nil, &block)
-        filter = filter || block
+        filter ||= block
         filters.push filter if filter
       end
     end

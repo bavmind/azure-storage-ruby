@@ -46,11 +46,11 @@ module Azure::Storage::Common
       def initialize(signer = nil, account_name = nil, options = {}, &block)
         StorageService.register_request_callback(&block) if block_given?
         client_config = options[:client]
-        signer = signer || Azure::Storage::Common::Core::Auth::SharedKey.new(
+        signer ||= Azure::Storage::Common::Core::Auth::SharedKey.new(
           client_config.storage_account_name,
           client_config.storage_access_key
         ) if client_config.storage_access_key
-        signer = signer || Azure::Storage::Common::Core::Auth::SharedAccessSignatureSigner.new(
+        signer ||= Azure::Storage::Common::Core::Auth::SharedAccessSignatureSigner.new(
           client_config.storage_account_name,
           client_config.storage_sas_token
         )

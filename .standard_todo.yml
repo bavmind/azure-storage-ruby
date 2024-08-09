@@ -44,7 +44,6 @@ ignore:
 - common/lib/azure/core/filtered_service.rb:
   - Style/SafeNavigation
   - Performance/ReverseEach
-  - Style/SelfAssignment
 - common/lib/azure/core/http/debug_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/http/http_error.rb:
@@ -52,7 +51,6 @@ ignore:
 - common/lib/azure/core/http/http_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/http/http_request.rb:
-  - Style/SelfAssignment
   - Style/RedundantSelf
   - Style/Proc
   - Lint/DuplicateMethods
@@ -115,7 +113,6 @@ ignore:
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Style/SuperWithArgsParentheses
   - Lint/AmbiguousOperator
-  - Style/SelfAssignment
   - Style/SafeNavigation
   - Performance/StringIdentifierArgument
   - Naming/VariableName
@@ -137,7 +134,6 @@ ignore:
   - Style/HashConversion
   - Naming/ConstantName
 - common/lib/azure/storage/common/service/serialization.rb:
-  - Style/SelfAssignment
   - Lint/AssignmentInCondition
   - Style/MultilineIfModifier
   - Style/TernaryParentheses
@@ -147,7 +143,6 @@ ignore:
   - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
   - Style/MultilineIfModifier
-  - Style/SelfAssignment
   - Lint/UselessAssignment
   - Style/RedundantSelf
   - Style/TernaryParentheses
@@ -344,7 +339,6 @@ ignore:
   - Style/ClassEqualityComparison
   - Style/StringLiteralsInInterpolation
 - test/integration/table/table_gb18030_test.rb:
-  - Style/SelfAssignment
   - Lint/UselessAssignment
 - test/integration/table/update_entity_batch_test.rb:
   - Lint/UselessAssignment
@@ -360,7 +354,6 @@ ignore:
   - Lint/DuplicateMethods
   - Style/SuperWithArgsParentheses
   - Lint/AmbiguousOperator
-  - Style/SelfAssignment
 - test/support/stubs.rb:
   - Style/ArgumentsForwarding
 - test/unit/blob/blob_service_test.rb:

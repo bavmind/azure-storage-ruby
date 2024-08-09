@@ -98,7 +98,7 @@ module Azure
         # will not complete and the HTTP request will never execute
         #
         def with_filter(filter = nil, options = {}, &block)
-          filter = filter || block
+          filter ||= block
           if filter
             is_retry_policy = filter.is_a?(Azure::Core::Http::RetryPolicy)
             filter.retry_data[:request_options] = options if is_retry_policy
