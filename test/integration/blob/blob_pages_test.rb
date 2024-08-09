@@ -80,23 +80,21 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "IO payload works" do
-      begin
-        content = SecureRandom.hex(1024)
-        length = content.size
-        blob_name = BlobNameHelper.name
-        file = File.open blob_name, "w+"
-        file.write content
-        file.seek 0
-        subject.create_page_blob_from_content container_name, blob_name, length, file
-        blob, body = subject.get_blob(container_name, blob_name)
-        _(blob.name).must_equal blob_name
-        _(blob.properties[:content_length]).must_equal length
-        _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
-      ensure
-        unless file.nil?
-          file.close
-          File.delete blob_name
-        end
+      content = SecureRandom.hex(1024)
+      length = content.size
+      blob_name = BlobNameHelper.name
+      file = File.open blob_name, "w+"
+      file.write content
+      file.seek 0
+      subject.create_page_blob_from_content container_name, blob_name, length, file
+      blob, body = subject.get_blob(container_name, blob_name)
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:content_length]).must_equal length
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
+    ensure
+      unless file.nil?
+        file.close
+        File.delete blob_name
       end
     end
   end

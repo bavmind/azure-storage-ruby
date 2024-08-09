@@ -41,23 +41,21 @@ describe Azure::Storage::Blob::BlobService do
   }
 
   it "creates the container with explicit name and some blobs" do
-    begin
-      container = subject.create_container container_name
-      _(container.name).must_equal container_name
-      # explicit root container name
-      blob = subject.create_page_blob container_name, blob_name1, length
-      _(blob.name).must_equal blob_name1
+    container = subject.create_container container_name
+    _(container.name).must_equal container_name
+    # explicit root container name
+    blob = subject.create_page_blob container_name, blob_name1, length
+    _(blob.name).must_equal blob_name1
 
-      # nil container name
-      blob = subject.create_page_blob nil, blob_name2, length
-      _(blob.name).must_equal blob_name2
+    # nil container name
+    blob = subject.create_page_blob nil, blob_name2, length
+    _(blob.name).must_equal blob_name2
 
-      # empty string container name
-      blob = subject.create_page_blob "", blob_name3, length
-      _(blob.name).must_equal blob_name3
-    rescue Azure::Core::Http::HTTPError => error
-      puts error.message
-      _(error.status_code).must_equal 409
-    end
+    # empty string container name
+    blob = subject.create_page_blob "", blob_name3, length
+    _(blob.name).must_equal blob_name3
+  rescue Azure::Core::Http::HTTPError => error
+    puts error.message
+    _(error.status_code).must_equal 409
   end
 end

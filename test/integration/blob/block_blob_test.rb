@@ -61,21 +61,19 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "creates a block blob with IO" do
-      begin
-        file = File.open blob_name, "w+"
-        file.write content
-        file.seek 0
-        subject.create_block_blob container_name, blob_name, file
-        blob = subject.get_blob_properties container_name, blob_name
-        _(blob.name).must_equal blob_name
-        _(is_boolean(blob.encrypted)).must_equal true
-        _(blob.properties[:content_length]).must_equal content.length
-        _(blob.properties[:content_type]).must_equal "application/octet-stream"
-      ensure
-        unless file.nil?
-          file.close
-          File.delete blob_name
-        end
+      file = File.open blob_name, "w+"
+      file.write content
+      file.seek 0
+      subject.create_block_blob container_name, blob_name, file
+      blob = subject.get_blob_properties container_name, blob_name
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:content_length]).must_equal content.length
+      _(blob.properties[:content_type]).must_equal "application/octet-stream"
+    ensure
+      unless file.nil?
+        file.close
+        File.delete blob_name
       end
     end
 

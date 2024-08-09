@@ -74,23 +74,21 @@ describe Azure::Storage::File::FileService do
     end
 
     it "IO payload works" do
-      begin
-        content = SecureRandom.hex(3 * 1024 * 1024)
-        length = content.size
-        file_name = FileNameHelper.name
-        local_file = File.open file_name, "w+"
-        local_file.write content
-        local_file.seek 0
-        subject.create_file_from_content share_name, directory_name, file_name, length, local_file
-        file, body = subject.get_file(share_name, directory_name, file_name)
-        _(file.name).must_equal file_name
-        _(file.properties[:content_length]).must_equal length
-        _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
-      ensure
-        unless local_file.nil?
-          local_file.close
-          File.delete file_name
-        end
+      content = SecureRandom.hex(3 * 1024 * 1024)
+      length = content.size
+      file_name = FileNameHelper.name
+      local_file = File.open file_name, "w+"
+      local_file.write content
+      local_file.seek 0
+      subject.create_file_from_content share_name, directory_name, file_name, length, local_file
+      file, body = subject.get_file(share_name, directory_name, file_name)
+      _(file.name).must_equal file_name
+      _(file.properties[:content_length]).must_equal length
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
+    ensure
+      unless local_file.nil?
+        local_file.close
+        File.delete file_name
       end
     end
   end

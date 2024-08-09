@@ -181,7 +181,6 @@ ignore:
 - test/integration/blob/append_blob_test.rb:
   - Naming/VariableName
   - Lint/ConstantDefinitionInBlock
-  - Style/RedundantBegin
   - Style/NestedParenthesizedCalls
 - test/integration/blob/blob_anonymous_access_test.rb:
   - Lint/UselessAssignment
@@ -191,7 +190,6 @@ ignore:
 - test/integration/blob/blob_metadata_test.rb:
   - Lint/UselessAssignment
 - test/integration/blob/blob_pages_test.rb:
-  - Style/RedundantBegin
   - Lint/UselessAssignment
   - Naming/VariableName
 - test/integration/blob/blob_properties_test.rb:
@@ -200,15 +198,12 @@ ignore:
   - Lint/ParenthesesAsGroupedExpression
   - Style/NestedParenthesizedCalls
 - test/integration/blob/block_blob_test.rb:
-  - Style/RedundantBegin
   - Lint/UselessAssignment
   - Lint/ParenthesesAsGroupedExpression
 - test/integration/blob/container/container_acl_test.rb:
   - Lint/UselessAssignment
 - test/integration/blob/container/container_metadata_test.rb:
   - Lint/UselessAssignment
-- test/integration/blob/container/root_container_test.rb:
-  - Style/RedundantBegin
 - test/integration/blob/copy_blob_test.rb:
   - Lint/UselessAssignment
   - Style/Not
@@ -223,8 +218,6 @@ ignore:
   - Lint/UselessAssignment
 - test/integration/blob/incremental_copy_blob_test.rb:
   - Lint/UselessAssignment
-- test/integration/file/create_file_test.rb:
-  - Style/RedundantBegin
 - test/integration/file/delete_directory_test.rb:
   - Lint/UselessAssignment
 - test/integration/file/file_copy_test.rb:
@@ -241,8 +234,6 @@ ignore:
   - Lint/UselessAssignment
 - test/integration/queue/create_queue_test.rb:
   - Lint/UselessAssignment
-- test/integration/queue/informative_errors_test.rb:
-  - Style/RedundantBegin
 - test/integration/queue/list_queues_test.rb:
   - Lint/Loop
 - test/integration/queue/update_message_test.rb:
