@@ -46,7 +46,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     it "reads the blob properties with an object level SAS in connection string" do
       sas_token = generator.generate_account_sas_token service: "b", resource: "o", permissions: "r"
       connection_string = "BlobEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.blob.core.windows.net;SharedAccessSignature=#{sas_token}"
-      client = Azure::Storage::Blob::BlobService::create_from_connection_string connection_string
+      client = Azure::Storage::Blob::BlobService.create_from_connection_string connection_string
       blob_properties = client.get_blob_properties container_name, blob_name
       _(blob_properties).wont_be_nil
       _(blob_properties.name).must_equal blob_name
@@ -57,7 +57,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     end
 
     it "access default signer would not throw exception" do
-      _(Azure::Storage::Common::Default::signer).must_be_nil
+      _(Azure::Storage::Common::Default.signer).must_be_nil
     end
 
     it "reads the blob properties with an object level SAS" do
@@ -135,7 +135,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     it "reads the file properties with an object level SAS in connection string" do
       sas_token = generator.generate_account_sas_token service: "f", resource: "o", permissions: "r"
       connection_string = "FileEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.file.core.windows.net;SharedAccessSignature=#{sas_token}"
-      client = Azure::Storage::File::FileService::create_from_connection_string connection_string
+      client = Azure::Storage::File::FileService.create_from_connection_string connection_string
       file_properties = client.get_file_properties share_name, directory_name, file_name
       _(file_properties).wont_be_nil
       _(file_properties.name).must_equal file_name
@@ -203,7 +203,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
       sas_token = generator.generate_account_sas_token service: "b", resource: "o", permissions: "r"
       connection_string = "SharedAccessSignature=#{sas_token}"
       assert_raises(Azure::Storage::Common::InvalidOptionsError) do
-        Azure::Storage::Blob::BlobService::create_from_connection_string connection_string
+        Azure::Storage::Blob::BlobService.create_from_connection_string connection_string
       end
     end
   end

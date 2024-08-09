@@ -174,7 +174,7 @@ module Azure::Storage::Common
 
     def account_name_from_endpoint(endpoint)
       return nil if endpoint.nil?
-      uri = URI::parse endpoint
+      uri = URI.parse endpoint
       fields = uri.host.split "."
       fields[0]
     end

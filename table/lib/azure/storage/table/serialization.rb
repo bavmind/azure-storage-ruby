@@ -40,7 +40,7 @@ module Azure
           h.map do |key, val|
             type = Table::EdmType.property_type(val)
             type_key = key.is_a?(Symbol) ? key.to_s + TableConstants::ODATA_TYPE_SUFFIX : key + TableConstants::ODATA_TYPE_SUFFIX
-            newhash[key] = EdmType::serialize_value(type, val)
+            newhash[key] = EdmType.serialize_value(type, val)
             newhash[type_key] = type unless type.nil? || type.empty? || h.key?(type_key)
           end
           JSON newhash
@@ -90,7 +90,7 @@ module Azure
             h.each do |k, v|
               next if k.end_with? TableConstants::ODATA_TYPE_SUFFIX
               type = h[k + TableConstants::ODATA_TYPE_SUFFIX]
-              properties[k] = EdmType::deserialize_value(v, type.nil? ? EdmType::property_type(v) : type)
+              properties[k] = EdmType.deserialize_value(v, type.nil? ? EdmType.property_type(v) : type)
             end
             entity.properties = properties
           end

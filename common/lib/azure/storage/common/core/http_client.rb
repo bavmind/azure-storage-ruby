@@ -66,9 +66,9 @@ module Azure::Storage::Common::Core
         ssl_options[:verify] = true
       end
       proxy_options = if ENV["HTTP_PROXY"]
-                        URI::parse(ENV["HTTP_PROXY"])
+                        URI.parse(ENV["HTTP_PROXY"])
                       elsif ENV["HTTPS_PROXY"]
-                        URI::parse(ENV["HTTPS_PROXY"])
+                        URI.parse(ENV["HTTPS_PROXY"])
                       end || nil
       Faraday.new(uri, ssl: ssl_options, proxy: proxy_options) do |conn|
         conn.response :follow_redirects # use Faraday::FollowRedirects::Middleware

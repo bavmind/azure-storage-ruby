@@ -42,7 +42,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
   it "reads a message in the queue with a SAS in connection string" do
     sas_token = generator.generate_service_sas_token queue_name, service: "q", permissions: "r", protocol: "https,http"
     connection_string = "QueueEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.queue.core.windows.net;SharedAccessSignature=#{sas_token}"
-    client = Azure::Storage::Queue::QueueService::create_from_connection_string connection_string
+    client = Azure::Storage::Queue::QueueService.create_from_connection_string connection_string
     message = client.peek_messages queue_name, number_of_messages: 2
     _(message).wont_be_nil
     assert message.length > 1

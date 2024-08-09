@@ -44,9 +44,9 @@ module Kernel
   def clear_storage_instance_variables
     removed = {}
     Azure::Storage::Common::Configurable.keys.each do |key|
-      if Azure::Storage::Common::Client::instance_variables.include? :"@#{key}"
+      if Azure::Storage::Common::Client.instance_variables.include? :"@#{key}"
         removed[key] = Azure::Storage.send(key)
-        Azure::Storage::Common::Client::instance_variable_set(:"@#{key}", nil)
+        Azure::Storage::Common::Client.instance_variable_set(:"@#{key}", nil)
       end
     end
     removed
@@ -60,7 +60,7 @@ module Kernel
 
   def restore_storage_instance_variables(removed)
     removed.each do |k, v|
-      Azure::Storage::Common::Client::instance_variable_set(:"@#{k}", v)
+      Azure::Storage::Common::Client.instance_variable_set(:"@#{k}", v)
     end
   end
 

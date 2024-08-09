@@ -379,7 +379,7 @@ module Azure::Storage::Common::Core
       # * +:startrk+              - String. Optional. The start row key of a specified row key range.
       # * +:endrk+                - String. Optional. The end row key of a specified row key range.
       def signed_uri(uri, use_account_sas, options)
-        CGI::parse(uri.query || "").inject({}) { |memo, (k, v)|
+        CGI.parse(uri.query || "").inject({}) { |memo, (k, v)|
           memo[k.to_sym] = v
           memo
         }

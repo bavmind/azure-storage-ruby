@@ -43,7 +43,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
   it "queries a table entity with SAS in connection string" do
     sas_token = generator.generate_service_sas_token table_name, service: "t", permissions: "r", protocol: "https,http"
     connection_string = "TableEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.table.core.windows.net;SharedAccessSignature=#{sas_token}"
-    client = Azure::Storage::Table::TableService::create_from_connection_string connection_string
+    client = Azure::Storage::Table::TableService.create_from_connection_string connection_string
     query = {filter: "RowKey eq '1-1'"}
     result = client.query_entities table_name, query
     _(result).wont_be_nil

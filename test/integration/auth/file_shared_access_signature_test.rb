@@ -49,7 +49,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     it "create a file with SAS in connection string" do
       sas_token = generator.generate_service_sas_token "#{share_name}", service: "f", resource: "s", permissions: "c", protocol: "https"
       connection_string = "FileEndpoint=https://#{ENV['AZURE_STORAGE_ACCOUNT']}.file.core.windows.net;SharedAccessSignature=#{sas_token}"
-      client = Azure::Storage::File::FileService::create_from_connection_string connection_string
+      client = Azure::Storage::File::FileService.create_from_connection_string connection_string
 
       new_file_name = FileNameHelper.name
       new_file = subject.create_file share_name, directory_name, new_file_name, file_length

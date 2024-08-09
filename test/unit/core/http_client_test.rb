@@ -9,7 +9,7 @@ describe Azure::Storage::Common::Core::HttpClient do
 
   describe "#agents" do
     describe "reusing a connection when connecting to the same host" do
-      let(:client) { Azure::Storage::Common::Client::create }
+      let(:client) { Azure::Storage::Common::Client.create }
 
       it "should use the same connection when reconnecting to the same host" do
         uri1 = URI("https://management.core.windows.net/uri1")
@@ -24,11 +24,11 @@ describe Azure::Storage::Common::Core::HttpClient do
 
     describe "ssl vs non ssl uris" do
       it "should set verify true if using ssl" do
-        _(Azure::Storage::Common::Client::create.agents(uri).ssl[:verify]).must_equal true
+        _(Azure::Storage::Common::Client.create.agents(uri).ssl[:verify]).must_equal true
       end
 
       it "should not set ssl if not using ssl" do
-        _(Azure::Storage::Common::Client::create.agents("http://localhost").ssl).must_be_empty
+        _(Azure::Storage::Common::Client.create.agents("http://localhost").ssl).must_be_empty
       end
     end
 
@@ -44,7 +44,7 @@ describe Azure::Storage::Common::Core::HttpClient do
       end
 
       it "should set the proxy configuration information on the http connection" do
-        _(Azure::Storage::Common::Client::create.agents(uri).proxy.uri).must_equal http_proxy_uri
+        _(Azure::Storage::Common::Client.create.agents(uri).proxy.uri).must_equal http_proxy_uri
       end
     end
 
@@ -60,7 +60,7 @@ describe Azure::Storage::Common::Core::HttpClient do
       end
 
       it "should set the proxy configuration information on the https connection" do
-        _(Azure::Storage::Common::Client::create.agents(uri).proxy.uri).must_equal https_proxy_uri
+        _(Azure::Storage::Common::Client.create.agents(uri).proxy.uri).must_equal https_proxy_uri
       end
     end
   end

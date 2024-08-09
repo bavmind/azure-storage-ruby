@@ -27,7 +27,7 @@ require "azure/storage/blob"
 describe Azure::Storage::Blob::BlobService do
   let(:user_agent_prefix) { "azure_storage_ruby_unit_test" }
   subject {
-    Azure::Storage::Blob::BlobService::create({storage_account_name: "mockaccount", storage_access_key: "YWNjZXNzLWtleQ=="})
+    Azure::Storage::Blob::BlobService.create({storage_account_name: "mockaccount", storage_access_key: "YWNjZXNzLWtleQ=="})
   }
   let(:serialization) { Azure::Storage::Blob::Serialization }
   let(:uri) { URI.parse "http://foo.com" }

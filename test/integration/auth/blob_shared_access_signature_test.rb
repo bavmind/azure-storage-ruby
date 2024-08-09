@@ -49,7 +49,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
     it "reads a blob property with SAS in connection string" do
       sas_token = generator.generate_service_sas_token "#{container_name}", service: "b", resource: "c", permissions: "r", protocol: "https"
       connection_string = "BlobEndpoint=https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.blob.core.windows.net;SharedAccessSignature=#{sas_token}"
-      client = Azure::Storage::Blob::BlobService::create_from_connection_string connection_string
+      client = Azure::Storage::Blob::BlobService.create_from_connection_string connection_string
       blob_properties = client.get_blob_properties container_name, block_blob_name
       _(blob_properties).wont_be_nil
       _(blob_properties.name).must_equal block_blob_name

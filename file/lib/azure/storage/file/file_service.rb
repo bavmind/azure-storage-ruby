@@ -79,7 +79,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::File::FileService]
         def create(options = {}, &block)
-          service_options = {client: Azure::Storage::Common::Client::create(options, &block), api_version: Azure::Storage::File::Default::STG_VERSION}
+          service_options = {client: Azure::Storage::Common::Client.create(options, &block), api_version: Azure::Storage::File::Default::STG_VERSION}
           service_options[:user_agent_prefix] = options[:user_agent_prefix] if options[:user_agent_prefix]
           Azure::Storage::File::FileService.new(service_options, &block)
         end
@@ -92,7 +92,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::File::FileService]
         def create_development(proxy_uri = nil, &block)
-          service_options = {client: Azure::Storage::Common::Client::create_development(proxy_uri, &block), api_version: Azure::Storage::File::Default::STG_VERSION}
+          service_options = {client: Azure::Storage::Common::Client.create_development(proxy_uri, &block), api_version: Azure::Storage::File::Default::STG_VERSION}
           Azure::Storage::File::FileService.new(service_options, &block)
         end
 
@@ -100,7 +100,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::File::FileService]
         def create_from_env(&block)
-          service_options = {client: Azure::Storage::Common::Client::create_from_env(&block), api_version: Azure::Storage::File::Default::STG_VERSION}
+          service_options = {client: Azure::Storage::Common::Client.create_from_env(&block), api_version: Azure::Storage::File::Default::STG_VERSION}
           Azure::Storage::File::FileService.new(service_options, &block)
         end
 
@@ -112,7 +112,7 @@ module Azure::Storage
         #
         # @return [Azure::Storage::File::FileService]
         def create_from_connection_string(connection_string, &block)
-          service_options = {client: Azure::Storage::Common::Client::create_from_connection_string(connection_string, &block), api_version: Azure::Storage::File::Default::STG_VERSION}
+          service_options = {client: Azure::Storage::Common::Client.create_from_connection_string(connection_string, &block), api_version: Azure::Storage::File::Default::STG_VERSION}
           Azure::Storage::File::FileService.new(service_options, &block)
         end
       end
@@ -160,7 +160,7 @@ module Azure::Storage
       # When empty options are given, it will try to read settings from Environment Variables. Refer to [Azure::Storage::Common::ClientOptions.env_vars_mapping] for the mapping relationship
       def initialize(options = {}, &block)
         service_options = options.clone
-        client_config = service_options[:client] ||= Azure::Storage::Common::Client::create(service_options, &block)
+        client_config = service_options[:client] ||= Azure::Storage::Common::Client.create(service_options, &block)
         @user_agent_prefix = service_options[:user_agent_prefix] if service_options[:user_agent_prefix]
         @api_version = service_options[:api_version] || Azure::Storage::File::Default::STG_VERSION
         signer = service_options[:signer] || client_config.signer || Azure::Storage::Common::Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
