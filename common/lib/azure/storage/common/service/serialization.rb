@@ -313,7 +313,7 @@ module Azure::Storage::Common
         end
 
         def slopify(xml)
-          node = (xml.is_a? String) ? Nokogiri.Slop(xml).root : xml
+          node = xml.is_a?(String) ? Nokogiri.Slop(xml).root : xml
           node.slop! if node.is_a? Nokogiri::XML::Document unless node.respond_to? :method_missing
           node = node.root if node.is_a? Nokogiri::XML::Document
           node

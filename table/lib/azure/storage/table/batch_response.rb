@@ -101,7 +101,11 @@ module Azure::Storage
         match_boundary = /--changesetresponse_(.*)/.match(current_line(context))
         match_end = /--changesetresponse_(.*)--/.match(current_line(context)) || /--batchresponse_(.*)--/.match(current_line(context))
 
-        (match_boundary && (not match_end)) ? :boundary : (match_end ? :end : nil)
+        if match_boundary && (not match_end)
+          :boundary
+        else
+          (match_end ? :end : nil)
+        end
       end
 
       def self.batch_headers(context)

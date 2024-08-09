@@ -185,7 +185,7 @@ module Azure::Storage::Common::Core::Filter
         else
           since_last_attempt = Time.now - lastAttemptTime
           remainder = retry_data[:interval] - since_last_attempt
-          remainder > 0 ? remainder : 0
+          (remainder > 0) ? remainder : 0
         end
     end
 

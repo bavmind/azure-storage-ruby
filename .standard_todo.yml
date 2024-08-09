@@ -89,11 +89,9 @@ ignore:
   - Style/EachWithObject
 - common/lib/azure/storage/common/core/filter/exponential_retry_filter.rb:
   - Style/SuperWithArgsParentheses
-  - Style/TernaryParentheses
   - Style/NilComparison
 - common/lib/azure/storage/common/core/filter/linear_retry_filter.rb:
   - Style/SuperWithArgsParentheses
-  - Style/TernaryParentheses
   - Style/NilComparison
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Style/SuperWithArgsParentheses
@@ -101,7 +99,6 @@ ignore:
   - Style/SafeNavigation
   - Performance/StringIdentifierArgument
   - Naming/VariableName
-  - Style/TernaryParentheses
   - Style/ConditionalAssignment
   - Style/IfInsideElse
 - common/lib/azure/storage/common/core/http_client.rb:
@@ -119,7 +116,6 @@ ignore:
 - common/lib/azure/storage/common/service/serialization.rb:
   - Lint/AssignmentInCondition
   - Style/MultilineIfModifier
-  - Style/TernaryParentheses
   - Style/NestedModifier
   - Style/IfUnlessModifierOfIfUnless
 - common/lib/azure/storage/common/service/storage_service.rb:
@@ -127,7 +123,6 @@ ignore:
   - Performance/BlockGivenWithExplicitBlock
   - Style/MultilineIfModifier
   - Lint/UselessAssignment
-  - Style/TernaryParentheses
   - Style/RedundantRegexpArgument
   - Style/SuperWithArgsParentheses
   - Style/SafeNavigation
@@ -166,9 +161,7 @@ ignore:
 - table/lib/azure/storage/table/batch_response.rb:
   - Style/IdenticalConditionalBranches
   - Style/Not
-  - Style/NestedTernaryOperator
 - table/lib/azure/storage/table/edmtype.rb:
-  - Style/TernaryParentheses
   - Style/NonNilCheck
   - Style/IfWithBooleanLiteralBranches
 - table/lib/azure/storage/table/query.rb:
@@ -180,7 +173,6 @@ ignore:
   - Style/NestedModifier
   - Style/IfUnlessModifierOfIfUnless
   - Style/MultilineIfModifier
-  - Style/TernaryParentheses
   - Style/SafeNavigation
   - Style/RedundantAssignment
   - Style/RedundantCondition

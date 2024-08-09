@@ -665,7 +665,7 @@ module Azure::Storage
         options[:partition_key] = partition_key
         options[:row_key] = row_key
         results = query_entities(table_name, options)
-        results.length > 0 ? results[0] : nil
+        (results.length > 0) ? results[0] : nil
       end
 
       # Protected: Generate the URI for the collection of tables.

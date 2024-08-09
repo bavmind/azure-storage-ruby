@@ -186,10 +186,10 @@ module Azure::Storage::Common
 
         if client.is_a?(Azure::Storage::Common::Client) && client.options[:use_path_style_uri]
           account_path = get_account_path location
-          path = path.length > 0 ? account_path + "/" + path : account_path
+          path = (path.length > 0) ? account_path + "/" + path : account_path
         end
 
-        @host = location == StorageLocation::PRIMARY ? @storage_service_host[:primary] : @storage_service_host[:secondary]
+        @host = (location == StorageLocation::PRIMARY) ? @storage_service_host[:primary] : @storage_service_host[:secondary]
 
         encode = options[:encode].nil? ? false : options[:encode]
         if encode
