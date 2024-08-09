@@ -3,7 +3,6 @@
 ---
 ignore:
 - Rakefile:
-  - Style/CommandLiteral
   - Performance/RedundantMatch
   - Performance/RegexpMatch
   - Style/FileWrite
