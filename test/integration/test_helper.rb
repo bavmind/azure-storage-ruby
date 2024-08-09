@@ -27,7 +27,7 @@ require "azure/storage/file"
 require "azure/storage/table"
 require "azure/storage/queue"
 
-def SERVICE_CREATE_OPTIONS()
+def SERVICE_CREATE_OPTIONS
   {storage_account_name: ENV.fetch("AZURE_STORAGE_ACCOUNT"), storage_access_key: ENV.fetch("AZURE_STORAGE_ACCESS_KEY")}
 end
 

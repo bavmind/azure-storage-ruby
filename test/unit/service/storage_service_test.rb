@@ -38,8 +38,8 @@ describe Azure::Storage::Common::Service::StorageService do
   end
 
   describe "#call" do
-    let(:mock_request) { mock() }
-    let(:mock_signer_filter) { mock() }
+    let(:mock_request) { mock }
+    let(:mock_signer_filter) { mock }
     let(:mock_headers) {
       {
         "Other-Header" => "SomeValue",
@@ -102,8 +102,8 @@ describe Azure::Storage::Common::Service::StorageService do
       end
 
       it "builds the HTTP pipeline by passing the filters to the HTTPRequest" do
-        filter = mock()
-        filter1 = mock()
+        filter = mock
+        filter1 = mock
 
         subject.with_filter filter
         subject.with_filter filter1
@@ -119,13 +119,13 @@ describe Azure::Storage::Common::Service::StorageService do
   describe "#with_filter" do
     it "appends filters to a list of filters that will be used in the #call method" do
       initial_length = subject.filters.length
-      filter = mock()
+      filter = mock
       subject.with_filter filter
       _(subject.filters.length).must_equal initial_length + 1
     end
 
     it "accepts object instances as filters" do
-      filter = mock()
+      filter = mock
       subject.with_filter filter
       _(subject.filters.last).must_equal filter
     end
@@ -139,8 +139,8 @@ describe Azure::Storage::Common::Service::StorageService do
     it "preserves the order of the filters" do
       subject.filters = []
 
-      filter = mock()
-      filter1 = mock()
+      filter = mock
+      filter1 = mock
 
       subject.with_filter filter
       subject.with_filter filter1
@@ -158,7 +158,7 @@ describe Azure::Storage::Common::Service::StorageService do
     let(:service_properties_xml) { Fixtures["storage_service_properties"] }
     let(:service_properties) { Azure::Storage::Common::Service::StorageServiceProperties.new }
     let(:response) {
-      response = mock()
+      response = mock
       response.stubs(:body).returns(service_properties_xml)
       response
     }
@@ -206,7 +206,7 @@ describe Azure::Storage::Common::Service::StorageService do
     let(:service_properties_xml) { Fixtures["storage_service_properties"] }
     let(:service_properties) { Azure::Storage::Common::Service::StorageServiceProperties.new }
     let(:response) {
-      response = mock()
+      response = mock
       response.stubs(:success?).returns(true)
       response
     }
@@ -276,7 +276,7 @@ describe Azure::Storage::Common::Service::StorageService do
       }
     }
     let(:response) {
-      response = mock()
+      response = mock
       response.stubs(:body).returns(service_stats_xml)
       response
     }

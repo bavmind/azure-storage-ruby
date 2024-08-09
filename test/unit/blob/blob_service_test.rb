@@ -38,8 +38,8 @@ describe Azure::Storage::Blob::BlobService do
   let(:request_body) { "request-body" }
 
   let(:response_headers) { {} }
-  let(:response_body) { mock() }
-  let(:response) { mock() }
+  let(:response_body) { mock }
+  let(:response) { mock }
 
   before {
     response.stubs(:body).returns(response_body)
@@ -1134,7 +1134,7 @@ describe Azure::Storage::Blob::BlobService do
       describe "#commit_blob_blocks" do
         let(:verb) { :put }
         let(:request_body) { "body" }
-        let(:block_list) { mock() }
+        let(:block_list) { mock }
         let(:request_headers) { {"x-ms-blob-content-type" => "application/octet-stream"} }
 
         before {

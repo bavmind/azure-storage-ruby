@@ -69,7 +69,7 @@ describe Azure::Storage::Common::Service::Serialization do
 
   describe "#signed_identifier_from_xml" do
     let(:signed_identifier_xml) { Nokogiri.Slop(Fixtures["container_acl"]).root.SignedIdentifier }
-    let(:mock_access_policy) { mock() }
+    let(:mock_access_policy) { mock }
     before { subject.expects(:access_policy_from_xml).with(signed_identifier_xml.AccessPolicy).returns(mock_access_policy) }
 
     it "accepts an XML node" do
@@ -520,7 +520,7 @@ describe Azure::Storage::Common::Service::Serialization do
   end
 
   describe "#expect_node" do
-    let(:node) { mock() }
+    let(:node) { mock }
     it "throws an error if the xml node doesn't match the passed element name" do
       node.expects(:name).returns("NotFoo")
       assert_raises RuntimeError do

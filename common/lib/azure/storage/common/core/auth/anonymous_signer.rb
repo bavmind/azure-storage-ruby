@@ -30,7 +30,7 @@ module Azure::Storage::Common::Core
   module Auth
     class AnonymousSigner < Azure::Core::Auth::Signer
       # Public: Initialize the Anonymous Signer
-      def initialize()
+      def initialize
         # Use mock key to initialize super class
         super(Base64.strict_encode64("accesskey"))
       end

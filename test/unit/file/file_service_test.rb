@@ -38,8 +38,8 @@ describe Azure::Storage::File::FileService do
   let(:request_body) { "request-body" }
 
   let(:response_headers) { {} }
-  let(:response_body) { mock() }
-  let(:response) { mock() }
+  let(:response_body) { mock }
+  let(:response) { mock }
 
   let(:share_name) { "share-name" }
   let(:directory_path) { "directory_path" }

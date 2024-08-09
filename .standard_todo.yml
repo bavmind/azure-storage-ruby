@@ -63,8 +63,6 @@ ignore:
   - Style/Proc
 - common/lib/azure/storage/common/configurable.rb:
   - Naming/VariableName
-- common/lib/azure/storage/common/core/auth/anonymous_signer.rb:
-  - Style/DefWithParentheses
 - common/lib/azure/storage/common/core/auth/shared_access_signature.rb:
   - Style/MixinUsage
 - common/lib/azure/storage/common/core/auth/shared_access_signature_generator.rb:
@@ -210,7 +208,6 @@ ignore:
 - test/integration/table/update_entity_batch_test.rb:
   - Lint/UselessAssignment
 - test/integration/test_helper.rb:
-  - Style/DefWithParentheses
   - Lint/UnderscorePrefixedVariableName
   - Lint/UselessAssignment
 - test/support/env.rb:
@@ -220,7 +217,6 @@ ignore:
   - Lint/DuplicateMethods
   - Lint/AmbiguousOperator
 - test/unit/blob/blob_service_test.rb:
-  - Style/MethodCallWithoutArgsParentheses
   - Lint/ConstantDefinitionInBlock
 - test/unit/config/client_services_test.rb:
   - Naming/VariableName
@@ -233,12 +229,7 @@ ignore:
 - test/unit/core/utility_test.rb:
   - Lint/UselessAssignment
 - test/unit/file/file_service_test.rb:
-  - Style/MethodCallWithoutArgsParentheses
   - Performance/RedundantMerge
   - Lint/UselessAssignment
-- test/unit/service/serialization_test.rb:
-  - Style/MethodCallWithoutArgsParentheses
-- test/unit/service/storage_service_test.rb:
-  - Style/MethodCallWithoutArgsParentheses
 - test/unit/table/edmtype_test.rb:
   - Naming/VariableName
