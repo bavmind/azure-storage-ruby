@@ -442,10 +442,12 @@ module Azure::Storage
         entities = Azure::Storage::Common::Service::EnumerationResults.new.push(*Serialization.entities_from_json(response.body))
 
         entities.continuation_token = nil
-        entities.continuation_token = {
-          next_partition_key: response.headers[TableConstants::CONTINUATION_NEXT_PARTITION_KEY],
-          next_row_key: response.headers[TableConstants::CONTINUATION_NEXT_ROW_KEY]
-        } if response.headers[TableConstants::CONTINUATION_NEXT_PARTITION_KEY]
+        if response.headers[TableConstants::CONTINUATION_NEXT_PARTITION_KEY]
+          entities.continuation_token = {
+            next_partition_key: response.headers[TableConstants::CONTINUATION_NEXT_PARTITION_KEY],
+            next_row_key: response.headers[TableConstants::CONTINUATION_NEXT_ROW_KEY]
+          }
+        end
 
         entities
       rescue => e

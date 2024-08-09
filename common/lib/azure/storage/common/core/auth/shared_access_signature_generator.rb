@@ -246,25 +246,31 @@ module Azure::Storage::Common::Core
           Azure::Storage::Common::Default::STG_VERSION
         ]
 
-        signable_fields.concat [
-          options[:resource],
-          options[:timestamp]
-        ] if service_type == Azure::Storage::Common::ServiceType::BLOB
+        if service_type == Azure::Storage::Common::ServiceType::BLOB
+          signable_fields.concat [
+            options[:resource],
+            options[:timestamp]
+          ]
+        end
 
-        signable_fields.concat [
-          options[:cache_control],
-          options[:content_disposition],
-          options[:content_encoding],
-          options[:content_language],
-          options[:content_type]
-        ] if service_type == Azure::Storage::Common::ServiceType::BLOB || service_type == Azure::Storage::Common::ServiceType::FILE
+        if service_type == Azure::Storage::Common::ServiceType::BLOB || service_type == Azure::Storage::Common::ServiceType::FILE
+          signable_fields.concat [
+            options[:cache_control],
+            options[:content_disposition],
+            options[:content_encoding],
+            options[:content_language],
+            options[:content_type]
+          ]
+        end
 
-        signable_fields.concat [
-          options[:startpk],
-          options[:startrk],
-          options[:endpk],
-          options[:endrk]
-        ] if service_type == Azure::Storage::Common::ServiceType::TABLE
+        if service_type == Azure::Storage::Common::ServiceType::TABLE
+          signable_fields.concat [
+            options[:startpk],
+            options[:startrk],
+            options[:endpk],
+            options[:endrk]
+          ]
+        end
 
         signable_fields.join "\n"
       end

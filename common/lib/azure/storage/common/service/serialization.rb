@@ -144,10 +144,12 @@ module Azure::Storage::Common
         end
 
         def retention_policy_to_xml(retention_policy, xml)
-          xml.RetentionPolicy {
-            xml.Enabled retention_policy.enabled
-            xml.Days retention_policy.days if retention_policy.enabled && retention_policy.days
-          } if retention_policy
+          if retention_policy
+            xml.RetentionPolicy {
+              xml.Enabled retention_policy.enabled
+              xml.Days retention_policy.days if retention_policy.enabled && retention_policy.days
+            }
+          end
         end
 
         def retention_policy_from_xml(xml)
@@ -169,15 +171,19 @@ module Azure::Storage::Common
         end
 
         def hour_metrics_to_xml(metrics, xml)
-          xml.HourMetrics {
-            metrics_to_xml_children(metrics, xml)
-          } if metrics
+          if metrics
+            xml.HourMetrics {
+              metrics_to_xml_children(metrics, xml)
+            }
+          end
         end
 
         def minute_metrics_to_xml(metrics, xml)
-          xml.MinuteMetrics {
-            metrics_to_xml_children(metrics, xml)
-          } if metrics
+          if metrics
+            xml.MinuteMetrics {
+              metrics_to_xml_children(metrics, xml)
+            }
+          end
         end
 
         def metrics_from_xml(xml)
@@ -192,13 +198,15 @@ module Azure::Storage::Common
         end
 
         def logging_to_xml(logging, xml)
-          xml.Logging {
-            xml.Version logging.version
-            xml.Delete logging.delete
-            xml.Read logging.read
-            xml.Write logging.write
-            retention_policy_to_xml(logging.retention_policy, xml)
-          } if logging
+          if logging
+            xml.Logging {
+              xml.Version logging.version
+              xml.Delete logging.delete
+              xml.Read logging.read
+              xml.Write logging.write
+              retention_policy_to_xml(logging.retention_policy, xml)
+            }
+          end
         end
 
         def logging_from_xml(xml)

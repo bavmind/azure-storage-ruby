@@ -85,7 +85,6 @@ ignore:
 - common/lib/azure/storage/common/core/auth/shared_access_signature_generator.rb:
   - Performance/RedundantMerge
   - Style/HashConversion
-  - Style/MultilineIfModifier
   - Style/EachWithObject
 - common/lib/azure/storage/common/core/filter/exponential_retry_filter.rb:
   - Style/SuperWithArgsParentheses
@@ -115,13 +114,11 @@ ignore:
   - Naming/ConstantName
 - common/lib/azure/storage/common/service/serialization.rb:
   - Lint/AssignmentInCondition
-  - Style/MultilineIfModifier
   - Style/NestedModifier
   - Style/IfUnlessModifierOfIfUnless
 - common/lib/azure/storage/common/service/storage_service.rb:
   - Style/ArgumentsForwarding
   - Performance/BlockGivenWithExplicitBlock
-  - Style/MultilineIfModifier
   - Lint/UselessAssignment
   - Style/RedundantRegexpArgument
   - Style/SuperWithArgsParentheses
@@ -172,7 +169,6 @@ ignore:
   - Style/NilComparison
   - Style/NestedModifier
   - Style/IfUnlessModifierOfIfUnless
-  - Style/MultilineIfModifier
   - Style/SafeNavigation
   - Style/RedundantAssignment
   - Style/RedundantCondition
