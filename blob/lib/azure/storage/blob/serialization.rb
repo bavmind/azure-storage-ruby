@@ -304,7 +304,7 @@ module Azure::Storage
           end
         end
 
-        return block_list unless (xml > "UncommittedBlocks")
+        return block_list unless xml > "UncommittedBlocks"
 
         if ((xml > "UncommittedBlocks") > "Block").any?
           if xml.UncommittedBlocks.Block.count == 0

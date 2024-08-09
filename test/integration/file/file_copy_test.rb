@@ -75,7 +75,7 @@ describe Azure::Storage::File::FileService do
 
       counter = 0
       finished = false
-      while (counter < (10) && (not finished))
+      while counter < (10) && (not finished)
         sleep(1)
         file = subject.get_file_properties dest_share_name, dest_directory_name, dest_file_name
         _(file.properties[:copy_id]).must_equal copy_id
@@ -96,7 +96,7 @@ describe Azure::Storage::File::FileService do
 
       counter = 0
       finished = false
-      while (counter < (10) && (not finished))
+      while counter < (10) && (not finished)
         sleep(1)
         file = subject.get_file_properties dest_share_name, dest_directory_name, dest_file_name
         _(file.properties[:copy_id]).must_equal copy_id

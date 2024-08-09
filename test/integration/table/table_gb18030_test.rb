@@ -79,7 +79,7 @@ describe "Table GB-18030" do
       result = subject.insert_entity table_name, entity_properties
       subject.insert_entity table_name, entity_properties2
       _(result.properties[prop]).must_equal "value"
-      if (k != "Chinese_2B5" && k != "Tibetan")
+      if k != "Chinese_2B5" && k != "Tibetan"
         filter = prop + " eq 'value'"
         result = subject.query_entities table_name, filter: filter
         _(result.length).must_equal 1
@@ -107,7 +107,7 @@ describe "Table GB-18030" do
       result = subject.insert_entity table_name, entity_properties
       subject.insert_entity table_name, entity_properties2
       _(result.properties[prop.encode("UTF-8")]).must_equal "value"
-      if (k != "Chinese_2B5" && k != "Tibetan")
+      if k != "Chinese_2B5" && k != "Tibetan"
         filter = prop + " eq 'value'"
         result = subject.query_entities table_name, filter: filter
         _(result.length).must_equal 1
@@ -231,7 +231,7 @@ describe "Table GB-18030" do
       batch.insert k + counter.to_s + "2", prop => "value2"
       results = subject.execute_batch batch
       _(results[0].properties[prop]).must_equal "value"
-      if (k != "Chinese_2B5" && k != "Tibetan")
+      if k != "Chinese_2B5" && k != "Tibetan"
         filter = prop + " eq 'value'"
         result = subject.query_entities table_name, filter: filter
         _(result.length).must_equal 1
@@ -250,7 +250,7 @@ describe "Table GB-18030" do
       batch.insert k + counter.to_s + "2", prop => "value2"
       results = subject.execute_batch batch
       _(results[0].properties[prop.encode("UTF-8")]).must_equal "value"
-      if (k != "Chinese_2B5" && k != "Tibetan")
+      if k != "Chinese_2B5" && k != "Tibetan"
         filter = prop + " eq 'value'"
         result = subject.query_entities table_name, filter: filter
         _(result.length).must_equal 1

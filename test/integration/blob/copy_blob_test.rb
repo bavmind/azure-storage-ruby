@@ -59,7 +59,7 @@ describe Azure::Storage::Blob::BlobService do
 
       counter = 0
       finished = false
-      while (counter < (10) && (not finished))
+      while counter < (10) && (not finished)
         sleep(1)
         blob = subject.get_blob_properties dest_container_name, dest_blob_name
         _(blob.properties[:copy_id]).must_equal copy_id
@@ -80,7 +80,7 @@ describe Azure::Storage::Blob::BlobService do
 
       counter = 0
       finished = false
-      while (counter < (10) && (not finished))
+      while counter < (10) && (not finished)
         sleep(1)
         blob = subject.get_blob_properties dest_container_name, dest_blob_name
         _(blob.properties[:copy_id]).must_equal copy_id

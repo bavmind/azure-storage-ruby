@@ -6,7 +6,6 @@ ignore:
   - Style/CommandLiteral
   - Performance/RedundantMatch
   - Performance/RegexpMatch
-  - Style/ParenthesesAroundCondition
   - Style/RedundantInterpolation
   - Style/StringLiteralsInInterpolation
   - Style/FileWrite
@@ -15,7 +14,6 @@ ignore:
 - blob/lib/azure/storage/blob/append.rb:
   - Style/NegatedWhile
 - blob/lib/azure/storage/blob/blob.rb:
-  - Style/RedundantParentheses
   - Style/Not
   - Style/RedundantReturn
   - Style/Semicolon
@@ -39,17 +37,12 @@ ignore:
 - blob/lib/azure/storage/blob/default.rb:
   - Naming/ConstantName
 - blob/lib/azure/storage/blob/page.rb:
-  - Style/RedundantParentheses
   - Style/Not
   - Style/RedundantAssignment
   - Style/RedundantReturn
   - Style/For
-- blob/lib/azure/storage/blob/serialization.rb:
-  - Style/ParenthesesAroundCondition
 - common/azure-storage-common.gemspec:
   - Style/RedundantCurrentDirectoryInPath
-  - Style/ParenthesesAroundCondition
-  - Style/RedundantParentheses
 - common/lib/azure/core/filtered_service.rb:
   - Style/SafeNavigation
   - Performance/ReverseEach
@@ -84,7 +77,6 @@ ignore:
 - common/lib/azure/core/utility.rb:
   - Performance/RegexpMatch
   - Lint/RescueException
-  - Style/RedundantParentheses
   - Performance/Count
   - Lint/DeprecatedOpenSSLConstant
   - Style/TrailingCommaInHashLiteral
@@ -141,8 +133,6 @@ ignore:
   - Style/ConditionalAssignment
   - Style/IfInsideElse
   - Style/RedundantCondition
-  - Style/ParenthesesAroundCondition
-  - Style/RedundantParentheses
   - Style/EmptyElse
 - common/lib/azure/storage/common/core/http_client.rb:
   - Style/UnlessElse
@@ -151,10 +141,8 @@ ignore:
 - common/lib/azure/storage/common/core/utility.rb:
   - Performance/RegexpMatch
   - Lint/RescueException
-  - Style/RedundantParentheses
   - Performance/Count
   - Lint/DeprecatedOpenSSLConstant
-  - Style/ParenthesesAroundCondition
   - Performance/FixedSize
   - Style/TrailingCommaInHashLiteral
   - Style/RedundantSelf
@@ -188,7 +176,6 @@ ignore:
 - file/azure-storage-file.gemspec:
   - Style/RedundantCurrentDirectoryInPath
 - file/lib/azure/storage/file/file.rb:
-  - Style/RedundantParentheses
   - Style/Not
   - Style/RedundantReturn
   - Style/Semicolon
@@ -226,10 +213,8 @@ ignore:
   - Standard/BlockSingleLineBraces
   - Style/SafeNavigation
 - table/lib/azure/storage/table/batch_response.rb:
-  - Style/ParenthesesAroundCondition
   - Style/IdenticalConditionalBranches
   - Style/RedundantReturn
-  - Style/RedundantParentheses
   - Style/Not
   - Style/EmptyElse
   - Style/NestedTernaryOperator
@@ -318,8 +303,6 @@ ignore:
 - test/integration/blob/copy_blob_test.rb:
   - Style/Semicolon
   - Lint/UselessAssignment
-  - Style/ParenthesesAroundCondition
-  - Style/RedundantParentheses
   - Style/Not
   - Style/NestedParenthesizedCalls
 - test/integration/blob/create_blob_snapshot_test.rb:
@@ -346,8 +329,6 @@ ignore:
   - Style/StringLiteralsInInterpolation
   - Style/Semicolon
   - Lint/UselessAssignment
-  - Style/ParenthesesAroundCondition
-  - Style/RedundantParentheses
   - Style/Not
   - Style/NestedParenthesizedCalls
 - test/integration/file/file_gb18030_test.rb:
@@ -419,8 +400,6 @@ ignore:
   - Style/SelfAssignment
   - Style/Semicolon
   - Style/TrailingCommaInHashLiteral
-  - Style/ParenthesesAroundCondition
-  - Style/RedundantParentheses
   - Lint/UselessAssignment
 - test/integration/table/update_entity_batch_test.rb:
   - Lint/UselessAssignment

@@ -39,7 +39,7 @@ module Azure::Storage
           find(context) { |c| response_headers c }
           find(context) { |c| response_body c }
         else
-          while (find(context) { |c| changeset_boundary_or_end c } == :boundary)
+          while find(context) { |c| changeset_boundary_or_end c } == :boundary
             find(context) { |c| changeset_headers c }
             find(context) { |c| response c }
             find(context) { |c| response_headers c }
@@ -51,7 +51,7 @@ module Azure::Storage
       end
 
       def self.find(context, &block)
-        while (context[:index] < context[:lines].length)
+        while context[:index] < context[:lines].length
           result = block.call(context)
           return result if result
           context[:index] += 1

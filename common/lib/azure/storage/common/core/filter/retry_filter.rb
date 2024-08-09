@@ -220,7 +220,7 @@ module Azure::Storage::Common::Core::Filter
       if retry_data[:secondary_not_found]
         retry_data[:status_code] = 500
       else
-        if (response.status_code)
+        if response.status_code
           retry_data[:status_code] = response.status_code
         else
           retry_data[:status_code] = nil
@@ -232,31 +232,31 @@ module Azure::Storage::Common::Core::Filter
     #
     # retry_data - Hash. Stores stateful retry data
     def check_status_code(retry_data)
-      if (retry_data[:status_code] < 400)
+      if retry_data[:status_code] < 400
         retry_data[:retryable] = false;
       # Non-timeout Cases
-      elsif (retry_data[:status_code] != 408)
+      elsif retry_data[:status_code] != 408
         # Always no retry on "not implemented" and "version not supported"
-        if (retry_data[:status_code] == 501 || retry_data[:status_code] == 505)
+        if retry_data[:status_code] == 501 || retry_data[:status_code] == 505
           retry_data[:retryable] = false;
         end
 
         # When absorb_conditional_errors_on_retry is set (for append blob)
-        if (@request_options[:absorb_conditional_errors_on_retry])
-          if (retry_data[:status_code] == 412)
+        if @request_options[:absorb_conditional_errors_on_retry]
+          if retry_data[:status_code] == 412
             # When appending block with precondition failure and their was a server error before, we ignore the error.
-            if (retry_data[:last_server_error])
+            if retry_data[:last_server_error]
               retry_data[:error] = nil;
               retry_data[:retryable] = true;
             else
               retry_data[:retryable] = false;
             end
-          elsif (retry_data[:retryable] && retry_data[:status_code] >= 500 && retry_data[:status_code] < 600)
+          elsif retry_data[:retryable] && retry_data[:status_code] >= 500 && retry_data[:status_code] < 600
             # Retry on the server error
             retry_data[:retryable] = true;
             retry_data[:last_server_error] = true;
           end
-        elsif (retry_data[:status_code] < 500)
+        elsif retry_data[:status_code] < 500
           # No retry on the client error
           retry_data[:retryable] = false;
         end

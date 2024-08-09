@@ -89,7 +89,7 @@ module Azure::Storage::Common
       end
 
       def enable_winrm?(winrm_transport)
-        (!winrm_transport.nil? && (winrm_transport.select { |x| x.downcase == "http" || x.downcase == "https" }.size > 0))
+        !winrm_transport.nil? && (winrm_transport.select { |x| x.downcase == "http" || x.downcase == "https" }.size > 0)
       end
 
       def get_certificate(private_key_file)
@@ -111,7 +111,7 @@ module Azure::Storage::Common
       end
 
       def parse_charset_from_content_type(content_type)
-        if (content_type && content_type.length > 0)
+        if content_type && content_type.length > 0
           charset = content_type.split(";").delete_if { |attribute| !attribute.lstrip.start_with?("charset=") }.map { |x| x.lstrip }[0]
           charset["charset=".length...charset.length] if charset
         end

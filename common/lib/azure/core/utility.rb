@@ -77,7 +77,7 @@ module Azure
       end
 
       def enable_winrm?(winrm_transport)
-        (!winrm_transport.nil? && (winrm_transport.select { |x| x.downcase == "http" || x.downcase == "https" }.size > 0))
+        !winrm_transport.nil? && (winrm_transport.select { |x| x.downcase == "http" || x.downcase == "https" }.size > 0)
       end
 
       def get_certificate(private_key_file)

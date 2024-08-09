@@ -74,10 +74,10 @@ task :publishDoc do
   system "git remote set-url --push origin #{repo}"
   system "git remote set-branches --add origin #{deploy_branch}"
   system "git fetch -q"
-  if ("#{ENV['GIT_NAME']}" != "")
+  if "#{ENV['GIT_NAME']}" != ""
     system "git config user.name '#{ENV['GIT_NAME']}'"
   end
-  if ("#{ENV['GIT_EMAIL']}" != "")
+  if "#{ENV['GIT_EMAIL']}" != ""
     system "git config user.email '#{ENV['GIT_EMAIL']}'"
   end
   system 'git config credential.helper "store --file=.git/credentials"'
