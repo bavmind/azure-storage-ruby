@@ -67,7 +67,7 @@ describe Azure::Storage::Table::TableService do
       _(result.etag).must_equal etag
 
       entity.each { |k, v|
-        unless entity[k].class == Time
+        unless entity[k].instance_of?(Time)
           _(result.properties[k]).must_equal entity[k]
         else
           _(result.properties[k].to_i).must_equal entity[k].to_i
@@ -107,7 +107,7 @@ describe Azure::Storage::Table::TableService do
 
       # retained all existing props
       entity.each { |k, v|
-        if entity[k].class == Time
+        if entity[k].instance_of?(Time)
           _(result.properties[k].to_i).must_equal entity[k].to_i
         else
           _(result.properties[k]).must_equal entity[k]

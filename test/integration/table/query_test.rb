@@ -80,7 +80,7 @@ describe Azure::Storage::Table::TableService do
       result.each { |e|
         _(entities[e.properties["PartitionKey"]]).must_include e.properties["RowKey"]
         entity_properties.each { |k, v|
-          unless v.class == Time
+          unless v.instance_of?(Time)
             _(e.properties[k]).must_equal v
           else
             _(e.properties[k].to_i).must_equal v.to_i
@@ -105,7 +105,7 @@ describe Azure::Storage::Table::TableService do
       result.each { |e|
         _(e.properties["RowKey"]).must_equal row_key
         entity_properties.each { |k, v|
-          unless v.class == Time
+          unless v.instance_of?(Time)
             _(e.properties[k]).must_equal v
           else
             _(e.properties[k].to_i).must_equal v.to_i
