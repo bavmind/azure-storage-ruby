@@ -90,7 +90,7 @@ module Azure
         cert.not_before = Time.now
         cert.not_after = cert.not_before + (60 * 60 * 24 * 365)
         cert.public_key = rsa.public_key
-        cert.sign(rsa, OpenSSL::Digest::SHA1.new)
+        cert.sign(rsa, OpenSSL::Digest.new("SHA1"))
         cert
       end
 
