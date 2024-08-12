@@ -218,7 +218,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.delete_share share_name
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
 
@@ -245,7 +245,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_share_properties share_name
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
 
       describe "when the options Hash is used" do
@@ -379,7 +379,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_share_metadata share_name, share_metadata
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
 
@@ -724,7 +724,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_directory_metadata share_name, directory_path, directory_metadata
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
   end
@@ -1046,7 +1046,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_file_properties share_name, directory_path, file_name
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
 
       describe "when the options Hash is used" do
@@ -1163,7 +1163,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_file_metadata share_name, directory_path, file_name, file_metadata
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
 
@@ -1327,7 +1327,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.delete_file share_name, directory_path, file_name
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
 

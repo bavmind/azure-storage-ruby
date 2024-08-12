@@ -122,7 +122,7 @@ describe Azure::Storage::Table::TableService do
 
       # and has the new one
       _(result.properties["NewCustomProperty"]).must_equal "NewCustomValue"
-      _(result.properties["NewNilProperty"]).must_equal nil
+      _(result.properties["NewNilProperty"]).must_be_nil
     end
 
     it "errors on an invalid table name" do
