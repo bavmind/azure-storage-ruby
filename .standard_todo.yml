@@ -18,8 +18,6 @@ ignore:
   - Lint/Loop
 - common/lib/azure/core/http/signer_filter.rb:
   - Lint/UnderscorePrefixedVariableName
-- common/lib/azure/core/utility.rb:
-  - Performance/Count
 - common/lib/azure/storage/common/client_options.rb:
   - Style/MissingRespondToMissing
 - common/lib/azure/storage/common/configurable.rb:
@@ -29,7 +27,6 @@ ignore:
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Naming/VariableName
 - common/lib/azure/storage/common/core/utility.rb:
-  - Performance/Count
   - Performance/FixedSize
 - common/lib/azure/storage/common/default.rb:
   - Naming/ConstantName
