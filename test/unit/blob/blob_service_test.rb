@@ -24,6 +24,20 @@
 require "unit/test_helper"
 require "azure/storage/blob"
 
+class MockBlobService < Azure::Storage::Blob::BlobService
+  def containers_uri(query = {})
+    super
+  end
+
+  def container_uri(name, query = {})
+    super
+  end
+
+  def blob_uri(container_name, blob_name, query = {})
+    super
+  end
+end
+
 describe Azure::Storage::Blob::BlobService do
   let(:user_agent_prefix) { "azure_storage_ruby_unit_test" }
   subject {
@@ -2756,20 +2770,6 @@ describe Azure::Storage::Blob::BlobService do
           end
         end
       end
-    end
-  end
-
-  class MockBlobService < Azure::Storage::Blob::BlobService
-    def containers_uri(query = {})
-      super
-    end
-
-    def container_uri(name, query = {})
-      super
-    end
-
-    def blob_uri(container_name, blob_name, query = {})
-      super
     end
   end
 

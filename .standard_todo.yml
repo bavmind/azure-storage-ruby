@@ -72,7 +72,6 @@ ignore:
   - Lint/UselessAssignment
 - test/integration/blob/append_blob_test.rb:
   - Naming/VariableName
-  - Lint/ConstantDefinitionInBlock
 - test/integration/blob/blob_anonymous_access_test.rb:
   - Lint/UselessAssignment
 - test/integration/blob/blob_gb18030_test.rb:
@@ -140,8 +139,6 @@ ignore:
 - test/support/fixtures.rb:
   - Lint/AssignmentInCondition
   - Lint/DuplicateMethods
-- test/unit/blob/blob_service_test.rb:
-  - Lint/ConstantDefinitionInBlock
 - test/unit/config/client_services_test.rb:
   - Naming/VariableName
 - test/unit/core/utility_test.rb:

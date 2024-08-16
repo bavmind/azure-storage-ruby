@@ -23,6 +23,20 @@
 #--------------------------------------------------------------------------
 require "integration/test_helper"
 
+class LocalFakeString
+  def initialize(string)
+    @string = StringIO.new(string)
+  end
+
+  def read(length)
+    @string.read(length)
+  end
+
+  def eof?
+    @string.eof?
+  end
+end
+
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
@@ -47,19 +61,6 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "4MB + 1 byte IO with no 'size' and 4MB max size fails with max size condition not met" do
-      class LocalFakeString
-        def initialize(string)
-          @string = StringIO.new(string)
-        end
-
-        def read(length)
-          @string.read(length)
-        end
-
-        def eof?
-          @string.eof?
-        end
-      end
       length = 4 * 1024 * 1024 + 1
       maxSize = length - 1
       content = LocalFakeString.new(SecureRandom.random_bytes(length))
