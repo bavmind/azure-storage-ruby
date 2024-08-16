@@ -24,11 +24,11 @@
 require "azure/core/http/retry_policy"
 
 Fixtures = Hash.new do |hash, fixture|
-  if path = Fixtures.xml?(fixture)
+  if (path = Fixtures.xml?(fixture))
     hash[fixture] = path.read
-  elsif path = Fixtures.json?(fixture)
+  elsif (path = Fixtures.json?(fixture))
     hash[fixture] = path.read
-  elsif path = Fixtures.file?(fixture)
+  elsif (path = Fixtures.file?(fixture))
     hash[fixture] = path
   end
 end
@@ -53,9 +53,9 @@ end
 module Azure
   module Core
     Fixtures = Hash.new do |hash, fixture|
-      if path = Fixtures.xml?(fixture)
+      if (path = Fixtures.xml?(fixture))
         hash[fixture] = path.read
-      elsif path = Fixtures.file?(fixture)
+      elsif (path = Fixtures.file?(fixture))
         hash[fixture] = path
       end
     end

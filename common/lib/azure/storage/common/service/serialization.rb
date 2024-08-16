@@ -130,7 +130,7 @@ module Azure::Storage::Common
           metadata = {}
 
           headers.each { |k, v|
-            if key = k[/^x-ms-meta-(.*)/, 1]
+            if (key = k[/^x-ms-meta-(.*)/, 1])
               if metadata.has_key? key
                 metadata[key] = [metadata[key]] unless metadata[key].respond_to? :push
                 metadata[key].push(v)

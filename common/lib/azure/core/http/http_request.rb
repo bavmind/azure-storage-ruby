@@ -177,7 +177,7 @@ module Azure
           headers["Content-Length"] = body.size.to_s
           unless headers["Content-MD5"]
             headers["Content-MD5"] = Digest::MD5.new.tap do |checksum|
-              while chunk = body.read(5242880)
+              while (chunk = body.read(5242880))
                 checksum << chunk
               end
               body.rewind

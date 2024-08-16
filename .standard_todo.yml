@@ -4,7 +4,6 @@
 ignore:
 - common/lib/azure/core/http/http_request.rb:
   - Lint/DuplicateMethods
-  - Lint/AssignmentInCondition
 - common/lib/azure/core/http/retry_policy.rb:
   - Lint/Loop
 - common/lib/azure/storage/common/client_options.rb:
@@ -13,10 +12,7 @@ ignore:
   - Style/MixinUsage
 - common/lib/azure/storage/common/core/utility.rb:
   - Performance/FixedSize
-- common/lib/azure/storage/common/service/serialization.rb:
-  - Lint/AssignmentInCondition
 - test/integration/queue/list_queues_test.rb:
   - Lint/Loop
 - test/support/fixtures.rb:
-  - Lint/AssignmentInCondition
   - Lint/DuplicateMethods
