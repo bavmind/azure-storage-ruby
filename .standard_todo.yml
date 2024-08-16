@@ -2,8 +2,6 @@
 # Remove from this list as you refactor files.
 ---
 ignore:
-- blob/lib/azure/storage/blob/default.rb:
-  - Naming/ConstantName
 - common/lib/azure/core/http/debug_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/http/http_filter.rb:
@@ -22,8 +20,6 @@ ignore:
   - Style/MixinUsage
 - common/lib/azure/storage/common/core/utility.rb:
   - Performance/FixedSize
-- common/lib/azure/storage/common/default.rb:
-  - Naming/ConstantName
 - common/lib/azure/storage/common/service/serialization.rb:
   - Lint/AssignmentInCondition
 - test/integration/queue/list_queues_test.rb:

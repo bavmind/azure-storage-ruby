@@ -754,18 +754,18 @@ module Azure::Storage::Common
 
     # Response codes.
     module HttpResponseCodes
-      Ok = 200
-      Created = 201
-      Accepted = 202
-      NoContent = 204
-      PartialContent = 206
-      BadRequest = 400
-      Unauthorized = 401
-      Forbidden = 403
-      NotFound = 404
-      Conflict = 409
-      LengthRequired = 411
-      PreconditionFailed = 412
+      OK = 200
+      CREATED = 201
+      ACCEPTED = 202
+      NO_CONTENT = 204
+      PARTIAL_CONTENT = 206
+      BAD_REQUEST = 400
+      UNAUTHORIZED = 401
+      FORBIDDEN = 403
+      NOT_FOUND = 404
+      CONFLICT = 409
+      LENGTH_REQUIRED = 411
+      PRECONDITION_FAILED = 412
     end
   end
 

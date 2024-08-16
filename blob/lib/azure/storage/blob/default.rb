@@ -130,8 +130,8 @@ module Azure::Storage::Blob
 
     # List blob types.
     module ListBlobTypes
-      Blob = "b"
-      Directory = "d"
+      BLOB = "b"
+      DIRECTORY = "d"
     end
 
     # Put page write options
