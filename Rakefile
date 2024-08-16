@@ -68,7 +68,7 @@ task :publishDoc do
   desc "Generate documents and publish to GitHub Pages"
   repo = `git config remote.origin.url`.gsub(/^git:/, "https:")
   deploy_branch = "gh-pages"
-  if repo.match(/github\.com\.git$/)
+  if repo.match?(/github\.com\.git$/)
     deploy_branch = "main"
   end
   system "git remote set-url --push origin #{repo}"

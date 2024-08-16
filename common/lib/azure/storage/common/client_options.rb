@@ -267,7 +267,7 @@ module Azure::Storage::Common
       if options[:default_endpoints_protocol]
         [:storage_blob_host, :storage_table_host, :storage_file_host, :storage_queue_host].each do |k|
           if options[k]
-            raise InvalidOptionsError, "Explict host cannot contain scheme if default_endpoints_protocol is set." if options[k] =~ /^https?/
+            raise InvalidOptionsError, "Explict host cannot contain scheme if default_endpoints_protocol is set." if /^https?/.match?(options[k])
             options[k] = "#{options[:default_endpoints_protocol]}://#{options[k]}"
           end
         end
@@ -282,7 +282,7 @@ module Azure::Storage::Common
 
     def is_url
       proc do |i|
-        i = "http://" + i unless i =~ /\Ahttps?:\/\//
+        i = "http://" + i unless /\Ahttps?:\/\//.match?(i)
         i =~ URI::DEFAULT_PARSER.make_regexp(["http", "https"])
       end
     end

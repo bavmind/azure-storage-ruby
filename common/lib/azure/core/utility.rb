@@ -17,7 +17,7 @@ require "ipaddr"
 
 if RUBY_VERSION.to_f < 2.0
   begin
-    require "Win32/Console/ANSI" if RUBY_PLATFORM =~ /win32|mingw32/
+    require "Win32/Console/ANSI" if RUBY_PLATFORM.match?(/win32|mingw32/)
   rescue LoadError
     puts "WARNING: Output will look weird on Windows unless" \
          ' you install the "win32console" gem.'

@@ -4,7 +4,6 @@
 ignore:
 - Rakefile:
   - Performance/RedundantMatch
-  - Performance/RegexpMatch
 - blob/lib/azure/storage/blob/block.rb:
   - Naming/VariableName
 - blob/lib/azure/storage/blob/default.rb:
@@ -24,12 +23,10 @@ ignore:
 - common/lib/azure/core/http/signer_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/utility.rb:
-  - Performance/RegexpMatch
   - Performance/Count
   - Style/RescueModifier
 - common/lib/azure/storage/common/client_options.rb:
   - Style/MissingRespondToMissing
-  - Performance/RegexpMatch
 - common/lib/azure/storage/common/configurable.rb:
   - Naming/VariableName
 - common/lib/azure/storage/common/core/auth/shared_access_signature.rb:
@@ -37,7 +34,6 @@ ignore:
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Naming/VariableName
 - common/lib/azure/storage/common/core/utility.rb:
-  - Performance/RegexpMatch
   - Performance/Count
   - Performance/FixedSize
   - Style/RescueModifier
@@ -53,8 +49,6 @@ ignore:
   - Lint/Loop
 - test/integration/test_helper.rb:
   - Lint/UnderscorePrefixedVariableName
-- test/support/env.rb:
-  - Performance/RegexpMatch
 - test/support/fixtures.rb:
   - Lint/AssignmentInCondition
   - Lint/DuplicateMethods
