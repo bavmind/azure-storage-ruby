@@ -172,7 +172,7 @@ module Azure::Storage::Common::Core::Filter
       # However, for the reasons explained above, the time spent between the last attempt to
       # the target location and current time must be subtracted from the total retry interval
       # that ShouldRetry returned.
-      lastAttemptTime =
+      last_attempt_time =
         if retry_data[:current_location] == Azure::Storage::Common::StorageLocation::PRIMARY
           retry_data[:last_primary_attempt]
         else
@@ -180,10 +180,10 @@ module Azure::Storage::Common::Core::Filter
         end
 
       @retry_interval =
-        if lastAttemptTime.nil?
+        if last_attempt_time.nil?
           0
         else
-          since_last_attempt = Time.now - lastAttemptTime
+          since_last_attempt = Time.now - last_attempt_time
           remainder = retry_data[:interval] - since_last_attempt
           (remainder > 0) ? remainder : 0
         end

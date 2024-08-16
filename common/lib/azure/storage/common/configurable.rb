@@ -120,8 +120,8 @@ module Azure::Storage::Common
 
     # Storage queue host
     # @return [String]
-    def storage_queue_host(isSecondary = false)
-      if isSecondary
+    def storage_queue_host(is_secondary = false)
+      if is_secondary
         @storage_queue_host_secondary || default_host(:queue, true)
       else
         @storage_queue_host || default_host(:queue, false)
@@ -130,8 +130,8 @@ module Azure::Storage::Common
 
     # Storage blob host
     # @return [String]
-    def storage_blob_host(isSecondary = false)
-      if isSecondary
+    def storage_blob_host(is_secondary = false)
+      if is_secondary
         @storage_blob_host_secondary || default_host(:blob, true)
       else
         @storage_blob_host || default_host(:blob, false)
@@ -140,8 +140,8 @@ module Azure::Storage::Common
 
     # Storage table host
     # @return [String]
-    def storage_table_host(isSecondary = false)
-      if isSecondary
+    def storage_table_host(is_secondary = false)
+      if is_secondary
         @storage_table_host_secondary || default_host(:table, true)
       else
         @storage_table_host || default_host(:table, false)
@@ -150,8 +150,8 @@ module Azure::Storage::Common
 
     # Storage file host
     # @return [String]
-    def storage_file_host(isSecondary = false)
-      if isSecondary
+    def storage_file_host(is_secondary = false)
+      if is_secondary
         @storage_file_host_secondary || default_host(:file, true)
       else
         @storage_file_host || default_host(:file, false)
@@ -160,8 +160,8 @@ module Azure::Storage::Common
 
     private
 
-    def default_host(service, isSecondary = false)
-      "https://#{storage_account_name}#{isSecondary ? "-secondary" : ""}.#{service}.core.windows.net" if storage_account_name
+    def default_host(service, is_secondary = false)
+      "https://#{storage_account_name}#{is_secondary ? "-secondary" : ""}.#{service}.core.windows.net" if storage_account_name
     end
 
     def setup_options

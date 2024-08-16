@@ -219,13 +219,13 @@ describe Azure::Storage::Blob::BlobService do
 
     it "list blob pages in the snapshot" do
       # initialize the blob
-      content_512B = SecureRandom.random_bytes(512)
-      subject.put_blob_pages container_name, blob_name3, 0, 511, content_512B
-      subject.put_blob_pages container_name, blob_name3, 1024, 1535, content_512B
+      content_512b = SecureRandom.random_bytes(512)
+      subject.put_blob_pages container_name, blob_name3, 0, 511, content_512b
+      subject.put_blob_pages container_name, blob_name3, 1024, 1535, content_512b
       # snapshot
       snapshot1 = subject.create_blob_snapshot container_name, blob_name3
       # modify the blob after snapshot
-      subject.put_blob_pages container_name, blob_name3, 2048, 2559, content_512B
+      subject.put_blob_pages container_name, blob_name3, 2048, 2559, content_512b
       # verify that even the blob has been altered, the returned list
       # will not contain the change if snapshot is specified
       ranges = subject.list_page_blob_ranges container_name, blob_name3, snapshot: snapshot1
@@ -246,10 +246,10 @@ describe Azure::Storage::Blob::BlobService do
       # initialize the blob
       page_blob_name = BlobNameHelper.name
       subject.create_page_blob container_name, page_blob_name, length
-      content_512B = SecureRandom.random_bytes(512)
-      subject.put_blob_pages container_name, page_blob_name, 0, 511, content_512B
-      subject.put_blob_pages container_name, page_blob_name, 1024, 1535, content_512B
-      subject.put_blob_pages container_name, page_blob_name, 2048, 2559, content_512B
+      content_512b = SecureRandom.random_bytes(512)
+      subject.put_blob_pages container_name, page_blob_name, 0, 511, content_512b
+      subject.put_blob_pages container_name, page_blob_name, 1024, 1535, content_512b
+      subject.put_blob_pages container_name, page_blob_name, 2048, 2559, content_512b
       # acquire lease for blob
       lease_id = subject.acquire_blob_lease container_name, page_blob_name
       subject.release_blob_lease container_name, page_blob_name, lease_id

@@ -51,22 +51,22 @@ describe Azure::Storage::Blob::BlobService do
 
     it "1MB string payload with 512K max size fails" do
       length = 1 * 1024 * 1024
-      maxSize = 512 * 1024
+      max_size = 512 * 1024
       content = SecureRandom.random_bytes(length)
       blob_name = BlobNameHelper.name
       exception = assert_raises(Azure::Storage::Common::Core::StorageError) do
-        subject.create_append_blob_from_content container_name, blob_name, content, max_size: maxSize
+        subject.create_append_blob_from_content container_name, blob_name, content, max_size: max_size
       end
       _(exception.message).must_include("Given content has exceeded the specified maximum size for the blob.")
     end
 
     it "4MB + 1 byte IO with no 'size' and 4MB max size fails with max size condition not met" do
       length = 4 * 1024 * 1024 + 1
-      maxSize = length - 1
+      max_size = length - 1
       content = LocalFakeString.new(SecureRandom.random_bytes(length))
       blob_name = BlobNameHelper.name
       exception = assert_raises(Azure::Core::Http::HTTPError) do
-        subject.create_append_blob_from_content container_name, blob_name, content, max_size: maxSize
+        subject.create_append_blob_from_content container_name, blob_name, content, max_size: max_size
       end
       _(exception.status_code).must_equal 412
       _(exception.message).must_include("MaxBlobSizeConditionNotMet")
@@ -76,11 +76,11 @@ describe Azure::Storage::Blob::BlobService do
       length = 4 * 1024 * 1024
       content = SecureRandom.random_bytes(length)
       blob_name = BlobNameHelper.name
-      tempSubject = subject.clone
+      temp_subject = subject.clone
       # Use duplicate request filter to simulate the retry scenario
-      tempSubject.with_filter(Azure::Storage::DuplicateRequestFilter.new)
+      temp_subject.with_filter(Azure::Storage::DuplicateRequestFilter.new)
       exception = assert_raises(Azure::Core::Http::HTTPError) do
-        tempSubject.create_append_blob_from_content container_name, blob_name, content, max_size: length
+        temp_subject.create_append_blob_from_content container_name, blob_name, content, max_size: length
       end
       _(exception.status_code).must_equal 412
       _(exception.message).must_include("AppendPositionConditionNotMet")

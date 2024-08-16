@@ -2,8 +2,6 @@
 # Remove from this list as you refactor files.
 ---
 ignore:
-- blob/lib/azure/storage/blob/block.rb:
-  - Naming/VariableName
 - blob/lib/azure/storage/blob/default.rb:
   - Naming/ConstantName
 - common/lib/azure/core/http/debug_filter.rb:
@@ -20,22 +18,14 @@ ignore:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/storage/common/client_options.rb:
   - Style/MissingRespondToMissing
-- common/lib/azure/storage/common/configurable.rb:
-  - Naming/VariableName
 - common/lib/azure/storage/common/core/auth/shared_access_signature.rb:
   - Style/MixinUsage
-- common/lib/azure/storage/common/core/filter/retry_filter.rb:
-  - Naming/VariableName
 - common/lib/azure/storage/common/core/utility.rb:
   - Performance/FixedSize
 - common/lib/azure/storage/common/default.rb:
   - Naming/ConstantName
 - common/lib/azure/storage/common/service/serialization.rb:
   - Lint/AssignmentInCondition
-- test/integration/blob/append_blob_test.rb:
-  - Naming/VariableName
-- test/integration/blob/blob_pages_test.rb:
-  - Naming/VariableName
 - test/integration/queue/list_queues_test.rb:
   - Lint/Loop
 - test/integration/test_helper.rb:
@@ -43,7 +33,3 @@ ignore:
 - test/support/fixtures.rb:
   - Lint/AssignmentInCondition
   - Lint/DuplicateMethods
-- test/unit/config/client_services_test.rb:
-  - Naming/VariableName
-- test/unit/table/edmtype_test.rb:
-  - Naming/VariableName

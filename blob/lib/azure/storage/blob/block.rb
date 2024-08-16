@@ -507,13 +507,13 @@ module Azure::Storage
     # Returns an Integer
     protected
 
-    def get_single_upload_threshold(userThreshold)
-      if userThreshold.nil?
+    def get_single_upload_threshold(user_threshold)
+      if user_threshold.nil?
         BlobConstants::DEFAULT_SINGLE_BLOB_PUT_THRESHOLD_IN_BYTES
-      elsif userThreshold <= 0
+      elsif user_threshold <= 0
         raise ArgumentError, "Single Upload Threshold should be positive number"
-      elsif userThreshold < BlobConstants::MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES
-        userThreshold
+      elsif user_threshold < BlobConstants::MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES
+        user_threshold
       else
         BlobConstants::MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES
       end
