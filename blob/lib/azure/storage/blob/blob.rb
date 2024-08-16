@@ -95,7 +95,7 @@ module Azure::Storage
       uri = blob_uri(container, blob, query, options)
 
       headers = {}
-      options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
+      options[:start_range] = 0 if options[:end_range] && !(options[:start_range])
       if options[:start_range]
         StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}"
         StorageService.with_header headers, "x-ms-range-get-content-md5", "true" if options[:get_content_md5]

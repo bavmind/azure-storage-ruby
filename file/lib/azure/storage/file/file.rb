@@ -144,7 +144,7 @@ module Azure::Storage::File
     uri = file_uri(share, directory_path, file, query, options)
 
     headers = {}
-    options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
+    options[:start_range] = 0 if options[:end_range] && !(options[:start_range])
     if options[:start_range]
       StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}"
       StorageService.with_header headers, "x-ms-range-get-content-md5", "true" if options[:get_content_md5]
@@ -385,7 +385,7 @@ module Azure::Storage::File
     options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
     uri = file_uri(share, directory_path, file, query, options)
 
-    options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
+    options[:start_range] = 0 if options[:end_range] && !(options[:start_range])
 
     headers = {}
     StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}" if options[:start_range]

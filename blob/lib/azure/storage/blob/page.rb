@@ -302,7 +302,7 @@ module Azure::Storage
       options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
       uri = blob_uri(container, blob, query, options)
 
-      options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
+      options[:start_range] = 0 if options[:end_range] && !(options[:start_range])
 
       headers = {}
       StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}" if options[:start_range]

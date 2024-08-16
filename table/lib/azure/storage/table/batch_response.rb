@@ -76,7 +76,7 @@ module Azure::Storage
       def self.response_headers(context)
         match = /(.*): (.*)/.match(current_line(context))
 
-        if context[:responses].last[:headers] && (not match)
+        if context[:responses].last[:headers] && !match
           context[:index] += 1
           context[:responses].last[:headers]
         elsif match
@@ -101,7 +101,7 @@ module Azure::Storage
         match_boundary = /--changesetresponse_(.*)/.match(current_line(context))
         match_end = /--changesetresponse_(.*)--/.match(current_line(context)) || /--batchresponse_(.*)--/.match(current_line(context))
 
-        if match_boundary && (not match_end)
+        if match_boundary && !match_end
           :boundary
         else
           (match_end ? :end : nil)
@@ -111,7 +111,7 @@ module Azure::Storage
       def self.batch_headers(context)
         match = /(.*): (.*)/.match(current_line(context))
 
-        if context[:batch_headers] && (not match)
+        if context[:batch_headers] && !match
           context[:batch_headers]
         elsif match
           context[:batch_headers] ||= {}

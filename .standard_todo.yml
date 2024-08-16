@@ -8,8 +8,6 @@ ignore:
   - Style/FileWrite
 - blob/lib/azure/storage/blob/append.rb:
   - Style/NegatedWhile
-- blob/lib/azure/storage/blob/blob.rb:
-  - Style/Not
 - blob/lib/azure/storage/blob/blob_service.rb:
   - Style/RedundantCondition
 - blob/lib/azure/storage/blob/block.rb:
@@ -18,7 +16,6 @@ ignore:
 - blob/lib/azure/storage/blob/default.rb:
   - Naming/ConstantName
 - blob/lib/azure/storage/blob/page.rb:
-  - Style/Not
   - Style/RedundantAssignment
   - Style/For
 - common/lib/azure/core/filtered_service.rb:
@@ -71,7 +68,6 @@ ignore:
   - Style/RedundantRegexpArgument
   - Performance/RedundantMerge
 - file/lib/azure/storage/file/file.rb:
-  - Style/Not
   - Style/For
 - file/lib/azure/storage/file/file_service.rb:
   - Style/RedundantCondition
@@ -82,7 +78,6 @@ ignore:
   - Style/RedundantCondition
 - table/lib/azure/storage/table/batch_response.rb:
   - Style/IdenticalConditionalBranches
-  - Style/Not
 - table/lib/azure/storage/table/edmtype.rb:
   - Style/IfWithBooleanLiteralBranches
 - table/lib/azure/storage/table/table_service.rb:
@@ -113,7 +108,6 @@ ignore:
   - Lint/UselessAssignment
 - test/integration/blob/copy_blob_test.rb:
   - Lint/UselessAssignment
-  - Style/Not
 - test/integration/blob/create_blob_snapshot_test.rb:
   - Lint/UselessAssignment
 - test/integration/blob/create_page_blob_test.rb:
@@ -128,7 +122,6 @@ ignore:
   - Lint/UselessAssignment
 - test/integration/file/file_copy_test.rb:
   - Lint/UselessAssignment
-  - Style/Not
 - test/integration/file/file_gb18030_test.rb:
   - Style/WhileUntilDo
 - test/integration/file/file_range_test.rb:
