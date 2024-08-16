@@ -31,7 +31,7 @@ module Azure
 
       def call(method, uri, body = nil, headers = nil, options = {})
         super(method, uri, body, headers) do |request|
-          filters&.reverse&.each { |filter| request.with_filter filter, options }
+          filters&.reverse_each { |filter| request.with_filter filter, options }
         end
       end
 

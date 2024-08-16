@@ -6,8 +6,6 @@ ignore:
   - Naming/VariableName
 - blob/lib/azure/storage/blob/default.rb:
   - Naming/ConstantName
-- common/lib/azure/core/filtered_service.rb:
-  - Performance/ReverseEach
 - common/lib/azure/core/http/debug_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/http/http_filter.rb:
