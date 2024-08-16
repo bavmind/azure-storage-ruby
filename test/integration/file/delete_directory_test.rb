@@ -36,7 +36,7 @@ describe Azure::Storage::File::FileService do
     }
 
     it "deletes the directory" do
-      directory = subject.get_directory_properties share_name, directory_name
+      subject.get_directory_properties share_name, directory_name
 
       result = subject.delete_directory share_name, directory_name
       _(result).must_be_nil

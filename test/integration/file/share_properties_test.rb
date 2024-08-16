@@ -61,7 +61,7 @@ describe Azure::Storage::File::FileService do
 
     it "sets properties for the share" do
       share = subject.create_share share_name, metadata: metadata
-      properties = share.properties
+      share.properties
 
       share = subject.set_share_properties share_name, quota: share_quota
       _(share).must_be_nil

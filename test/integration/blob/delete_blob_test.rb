@@ -79,7 +79,7 @@ describe Azure::Storage::Blob::BlobService do
       }
 
       # ensure snapshot gets created before tests run. silly.
-      before { s = snapshot }
+      before { snapshot }
 
       it "deletes the blob, and all the snapshots for the blob, if optional paramters are not used" do
         # verify snapshot exists

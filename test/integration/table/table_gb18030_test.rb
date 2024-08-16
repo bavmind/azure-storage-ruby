@@ -184,7 +184,7 @@ describe "Table GB-18030" do
         subject.delete_entity(table_name, value, value)
         begin
           # Expect error because the entity should be gone
-          result = subject.get_entity(table_name, value, value)
+          subject.get_entity(table_name, value, value)
           flunk "No exception"
         rescue Azure::Core::Http::HTTPError => error
           _(error.status_code).must_equal 404
@@ -210,7 +210,7 @@ describe "Table GB-18030" do
         subject.delete_entity(table_name, value, value)
         begin
           # Expect error because the entity should be gone
-          result = subject.get_entity(table_name, value, value)
+          subject.get_entity(table_name, value, value)
           flunk "No exception"
         rescue Azure::Core::Http::HTTPError => error
           _(error.status_code).must_equal 404
@@ -313,12 +313,12 @@ describe "Table GB-18030" do
       batch = Azure::Storage::Table::Batch.new table_name, value
       batch.delete value
       batch.delete value + "2"
-      results = subject.execute_batch batch
+      subject.execute_batch batch
       if k != "ChineseExtB"
         # Service does not support surrogates in key in URL
         begin
           # Expect error because the entity should be gone
-          result = subject.get_entity(table_name, value, value)
+          subject.get_entity(table_name, value, value)
           flunk "No exception"
         rescue Azure::Core::Http::HTTPError => error
           _(error.status_code).must_equal 404
@@ -347,12 +347,12 @@ describe "Table GB-18030" do
       batch = Azure::Storage::Table::Batch.new table_name, value
       batch.delete value
       batch.delete value + "2"
-      results = subject.execute_batch batch
+      subject.execute_batch batch
       if k != "ChineseExtB"
         # Service does not support surrogates in key in URL
         begin
           # Expect error because the entity should be gone
-          result = subject.get_entity(table_name, value, value)
+          subject.get_entity(table_name, value, value)
           flunk "No exception"
         rescue Azure::Core::Http::HTTPError => error
           _(error.status_code).must_equal 404

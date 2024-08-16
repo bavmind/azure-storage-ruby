@@ -957,7 +957,7 @@ describe Azure::Storage::File::FileService do
       end
 
       it "returns a list of ranges" do
-        file, result = subject.list_file_ranges share_name, directory_path, file_name
+        _file, result = subject.list_file_ranges share_name, directory_path, file_name
         _(result).must_be_kind_of Array
         _(result.first).must_be_kind_of Array
         _(result.first.first).must_be_kind_of Integer
@@ -1207,7 +1207,6 @@ describe Azure::Storage::File::FileService do
 
       before {
         response.stubs(:success?).returns(true)
-        response_body = "file-contents"
 
         subject.stubs(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)

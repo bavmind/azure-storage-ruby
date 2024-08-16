@@ -113,7 +113,7 @@ describe Azure::Storage::Blob::BlobService do
         metadata: {"CustomMetadataProperty" => "CustomMetadataValue"}
       }
 
-      blob = subject.create_block_blob container_name, blob_name, content, options
+      subject.create_block_blob container_name, blob_name, content, options
       blob = subject.get_blob_properties container_name, blob_name
       _(blob.name).must_equal blob_name
       _(is_boolean(blob.encrypted)).must_equal true
@@ -267,7 +267,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        result = subject.commit_blob_blocks container_name, block_blob_name, blocklist
+        subject.commit_blob_blocks container_name, block_blob_name, blocklist
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description
@@ -348,7 +348,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        result = subject.list_blob_blocks container_name, block_blob_name, lease_id: lease_id
+        subject.list_blob_blocks container_name, block_blob_name, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

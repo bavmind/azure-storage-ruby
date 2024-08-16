@@ -95,12 +95,11 @@ describe Azure::Storage::Blob::BlobService do
       new_lease_id = subject.acquire_blob_lease container_name, page_blob_name
       # assert wrong lease fails
       status_code = ""
-      description = ""
       begin
-        blob = subject.get_blob_properties container_name, page_blob_name, lease_id: lease_id
+        subject.get_blob_properties container_name, page_blob_name, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
-        description = e.description
+        e.description
       end
       _(status_code).must_equal "412"
       # assert right lease succeeds
@@ -128,7 +127,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        blob = subject.set_blob_properties container_name, page_blob_name, options.merge(lease_id: lease_id)
+        subject.set_blob_properties container_name, page_blob_name, options.merge(lease_id: lease_id)
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description
@@ -147,7 +146,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        blob = subject.set_blob_properties container_name, page_blob_name, options
+        subject.set_blob_properties container_name, page_blob_name, options
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

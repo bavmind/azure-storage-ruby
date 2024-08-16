@@ -66,7 +66,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        result = anonymous_blob_client.list_blobs container_name
+        anonymous_blob_client.list_blobs container_name
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

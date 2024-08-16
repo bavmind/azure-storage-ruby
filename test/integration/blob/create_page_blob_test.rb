@@ -75,7 +75,7 @@ describe Azure::Storage::Blob::BlobService do
         metadata: {"CustomMetadataProperty" => "CustomMetadataValue"}
       }
 
-      blob = subject.create_page_blob container_name, blob_name, length, options
+      subject.create_page_blob container_name, blob_name, length, options
       blob = subject.get_blob_properties container_name, blob_name
       _(is_boolean(blob.encrypted)).must_equal true
       _(blob.name).must_equal blob_name

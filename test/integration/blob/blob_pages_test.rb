@@ -125,7 +125,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        blob = subject.put_blob_pages container_name, page_blob_name, 0, 511, content
+        subject.put_blob_pages container_name, page_blob_name, 0, 511, content
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description
@@ -258,7 +258,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        ranges = subject.list_page_blob_ranges container_name, page_blob_name, lease_id: lease_id
+        subject.list_page_blob_ranges container_name, page_blob_name, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

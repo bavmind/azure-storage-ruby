@@ -176,7 +176,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        result = subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, lease_id: lease_id
+        subject.incremental_copy_blob container_name, dest_blob_name, @source_uri2.to_s, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

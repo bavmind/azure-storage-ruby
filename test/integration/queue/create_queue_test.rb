@@ -46,7 +46,7 @@ describe Azure::Storage::Queue::QueueService do
       result = subject.create_queue queue_name, metadata: metadata
       _(result).must_be_nil
 
-      message_count, queue_metadata = subject.get_queue_metadata queue_name
+      _message_count, queue_metadata = subject.get_queue_metadata queue_name
 
       metadata.each { |k, v|
         _(queue_metadata).must_include k

@@ -181,7 +181,7 @@ module Azure::Storage::Common
           if options[:request_location_mode].nil?
             RequestLocationMode::PRIMARY_ONLY
           else
-            request_location_mode = options[:request_location_mode]
+            options[:request_location_mode]
           end
 
         location = StorageService.get_location location_mode, request_location_mode

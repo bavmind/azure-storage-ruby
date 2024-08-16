@@ -63,7 +63,7 @@ describe Azure::Storage::File::FileService do
       content = ""
       512.times.each { |i| content << "@" }
 
-      file = subject.put_file_range share_name, directory_name, file_name, 0, 511, content
+      subject.put_file_range share_name, directory_name, file_name, 0, 511, content
       subject.put_file_range share_name, directory_name, file_name, 1024, 1535, content, transactional_md5: Base64.strict_encode64(Digest::MD5.digest(content))
     end
 
@@ -72,7 +72,7 @@ describe Azure::Storage::File::FileService do
       512.times.each { |i| content << "@" }
 
       assert_raises(Azure::Core::Http::HTTPError) do
-        file = subject.put_file_range share_name, directory_name, file_name2, 0, 511, content, transactional_md5: "2105b16a6714bd9d"
+        subject.put_file_range share_name, directory_name, file_name2, 0, 511, content, transactional_md5: "2105b16a6714bd9d"
       end
     end
   end
@@ -86,7 +86,7 @@ describe Azure::Storage::File::FileService do
       subject.put_file_range share_name, directory_name, file_name, 1024, 1535, content
       subject.put_file_range share_name, directory_name, file_name, 2048, 2559, content
 
-      file, ranges = subject.list_file_ranges share_name, directory_name, file_name, start_range: 0, end_range: 2560
+      _file, ranges = subject.list_file_ranges share_name, directory_name, file_name, start_range: 0, end_range: 2560
       _(ranges.length).must_equal 3
       _(ranges[0][0]).must_equal 0
       _(ranges[0][1]).must_equal 511

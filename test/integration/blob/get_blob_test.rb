@@ -86,7 +86,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        blob = subject.get_blob container_name, blob_name, if_none_match: "*"
+        subject.get_blob container_name, blob_name, if_none_match: "*"
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

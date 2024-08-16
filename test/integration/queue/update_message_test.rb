@@ -43,7 +43,7 @@ describe Azure::Storage::Queue::QueueService do
       message = messages.first
       _(message.message_text).must_equal message_text
 
-      pop_receipt, time_next_visible = subject.update_message queue_name, message.id, message.pop_receipt, new_message_text, 0
+      _pop_receipt, _time_next_visible = subject.update_message queue_name, message.id, message.pop_receipt, new_message_text, 0
 
       result = subject.peek_messages queue_name
       result.wont_be_empty

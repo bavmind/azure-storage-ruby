@@ -106,7 +106,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        result = subject.set_container_metadata container_name, metadata, lease_id: lease_id
+        subject.set_container_metadata container_name, metadata, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description
@@ -124,7 +124,7 @@ describe Azure::Storage::Blob::BlobService do
         _(container.metadata[k.downcase]).must_equal v
       }
       # prove that no lease succeeds
-      result = subject.set_container_metadata container_name, metadata
+      subject.set_container_metadata container_name, metadata
       # release lease afterwards
       subject.release_container_lease container_name, new_lease_id
     end

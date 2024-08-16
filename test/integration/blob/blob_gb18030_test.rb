@@ -155,7 +155,7 @@ describe "Blob GB-18030" do
       blob_name = "Read/Write Block Blob Content UTF-8 for " + k
       content = v.encode("UTF-8")
       subject.create_block_blob container_name, blob_name, content
-      blob, returned_content = subject.get_blob container_name, blob_name
+      _blob, returned_content = subject.get_blob container_name, blob_name
       _(returned_content).must_equal content
     }
   end

@@ -95,7 +95,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.merge entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -103,7 +103,7 @@ describe Azure::Storage::Table::TableService do
       assert_raises(RuntimeError) do
         batch = Azure::Storage::Table::Batch.new "this_table.cannot-exist!", entity_properties["PartitionKey"]
         batch.merge entity_properties["RowKey"], entity_properties
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -114,7 +114,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.merge entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -125,7 +125,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.merge entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
   end

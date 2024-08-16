@@ -100,7 +100,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        snapshot = subject.create_blob_snapshot container_name, page_blob_name, lease_id: lease_id
+        subject.create_blob_snapshot container_name, page_blob_name, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description
