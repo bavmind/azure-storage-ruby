@@ -115,7 +115,7 @@ module Azure::Storage
         when "Edm.Int32", "Edm.Int64"
           Integer(value)
         when "Edm.Boolean"
-          (value == true || value == "true") ? true : false
+          value == true || value == "true"
         when "Edm.Guid"
           GUID.new(value.to_s)
         when "Edm.Binary"

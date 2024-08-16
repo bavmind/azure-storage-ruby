@@ -67,8 +67,6 @@ ignore:
   - Style/RedundantCondition
 - table/lib/azure/storage/table/batch_response.rb:
   - Style/IdenticalConditionalBranches
-- table/lib/azure/storage/table/edmtype.rb:
-  - Style/IfWithBooleanLiteralBranches
 - table/lib/azure/storage/table/table_service.rb:
   - Style/RedundantAssignment
   - Style/RedundantCondition
