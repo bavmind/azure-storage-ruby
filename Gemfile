@@ -23,20 +23,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #--------------------------------------------------------------------------
-source "https://rubygems.org" do
-  gem "faraday", "~> 2.0", require: false
-  gem "faraday-follow_redirects", "~> 0.3.0", require: false
-  gem "faraday-net_http_persistent", "~> 2.0", require: false
-  gem "net-http-persistent", "~> 4.0", require: false
-  gem "nokogiri", "~> 1", ">= 1.10.8", require: false
-  gem "adal", "~> 1.0", require: false
-  gem "dotenv", "~> 2.0", require: false
-  gem "minitest", "~> 5", require: false
-  gem "minitest-reporters", "~> 1", require: false
-  gem "mocha", "~> 2.0", require: false
-  gem "rake", "~> 13.0", require: false
-  gem "timecop", "~> 0.7", require: false
-  gem "yard", "~> 0.9", ">= 0.9.11", require: false
-  gem "standard", ">= 1.0", require: false
-  gem "standard-performance", ">= 1.0", require: false
-end
+source "https://rubygems.org"
+
+gem "faraday", "~> 2.0", require: false
+gem "faraday-follow_redirects", "~> 0.3.0", require: false
+gem "faraday-net_http_persistent", "~> 2.0", require: false
+gem "net-http-persistent", "~> 4.0", require: false
+gem "nokogiri", "~> 1", ">= 1.10.8", require: false
+gem "adal", "~> 1.0", require: false
+gem "dotenv", "~> 2.0", require: false
+gem "minitest", "~> 5", require: false
+gem "minitest-reporters", "~> 1", require: false
+gem "mocha", "~> 2.0", require: false
+gem "rake", "~> 13.0", require: false
+gem "timecop", "~> 0.7", require: false
+gem "yard", "~> 0.9", ">= 0.9.11", require: false
+gem "standard", ">= 1.0", require: false
+gem "standard-performance", ">= 1.0", require: false
