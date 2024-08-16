@@ -19,12 +19,12 @@ module Azure
     module Http
       # A HttpFilter implementation that displays information about the request and response for debugging
       class DebugFilter < HttpFilter
-        def call(req, _next)
+        def call(req, next_)
           puts "--REQUEST-BEGIN---------------------------"
           puts "method:", req.method, "uri:", req.uri, "headers:", req.headers, "body:", req.body
           puts "--REQUEST-END---------------------------"
 
-          r = _next.call
+          r = next_.call
           puts "--RESPONSE-BEGIN---------------------------"
           puts "status_code:", r.status_code, "headers:", r.headers, "body:", r.body
           puts "--RESPONSE-END---------------------------"

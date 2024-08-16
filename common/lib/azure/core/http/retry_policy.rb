@@ -32,8 +32,8 @@ module Azure
         # break the loop
         #
         # req   - HttpRequest. The HTTP request
-        # _next - HttpFilter. The next filter in the pipeline
-        def call(req, _next)
+        # next_ - HttpFilter. The next filter in the pipeline
+        def call(req, next_)
           response = nil
           retry_data = @retry_data.dup
           begin
@@ -43,7 +43,7 @@ module Azure
             end
 
             retry_data[:error] = nil
-            response = _next.call
+            response = next_.call
           rescue
             retry_data[:error] = $!
           end while should_retry?(response, retry_data)

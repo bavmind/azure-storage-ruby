@@ -23,11 +23,11 @@ module Azure
         #
         # &block - An inline block which implements the filter.
         #
-        # The inline block should take parameters |request, _next| where
-        # request is a HttpRequest and _next is an object that implements
+        # The inline block should take parameters |request, next_| where
+        # request is a HttpRequest and next_ is an object that implements
         # a method .call which returns an HttpResponse. The block passed
         # to the constructor should also return HttpResponse, either as
-        # the result of calling _next.call or by customized logic.
+        # the result of calling next_.call or by customized logic.
         #
         def initialize(&block)
           @block = block
@@ -36,15 +36,15 @@ module Azure
         # Executes the filter
         #
         # request - HttpRequest. The request
-        # _next   - An object that implements .call (no params)
+        # next_   - An object that implements .call (no params)
         #
-        # NOTE: _next is a either a subsequent HttpFilter wrapped in a
+        # NOTE: next_ is a either a subsequent HttpFilter wrapped in a
         # closure, or the HttpRequest object's call method. Either way,
         # it must have it's .call method executed within each filter to
-        #  complete the pipeline. _next.call should return an HttpResponse
+        #  complete the pipeline. next_.call should return an HttpResponse
         # and so should this Filter.
-        def call(request, _next)
-          @block ? @block.call(request, _next) : _next.call
+        def call(request, next_)
+          @block ? @block.call(request, next_) : next_.call
         end
       end
     end

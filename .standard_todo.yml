@@ -2,18 +2,11 @@
 # Remove from this list as you refactor files.
 ---
 ignore:
-- common/lib/azure/core/http/debug_filter.rb:
-  - Lint/UnderscorePrefixedVariableName
-- common/lib/azure/core/http/http_filter.rb:
-  - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/http/http_request.rb:
   - Lint/DuplicateMethods
   - Lint/AssignmentInCondition
 - common/lib/azure/core/http/retry_policy.rb:
-  - Lint/UnderscorePrefixedVariableName
   - Lint/Loop
-- common/lib/azure/core/http/signer_filter.rb:
-  - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/storage/common/client_options.rb:
   - Style/MissingRespondToMissing
 - common/lib/azure/storage/common/core/auth/shared_access_signature.rb:
@@ -24,8 +17,6 @@ ignore:
   - Lint/AssignmentInCondition
 - test/integration/queue/list_queues_test.rb:
   - Lint/Loop
-- test/integration/test_helper.rb:
-  - Lint/UnderscorePrefixedVariableName
 - test/support/fixtures.rb:
   - Lint/AssignmentInCondition
   - Lint/DuplicateMethods

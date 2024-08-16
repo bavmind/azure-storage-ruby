@@ -43,13 +43,13 @@ module Azure::Storage
       @callable = callable
     end
 
-    def call(req, _next)
+    def call(req, next_)
       begin
-        r = _next.call
+        r = next_.call
       rescue Azure::Core::Http::HTTPError
       end
       @callable&.call(req, r)
-      _next.call
+      next_.call
     end
   end
 end
