@@ -20,7 +20,6 @@ ignore:
 - common/lib/azure/core/http/http_filter.rb:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/http/http_request.rb:
-  - Style/Proc
   - Lint/DuplicateMethods
   - Lint/AssignmentInCondition
 - common/lib/azure/core/http/retry_policy.rb:
@@ -38,7 +37,6 @@ ignore:
 - common/lib/azure/storage/common/client_options.rb:
   - Style/MissingRespondToMissing
   - Performance/RegexpMatch
-  - Style/Proc
 - common/lib/azure/storage/common/configurable.rb:
   - Naming/VariableName
 - common/lib/azure/storage/common/core/auth/shared_access_signature.rb:

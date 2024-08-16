@@ -275,24 +275,24 @@ module Azure::Storage::Common
     end
 
     def is_base64_encoded
-      Proc.new do |i|
+      proc do |i|
         i.is_a?(String) && i =~ /^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=|[A-Za-z0-9+\/]{4})$/
       end
     end
 
     def is_url
-      Proc.new do |i|
+      proc do |i|
         i = "http://" + i unless i =~ /\Ahttps?:\/\//
         i =~ URI::DEFAULT_PARSER.make_regexp(["http", "https"])
       end
     end
 
     def is_true
-      Proc.new { |i| i == true || (i.is_a?(String) && i.downcase == "true") }
+      proc { |i| i == true || (i.is_a?(String) && i.downcase == "true") }
     end
 
     def is_non_empty_string
-      Proc.new { |i| i&.is_a?(String) && i.strip.length }
+      proc { |i| i&.is_a?(String) && i.strip.length }
     end
 
     def validated_options(opts, requirements = {})

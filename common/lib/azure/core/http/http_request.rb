@@ -107,7 +107,7 @@ module Azure
             original_call = _method(:call)
 
             # support 1.8.7 (define_singleton_method doesn't exist until 1.9.1)
-            filter_call = Proc.new do
+            filter_call = proc do
               filter.call(self, original_call)
             end
             k = class << self
