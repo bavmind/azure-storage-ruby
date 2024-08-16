@@ -257,7 +257,7 @@ describe Azure::Storage::File::FileService do
         end
 
         it "modifies the URI query parameters when provided a :timeout value" do
-          query.merge!("timeout" => "37")
+          query["timeout"] = "37"
           subject.stubs(:share_uri).with(share_name, query).returns(uri)
 
           options = {timeout: 37}

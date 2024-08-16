@@ -176,21 +176,13 @@ module Azure::Storage::Common::Core
         options = DEFAULTS.merge(options)
         valid_mappings = SERVICE_KEY_MAPPINGS
         if service_type == Azure::Storage::Common::ServiceType::BLOB
-          if options[:resource]
-            options.merge!(resource: options[:resource])
-          else
-            options.merge!(resource: "b")
-          end
+          options[:resource] = (options[:resource] || "b")
           valid_mappings.merge!(BLOB_KEY_MAPPINGS)
         elsif service_type == Azure::Storage::Common::ServiceType::TABLE
-          options.merge!(table_name: path)
+          options[:table_name] = path
           valid_mappings.merge!(TABLE_KEY_MAPPINGS)
         elsif service_type == Azure::Storage::Common::ServiceType::FILE
-          if options[:resource]
-            options.merge!(resource: options[:resource])
-          else
-            options.merge!(resource: "f")
-          end
+          options[:resource] = (options[:resource] || "f")
           valid_mappings.merge!(FILE_KEY_MAPPINGS)
         end
 

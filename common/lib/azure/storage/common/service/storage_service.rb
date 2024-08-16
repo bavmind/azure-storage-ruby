@@ -315,7 +315,7 @@ module Azure::Storage::Common
         # Declares a default hash object for request headers
         def common_headers(options = {}, body = nil)
           headers = {}
-          headers.merge!("x-ms-client-request-id" => options[:request_id]) if options[:request_id]
+          headers["x-ms-client-request-id"] = options[:request_id] if options[:request_id]
           @request_callback&.call(headers)
           headers
         end

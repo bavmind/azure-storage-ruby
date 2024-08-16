@@ -34,8 +34,6 @@ ignore:
   - Naming/VariableName
 - common/lib/azure/storage/common/core/auth/shared_access_signature.rb:
   - Style/MixinUsage
-- common/lib/azure/storage/common/core/auth/shared_access_signature_generator.rb:
-  - Performance/RedundantMerge
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Naming/VariableName
 - common/lib/azure/storage/common/core/utility.rb:
@@ -47,8 +45,6 @@ ignore:
   - Naming/ConstantName
 - common/lib/azure/storage/common/service/serialization.rb:
   - Lint/AssignmentInCondition
-- common/lib/azure/storage/common/service/storage_service.rb:
-  - Performance/RedundantMerge
 - test/integration/blob/append_blob_test.rb:
   - Naming/VariableName
 - test/integration/blob/blob_pages_test.rb:
@@ -64,7 +60,5 @@ ignore:
   - Lint/DuplicateMethods
 - test/unit/config/client_services_test.rb:
   - Naming/VariableName
-- test/unit/file/file_service_test.rb:
-  - Performance/RedundantMerge
 - test/unit/table/edmtype_test.rb:
   - Naming/VariableName
