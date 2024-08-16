@@ -256,7 +256,11 @@ class IPAddr
     end
 
     def valid?(ip)
-      (IPAddr.new(ip) rescue nil).nil?
+      begin
+        IPAddr.new(ip)
+      rescue
+        nil
+      end.nil?
     end
   end
 end

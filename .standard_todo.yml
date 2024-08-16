@@ -2,8 +2,6 @@
 # Remove from this list as you refactor files.
 ---
 ignore:
-- Rakefile:
-  - Performance/RedundantMatch
 - blob/lib/azure/storage/blob/block.rb:
   - Naming/VariableName
 - blob/lib/azure/storage/blob/default.rb:
@@ -24,7 +22,6 @@ ignore:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/utility.rb:
   - Performance/Count
-  - Style/RescueModifier
 - common/lib/azure/storage/common/client_options.rb:
   - Style/MissingRespondToMissing
 - common/lib/azure/storage/common/configurable.rb:
@@ -36,7 +33,6 @@ ignore:
 - common/lib/azure/storage/common/core/utility.rb:
   - Performance/Count
   - Performance/FixedSize
-  - Style/RescueModifier
 - common/lib/azure/storage/common/default.rb:
   - Naming/ConstantName
 - common/lib/azure/storage/common/service/serialization.rb:
