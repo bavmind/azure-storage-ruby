@@ -198,11 +198,11 @@ module Azure::Storage::Common
           path = CGI.escape(path.encode("UTF-8"))
 
           # decode the forward slashes to match what the server expects.
-          path = path.gsub(/%2F/, "/")
+          path = path.gsub("%2F", "/")
           # decode the backward slashes to match what the server expects.
-          path = path.gsub(/%5C/, "/")
+          path = path.gsub("%5C", "/")
           # Re-encode the spaces (encoded as space) to the % encoding.
-          path = path.gsub(/\+/, "%20")
+          path = path.gsub("+", "%20")
         end
 
         @host = storage_service_host[:primary]
