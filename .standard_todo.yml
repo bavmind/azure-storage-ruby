@@ -40,7 +40,6 @@ ignore:
   - Style/MixinUsage
 - common/lib/azure/storage/common/core/auth/shared_access_signature_generator.rb:
   - Performance/RedundantMerge
-  - Style/EachWithObject
 - common/lib/azure/storage/common/core/filter/retry_filter.rb:
   - Naming/VariableName
 - common/lib/azure/storage/common/core/utility.rb:
