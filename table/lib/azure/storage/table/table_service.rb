@@ -768,7 +768,7 @@ module Azure::Storage
       protected
 
       def call(method, uri, body = nil, headers = {}, options = {}, is_batch = false)
-        headers["x-ms-version"] = @api_version ? @api_version : Default::STG_VERSION unless headers["x-ms-version"]
+        headers["x-ms-version"] = @api_version || Default::STG_VERSION unless headers["x-ms-version"]
         headers["User-Agent"] = @user_agent_prefix ? "#{@user_agent_prefix}; #{Default::USER_AGENT}" : Default::USER_AGENT
         # Add JSON Content-Type header if is_batch is false because default is Atom.
         headers[Azure::Storage::Common::HeaderConstants::CONTENT_TYPE] = Azure::Storage::Common::HeaderConstants::JSON_CONTENT_TYPE_VALUE unless is_batch

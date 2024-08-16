@@ -326,7 +326,7 @@ module Azure::Storage::File
       # Headers + body
       headers = {}
 
-      signed_identifiers = options[:signed_identifiers] ? options[:signed_identifiers] : nil
+      signed_identifiers = options[:signed_identifiers] || nil
       body = signed_identifiers ? Serialization.signed_identifiers_to_xml(signed_identifiers) : nil
 
       # Call

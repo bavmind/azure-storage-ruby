@@ -173,7 +173,7 @@ module Azure::Storage
       def call(method, uri, body = nil, headers = {}, options = {})
         content_type = get_or_apply_content_type(body, headers[Azure::Storage::Common::HeaderConstants::FILE_CONTENT_TYPE])
         headers[Azure::Storage::Common::HeaderConstants::FILE_CONTENT_TYPE] = content_type if content_type
-        headers["x-ms-version"] = @api_version ? @api_version : Default::STG_VERSION
+        headers["x-ms-version"] = @api_version || Default::STG_VERSION
         headers["User-Agent"] = @user_agent_prefix ? "#{@user_agent_prefix}; #{Default::USER_AGENT}" : Default::USER_AGENT
 
         response = super

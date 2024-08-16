@@ -749,7 +749,7 @@ module Azure::Storage
       protected
 
       def call(method, uri, body = nil, headers = {}, options = {})
-        headers["x-ms-version"] = @api_version ? @api_version : Default::STG_VERSION
+        headers["x-ms-version"] = @api_version || Default::STG_VERSION
         headers["User-Agent"] = @user_agent_prefix ? "#{@user_agent_prefix}; #{Default::USER_AGENT}" : Default::USER_AGENT
         super
       end
