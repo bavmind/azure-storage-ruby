@@ -67,7 +67,7 @@ module Azure
       def export_der(cert, key, pass = nil, name = nil)
         pkcs12 = OpenSSL::PKCS12.create(pass, name, key, cert)
         Base64.encode64(pkcs12.to_der)
-      rescue Exception => e
+      rescue => e
         puts e.message
         abort
       end

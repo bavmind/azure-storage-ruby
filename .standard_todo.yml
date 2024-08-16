@@ -29,7 +29,6 @@ ignore:
   - Lint/UnderscorePrefixedVariableName
 - common/lib/azure/core/utility.rb:
   - Performance/RegexpMatch
-  - Lint/RescueException
   - Performance/Count
   - Style/RescueModifier
 - common/lib/azure/storage/common/client_options.rb:
@@ -46,7 +45,6 @@ ignore:
   - Naming/VariableName
 - common/lib/azure/storage/common/core/utility.rb:
   - Performance/RegexpMatch
-  - Lint/RescueException
   - Performance/Count
   - Performance/FixedSize
   - Style/RescueModifier
