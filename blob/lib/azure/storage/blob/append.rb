@@ -225,7 +225,7 @@ module Azure::Storage
       append_block_options[:lease_id] = options[:lease_id] if options[:lease_id]
       append_block_options[:max_size] = max_size if max_size
       position = 0
-      while !content.eof?
+      until content.eof?
         payload = content.read(BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES)
         # set the append position to make sure that each append is going to the correct offset.
         append_block_options[:append_position] = position

@@ -5,8 +5,6 @@ ignore:
 - Rakefile:
   - Performance/RedundantMatch
   - Performance/RegexpMatch
-- blob/lib/azure/storage/blob/append.rb:
-  - Style/NegatedWhile
 - blob/lib/azure/storage/blob/blob_service.rb:
   - Style/RedundantCondition
 - blob/lib/azure/storage/blob/block.rb:
