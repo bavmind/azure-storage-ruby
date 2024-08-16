@@ -81,9 +81,7 @@ task :publishDoc do
     system "git config user.email '#{ENV["GIT_EMAIL"]}'"
   end
   system 'git config credential.helper "store --file=.git/credentials"'
-  File.open(".git/credentials", "w") do |f|
-    f.write("https://#{ENV["GH_TOKEN"]}:x-oauth-basic@github.com")
-  end
+  File.write(".git/credentials", "https://#{ENV["GH_TOKEN"]}:x-oauth-basic@github.com")
   system "rake yard"
   system "git checkout gh-pages"
   system "mv doc/* ./ -f"
