@@ -311,8 +311,7 @@ module Azure::Storage
 
       response = call(:get, uri, nil, headers, options)
 
-      pagelist = Serialization.page_list_from_xml(response.body)
-      pagelist
+      Serialization.page_list_from_xml(response.body)
     end
 
     # Public: Resizes a page blob to the specified size.

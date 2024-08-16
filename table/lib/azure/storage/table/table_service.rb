@@ -753,9 +753,7 @@ module Azure::Storage
         value = value.gsub("'", "''")
 
         # Encode the special URL characters
-        value = URI.encode_www_form_component(value)
-
-        value
+        URI.encode_www_form_component(value)
       end
 
       protected

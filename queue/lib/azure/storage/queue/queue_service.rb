@@ -584,8 +584,7 @@ module Azure::Storage
         uri = messages_uri(queue_name, query, options)
         response = call(:get, uri, nil, {}, options)
 
-        messages = Serialization.queue_messages_from_xml(response.body, options[:decode])
-        messages
+        Serialization.queue_messages_from_xml(response.body, options[:decode])
       end
 
       # Public: Retrieves one or more messages from the front of the queue.
@@ -618,8 +617,7 @@ module Azure::Storage
         uri = messages_uri(queue_name, query)
         response = call(:get, uri, nil, {}, options)
 
-        messages = Serialization.queue_messages_from_xml(response.body, options[:decode])
-        messages
+        Serialization.queue_messages_from_xml(response.body, options[:decode])
       end
 
       # Public: Adds a message to the queue and optionally sets a visibility timeout for the message.
