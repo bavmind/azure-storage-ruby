@@ -50,8 +50,6 @@ ignore:
 - common/lib/azure/storage/common/service/storage_service.rb:
   - Lint/UselessAssignment
   - Performance/RedundantMerge
-- table/lib/azure/storage/table/batch_response.rb:
-  - Style/IdenticalConditionalBranches
 - test/integration/auth/file_shared_access_signature_test.rb:
   - Lint/UselessAssignment
 - test/integration/blob/append_blob_test.rb:

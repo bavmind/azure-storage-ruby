@@ -62,14 +62,10 @@ module Azure::Storage
         end_of_body = nil
         end_of_body = changeset_boundary_or_end(context.dup.merge!(index: context[:index] + 1)) if context[:index] < (context[:lines].length - 1)
 
+        context[:responses].last[:body] ||= ""
+        context[:responses].last[:body] << current_line(context)
         if end_of_body
-          context[:responses].last[:body] ||= ""
-          context[:responses].last[:body] << current_line(context)
           context[:responses].last[:body]
-        else
-          context[:responses].last[:body] ||= ""
-          context[:responses].last[:body] << current_line(context)
-          nil
         end
       end
 
