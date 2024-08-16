@@ -178,7 +178,7 @@ describe "Blob GB-18030" do
       blob_name = "Read/Write Page Blob Content UTF-8 for " + k
       options = {content_type: "text/html; charset=UTF-8"}
       content = v.encode("UTF-8")
-      while content.bytesize < 512 do
+      while content.bytesize < 512
         content << "X"
       end
       subject.create_page_blob container_name, blob_name, 512, options
@@ -195,7 +195,7 @@ describe "Blob GB-18030" do
       blob_name = "Read/Write Page Blob Content GB18030 for " + k
       options = {content_type: "text/html; charset=GB18030"}
       content = v.encode("GB18030")
-      while content.bytesize < 512 do
+      while content.bytesize < 512
         content << "X"
       end
       subject.create_page_blob container_name, blob_name, 512, options

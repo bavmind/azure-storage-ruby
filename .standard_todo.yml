@@ -79,7 +79,6 @@ ignore:
   - Lint/UselessAssignment
 - test/integration/blob/blob_gb18030_test.rb:
   - Lint/UselessAssignment
-  - Style/WhileUntilDo
 - test/integration/blob/blob_metadata_test.rb:
   - Lint/UselessAssignment
 - test/integration/blob/blob_pages_test.rb:
@@ -109,8 +108,6 @@ ignore:
   - Lint/UselessAssignment
 - test/integration/file/file_copy_test.rb:
   - Lint/UselessAssignment
-- test/integration/file/file_gb18030_test.rb:
-  - Style/WhileUntilDo
 - test/integration/file/file_range_test.rb:
   - Lint/UselessAssignment
 - test/integration/file/share_properties_test.rb:

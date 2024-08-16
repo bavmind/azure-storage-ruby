@@ -185,7 +185,7 @@ describe "File GB-18030" do
       file_name = "Read-Write File Content UTF-8 for " + k
       options = {content_type: "text/html; charset=UTF-8"}
       content = v.encode("UTF-8")
-      while content.bytesize < 512 do
+      while content.bytesize < 512
         content << "X"
       end
       subject.create_file share_name, directory_name, file_name, 512, options
@@ -202,7 +202,7 @@ describe "File GB-18030" do
       file_name = "Read-Write File Content GB18030 for " + k
       options = {content_type: "text/html; charset=GB18030"}
       content = v.encode("GB18030")
-      while content.bytesize < 512 do
+      while content.bytesize < 512
         content << "X"
       end
       subject.create_file share_name, directory_name, file_name, 512, options
