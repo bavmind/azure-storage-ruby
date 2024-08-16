@@ -207,7 +207,7 @@ describe Azure::Storage::Common::Client do
 
     it "calls default options to see if valid" do
       options = Azure::Storage::Common::Default.options
-      for key in Azure::Storage::Common::Configurable.keys
+      Azure::Storage::Common::Configurable.keys.each do |key|
         _(options[key]).must_be_nil
       end
     end

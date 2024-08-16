@@ -470,7 +470,7 @@ module Azure::Storage
       # Get the number of blocks
       block_count = (Float(size) / Float(block_size)).ceil
       block_list = []
-      for block_id in 0...block_count
+      (0...block_count).each do |block_id|
         id = block_id.to_s.rjust(6, "0")
         put_blob_block(container, blob, id, content.read(block_size), timeout: options[:timeout], lease_id: options[:lease_id])
         block_list.push([id])

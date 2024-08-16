@@ -550,7 +550,7 @@ module Azure::Storage
       content = StringIO.new(content) if content.is_a? String
       upload_count = (Float(length) / Float(BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES)).ceil
 
-      for idx in 0...upload_count
+      (0...upload_count).each do |idx|
         start_range = idx * BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES
         end_range = start_range + BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES - 1
         end_range = (length - 1) if end_range > (length - 1)

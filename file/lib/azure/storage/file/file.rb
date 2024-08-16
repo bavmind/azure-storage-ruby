@@ -660,7 +660,7 @@ module Azure::Storage::File
     content = StringIO.new(content) if content.is_a? String
     upload_count = (Float(length) / Float(FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES)).ceil
 
-    for idx in 0...upload_count
+    (0...upload_count).each do |idx|
       start_range = idx * FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES
       end_range = start_range + FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES - 1
       end_range = (length - 1) if end_range > (length - 1)
