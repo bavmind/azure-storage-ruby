@@ -136,7 +136,7 @@ module Azure::Storage
     #
     # Returns response of the operation
     def put_blob_block(container, blob, block_id, content, options = {})
-      query = { "comp" => "block" }
+      query = {"comp" => "block"}
       StorageService.with_query query, "blockid", Base64.strict_encode64(block_id)
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
@@ -198,7 +198,7 @@ module Azure::Storage
     #
     # Returns nil on success
     def commit_blob_blocks(container, blob, block_list, options = {})
-      query = { "comp" => "blocklist" }
+      query = {"comp" => "blocklist"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
@@ -263,12 +263,12 @@ module Azure::Storage
     def list_blob_blocks(container, blob, options = {})
       options[:blocklist_type] = options[:blocklist_type] || :all
 
-      query = { "comp" => "blocklist" }
+      query = {"comp" => "blocklist"}
       StorageService.with_query query, "snapshot", options[:snapshot]
       StorageService.with_query query, "blocklisttype", options[:blocklist_type].to_s if options[:blocklist_type]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
+      headers = options[:lease_id] ? {"x-ms-lease-id" => options[:lease_id]} : {}
 
       options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
       uri = blob_uri(container, blob, query, options)
@@ -332,7 +332,7 @@ module Azure::Storage
     # See http://msdn.microsoft.com/en-us/library/azure/dd179451.aspx
     #
     # Returns a Blob
-    alias create_block_blob_from_content create_block_blob
+    alias_method :create_block_blob_from_content, :create_block_blob
 
     # Protected: Creates a new block blob or updates the content of an existing block blob with single API call
     #
@@ -388,39 +388,40 @@ module Azure::Storage
     #
     # Returns a Blob
     protected
-      def create_block_blob_single_put(container, blob, content, options = {})
-        query = {}
-        StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-        uri = blob_uri(container, blob, query)
+    def create_block_blob_single_put(container, blob, content, options = {})
+      query = {}
+      StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-        headers = {}
+      uri = blob_uri(container, blob, query)
 
-        # set x-ms-blob-type to BlockBlob
-        StorageService.with_header headers, "x-ms-blob-type", "BlockBlob"
+      headers = {}
 
-        # set the rest of the optional headers
-        StorageService.with_header headers, "Content-MD5", options[:transactional_md5]
-        StorageService.with_header headers, "Content-Length", options[:content_length]
-        StorageService.with_header headers, "x-ms-blob-content-encoding", options[:content_encoding]
-        StorageService.with_header headers, "x-ms-blob-content-language", options[:content_language]
-        StorageService.with_header headers, "x-ms-blob-content-md5", options[:content_md5]
-        StorageService.with_header headers, "x-ms-blob-cache-control", options[:cache_control]
-        StorageService.with_header headers, "x-ms-blob-content-disposition", options[:content_disposition]
-        StorageService.with_header headers, "x-ms-lease-id", options[:lease_id]
+      # set x-ms-blob-type to BlockBlob
+      StorageService.with_header headers, "x-ms-blob-type", "BlockBlob"
 
-        StorageService.add_metadata_to_headers options[:metadata], headers
-        add_blob_conditional_headers options, headers
-        headers["x-ms-blob-content-type"] = get_or_apply_content_type(content, options[:content_type])
-        # call PutBlob
-        response = call(:put, uri, content, headers, options)
+      # set the rest of the optional headers
+      StorageService.with_header headers, "Content-MD5", options[:transactional_md5]
+      StorageService.with_header headers, "Content-Length", options[:content_length]
+      StorageService.with_header headers, "x-ms-blob-content-encoding", options[:content_encoding]
+      StorageService.with_header headers, "x-ms-blob-content-language", options[:content_language]
+      StorageService.with_header headers, "x-ms-blob-content-md5", options[:content_md5]
+      StorageService.with_header headers, "x-ms-blob-cache-control", options[:cache_control]
+      StorageService.with_header headers, "x-ms-blob-content-disposition", options[:content_disposition]
+      StorageService.with_header headers, "x-ms-lease-id", options[:lease_id]
 
-        result = Serialization.blob_from_headers(response.headers)
-        result.name = blob
-        result.metadata = options[:metadata] if options[:metadata]
+      StorageService.add_metadata_to_headers options[:metadata], headers
+      add_blob_conditional_headers options, headers
+      headers["x-ms-blob-content-type"] = get_or_apply_content_type(content, options[:content_type])
+      # call PutBlob
+      response = call(:put, uri, content, headers, options)
 
-        result
-      end
+      result = Serialization.blob_from_headers(response.headers)
+      result.name = blob
+      result.metadata = options[:metadata] if options[:metadata]
+
+      result
+    end
 
     # Protected: Creates a new block blob or updates the content of an existing block blob with multiple upload
     #
@@ -461,40 +462,41 @@ module Azure::Storage
     #
     # Returns a Blob
     protected
-      def create_block_blob_multiple_put(container, blob, content, size, options = {})
-        content_type = get_or_apply_content_type(content, options[:content_type])
-        content = StringIO.new(content) if content.is_a? String
-        block_size = get_block_size(size)
-        # Get the number of blocks
-        block_count = (Float(size) / Float(block_size)).ceil
-        block_list = []
-        for block_id in 0...block_count
-          id = block_id.to_s.rjust(6, "0")
-          put_blob_block(container, blob, id, content.read(block_size), timeout: options[:timeout], lease_id: options[:lease_id])
-          block_list.push([id])
-        end
 
-        # Commit the blocks put
-        commit_options = {}
-        commit_options[:content_type] = content_type
-        commit_options[:content_encoding] = options[:content_encoding] if options[:content_encoding]
-        commit_options[:content_language] = options[:content_language] if options[:content_language]
-        commit_options[:content_md5] = options[:content_md5] if options[:content_md5]
-        commit_options[:cache_control] = options[:cache_control] if options[:cache_control]
-        commit_options[:content_disposition] = options[:content_disposition] if options[:content_disposition]
-        commit_options[:metadata] = options[:metadata] if options[:metadata]
-        commit_options[:timeout] = options[:timeout] if options[:timeout]
-        commit_options[:request_id] = options[:request_id] if options[:request_id]
-        commit_options[:lease_id] = options[:lease_id] if options[:lease_id]
-
-        commit_blob_blocks(container, blob, block_list, commit_options)
-
-        get_properties_options = {}
-        get_properties_options[:lease_id] = options[:lease_id] if options[:lease_id]
-
-        # Get the blob properties
-        get_blob_properties(container, blob, get_properties_options)
+    def create_block_blob_multiple_put(container, blob, content, size, options = {})
+      content_type = get_or_apply_content_type(content, options[:content_type])
+      content = StringIO.new(content) if content.is_a? String
+      block_size = get_block_size(size)
+      # Get the number of blocks
+      block_count = (Float(size) / Float(block_size)).ceil
+      block_list = []
+      (0...block_count).each do |block_id|
+        id = block_id.to_s.rjust(6, "0")
+        put_blob_block(container, blob, id, content.read(block_size), timeout: options[:timeout], lease_id: options[:lease_id])
+        block_list.push([id])
       end
+
+      # Commit the blocks put
+      commit_options = {}
+      commit_options[:content_type] = content_type
+      commit_options[:content_encoding] = options[:content_encoding] if options[:content_encoding]
+      commit_options[:content_language] = options[:content_language] if options[:content_language]
+      commit_options[:content_md5] = options[:content_md5] if options[:content_md5]
+      commit_options[:cache_control] = options[:cache_control] if options[:cache_control]
+      commit_options[:content_disposition] = options[:content_disposition] if options[:content_disposition]
+      commit_options[:metadata] = options[:metadata] if options[:metadata]
+      commit_options[:timeout] = options[:timeout] if options[:timeout]
+      commit_options[:request_id] = options[:request_id] if options[:request_id]
+      commit_options[:lease_id] = options[:lease_id] if options[:lease_id]
+
+      commit_blob_blocks(container, blob, block_list, commit_options)
+
+      get_properties_options = {}
+      get_properties_options[:lease_id] = options[:lease_id] if options[:lease_id]
+
+      # Get the blob properties
+      get_blob_properties(container, blob, get_properties_options)
+    end
 
     # Protected: Gets the single upload threshold according to user's preference
     #
@@ -504,27 +506,29 @@ module Azure::Storage
     #
     # Returns an Integer
     protected
-      def get_single_upload_threshold(userThreshold)
-        if userThreshold.nil?
-          BlobConstants::DEFAULT_SINGLE_BLOB_PUT_THRESHOLD_IN_BYTES
-        elsif userThreshold <= 0
-          raise ArgumentError, "Single Upload Threshold should be positive number"
-        elsif userThreshold < BlobConstants::MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES
-          userThreshold
-        else
-          BlobConstants::MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES
-        end
+
+    def get_single_upload_threshold(user_threshold)
+      if user_threshold.nil?
+        BlobConstants::DEFAULT_SINGLE_BLOB_PUT_THRESHOLD_IN_BYTES
+      elsif user_threshold <= 0
+        raise ArgumentError, "Single Upload Threshold should be positive number"
+      elsif user_threshold < BlobConstants::MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES
+        user_threshold
+      else
+        BlobConstants::MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES
       end
+    end
 
     protected
-      def get_block_size(size)
-        if size > BlobConstants::MAX_BLOCK_BLOB_SIZE
-          raise ArgumentError, "Block blob size should be less than #{BlobConstants::MAX_BLOCK_BLOB_SIZE} bytes in size"
-        elsif (size / BlobConstants::MAX_BLOCK_COUNT) < BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
-          BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
-        else
-          BlobConstants::MAX_BLOCK_SIZE
-        end
+
+    def get_block_size(size)
+      if size > BlobConstants::MAX_BLOCK_BLOB_SIZE
+        raise ArgumentError, "Block blob size should be less than #{BlobConstants::MAX_BLOCK_BLOB_SIZE} bytes in size"
+      elsif (size / BlobConstants::MAX_BLOCK_COUNT) < BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
+        BlobConstants::DEFAULT_WRITE_BLOCK_SIZE_IN_BYTES
+      else
+        BlobConstants::MAX_BLOCK_SIZE
       end
+    end
   end
 end

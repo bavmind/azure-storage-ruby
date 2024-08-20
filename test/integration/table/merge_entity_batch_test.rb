@@ -61,7 +61,7 @@ describe Azure::Storage::Table::TableService do
 
     it "updates an existing entity, merging the properties" do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
-      batch.merge entity_properties["RowKey"],         "PartitionKey" => entity_properties["PartitionKey"],
+      batch.merge entity_properties["RowKey"], "PartitionKey" => entity_properties["PartitionKey"],
         "RowKey" => entity_properties["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
       etags = subject.execute_batch batch
@@ -77,10 +77,10 @@ describe Azure::Storage::Table::TableService do
 
       # retained all existing props
       entity_properties.each { |k, v|
-        unless entity_properties[k].class == Time
-          _(result.properties[k]).must_equal entity_properties[k]
-        else
+        if entity_properties[k].instance_of?(Time)
           _(result.properties[k].to_i).must_equal entity_properties[k].to_i
+        else
+          _(result.properties[k]).must_equal entity_properties[k]
         end
       }
 
@@ -95,7 +95,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.merge entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -103,7 +103,7 @@ describe Azure::Storage::Table::TableService do
       assert_raises(RuntimeError) do
         batch = Azure::Storage::Table::Batch.new "this_table.cannot-exist!", entity_properties["PartitionKey"]
         batch.merge entity_properties["RowKey"], entity_properties
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -114,7 +114,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.merge entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -125,7 +125,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.merge entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
   end

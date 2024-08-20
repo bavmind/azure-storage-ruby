@@ -25,7 +25,6 @@ require "unit/test_helper"
 require "azure/storage/common"
 
 describe Azure::Storage::Common::Client do
-
   describe "create client with options" do
     let(:azure_storage_account) { "testStorageAccount" }
     let(:azure_storage_access_key) { "testKey1" }
@@ -75,15 +74,15 @@ describe Azure::Storage::Common::Client do
     end
 
     it "storage from env && storage from connection_string works" do
-      subjectA = Azure::Storage::Common::Client.create_from_env
-      subjectB = Azure::Storage::Common::Client.create_from_connection_string(ENV["AZURE_STORAGE_CONNECTION_STRING"])
-      _(subjectA.storage_account_name).must_equal subjectB.storage_account_name
-      _(subjectA.storage_access_key).must_equal subjectB.storage_access_key
-      _(subjectA.storage_sas_token).must_equal subjectB.storage_sas_token
-      _(subjectA.storage_blob_host).must_equal subjectB.storage_blob_host
-      _(subjectA.storage_table_host).must_equal subjectB.storage_table_host
-      _(subjectA.storage_queue_host).must_equal subjectB.storage_queue_host
-      _(subjectA.storage_file_host).must_equal subjectB.storage_file_host
+      subject_a = Azure::Storage::Common::Client.create_from_env
+      subject_b = Azure::Storage::Common::Client.create_from_connection_string(ENV["AZURE_STORAGE_CONNECTION_STRING"])
+      _(subject_a.storage_account_name).must_equal subject_b.storage_account_name
+      _(subject_a.storage_access_key).must_equal subject_b.storage_access_key
+      _(subject_a.storage_sas_token).must_equal subject_b.storage_sas_token
+      _(subject_a.storage_blob_host).must_equal subject_b.storage_blob_host
+      _(subject_a.storage_table_host).must_equal subject_b.storage_table_host
+      _(subject_a.storage_queue_host).must_equal subject_b.storage_queue_host
+      _(subject_a.storage_file_host).must_equal subject_b.storage_file_host
     end
   end
 end

@@ -59,31 +59,29 @@ task :build_queue do
 end
 
 YARD::Rake::YardocTask.new do |t|
-  t.files   = ["blob/lib/**/*.rb", "table/lib/**/*.rb", "file/lib/**/*.rb", "queue/lib/**/*.rb"]
+  t.files = ["blob/lib/**/*.rb", "table/lib/**/*.rb", "file/lib/**/*.rb", "queue/lib/**/*.rb"]
   t.options = [""]
   t.stats_options = ["--list-undoc"]
 end
 
 task :publishDoc do
   desc "Generate documents and publish to GitHub Pages"
-  repo = %x(git config remote.origin.url).gsub(/^git:/, "https:")
+  repo = `git config remote.origin.url`.gsub(/^git:/, "https:")
   deploy_branch = "gh-pages"
-  if repo.match(/github\.com\.git$/)
+  if repo.match?(/github\.com\.git$/)
     deploy_branch = "main"
   end
   system "git remote set-url --push origin #{repo}"
   system "git remote set-branches --add origin #{deploy_branch}"
   system "git fetch -q"
-  if ("#{ENV['GIT_NAME']}" != "")
-    system "git config user.name '#{ENV['GIT_NAME']}'"
+  if (ENV["GIT_NAME"]).to_s != ""
+    system "git config user.name '#{ENV["GIT_NAME"]}'"
   end
-  if ("#{ENV['GIT_EMAIL']}" != "")
-    system "git config user.email '#{ENV['GIT_EMAIL']}'"
+  if (ENV["GIT_EMAIL"]).to_s != ""
+    system "git config user.email '#{ENV["GIT_EMAIL"]}'"
   end
   system 'git config credential.helper "store --file=.git/credentials"'
-  File.open(".git/credentials", "w") do |f|
-    f.write("https://#{ENV['GH_TOKEN']}:x-oauth-basic@github.com")
-  end
+  File.write(".git/credentials", "https://#{ENV["GH_TOKEN"]}:x-oauth-basic@github.com")
   system "rake yard"
   system "git checkout gh-pages"
   system "mv doc/* ./ -f"
@@ -109,7 +107,7 @@ namespace :test do
   Rake::TestTask.new :unit do |t|
     t.pattern = "test/unit/**/*_test.rb"
     t.verbose = true
-    t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+    t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
   end
 
   namespace :unit do
@@ -117,7 +115,7 @@ namespace :test do
       Rake::TestTask.new component do |t|
         t.pattern = "test/unit/#{component}/**/*_test.rb"
         t.verbose = true
-        t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+        t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
       end
     end
 
@@ -129,7 +127,7 @@ namespace :test do
       path.include?("database")
     end
     t.verbose = true
-    t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+    t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
   end
 
   task integration: :require_environment
@@ -139,7 +137,7 @@ namespace :test do
       Rake::TestTask.new component do |t|
         t.pattern = "test/integration/#{component}/**/*_test.rb"
         t.verbose = true
-        t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+        t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
       end
 
       task component => "test:require_environment"
@@ -149,11 +147,10 @@ namespace :test do
   end
 
   namespace :storage do
-
     Rake::TestTask.new :unit do |t|
       t.pattern = "test/unit/storage/**/*_test.rb"
       t.verbose = true
-      t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+      t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
     end
 
     task require_storage_env: :dotenv do
@@ -166,11 +163,10 @@ namespace :test do
       abort "[ABORTING] Configure your environment to run the storage integration tests" if unset_environment
     end
 
-
     Rake::TestTask.new :integration do |t|
       t.pattern = "test/integration/storage/**/*_test.rb"
       t.verbose = true
-      t.libs = %w(./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test)
+      t.libs = %w[./blob/lib ./table/lib ./queue/lib ./file/lib ./common/lib test]
     end
 
     task integration: :require_storage_env
@@ -181,13 +177,13 @@ namespace :test do
     require "azure/storage"
 
     Azure.configure do |config|
-      config.access_key     = ENV.fetch("AZURE_STORAGE_ACCESS_KEY")
-      config.account_name   = ENV.fetch("AZURE_STORAGE_ACCOUNT")
+      config.access_key = ENV.fetch("AZURE_STORAGE_ACCESS_KEY")
+      config.account_name = ENV.fetch("AZURE_STORAGE_ACCOUNT")
     end
   end
 end
 
-task test: %w(test:unit test:integration)
+task test: %w[test:unit test:integration]
 
 task :sanity_check do
   abort "[ABORTING] build common gem failed" unless system "rake build_common"

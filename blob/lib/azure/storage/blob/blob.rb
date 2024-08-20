@@ -95,7 +95,7 @@ module Azure::Storage
       uri = blob_uri(container, blob, query, options)
 
       headers = {}
-      options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
+      options[:start_range] = 0 if options[:end_range] && !(options[:start_range])
       if options[:start_range]
         StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}"
         StorageService.with_header headers, "x-ms-range-get-content-md5", "true" if options[:get_content_md5]
@@ -107,7 +107,7 @@ module Azure::Storage
       result = Serialization.blob_from_headers(response.headers)
       result.name = blob unless result.name
 
-      return result, response.body
+      [result, response.body]
     end
 
     # Public: Returns all properties and metadata on the blob.
@@ -274,7 +274,7 @@ module Azure::Storage
     #
     # Returns nil on success.
     def set_blob_properties(container, blob, options = {})
-      query = { "comp" => "properties" }
+      query = {"comp" => "properties"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
       uri = blob_uri(container, blob, query)
 
@@ -293,7 +293,7 @@ module Azure::Storage
           StorageService.with_header headers, "x-ms-sequence-number-action", options[:sequence_number_action]
 
           if options[:sequence_number_action].to_s != "increment" && options[:sequence_number]
-            StorageService.with_header headers, "x-ms-blob-sequence-number", options[:sequence_number] 
+            StorageService.with_header headers, "x-ms-blob-sequence-number", options[:sequence_number]
           end
         end
 
@@ -347,7 +347,7 @@ module Azure::Storage
     #
     # Returns a Blob
     def get_blob_metadata(container, blob, options = {})
-      query = { "comp" => "metadata" }
+      query = {"comp" => "metadata"}
       StorageService.with_query query, "snapshot", options[:snapshot]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
@@ -402,7 +402,7 @@ module Azure::Storage
     #
     # Returns nil on success.
     def set_blob_metadata(container, blob, metadata, options = {})
-      query = { "comp" => "metadata" }
+      query = {"comp" => "metadata"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
@@ -666,7 +666,7 @@ module Azure::Storage
     #
     # Returns the snapshot DateTime value
     def create_blob_snapshot(container, blob, options = {})
-      query = { "comp" => "snapshot" }
+      query = {"comp" => "snapshot"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
@@ -760,7 +760,7 @@ module Azure::Storage
       end
 
       response = call(:put, uri, nil, headers, options)
-      return response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]
+      [response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]]
     end
 
     # Public: Copies a source blob to a destination blob within the same storage account.
@@ -827,9 +827,9 @@ module Azure::Storage
     #                                    "pending" - The copy is in progress.
     #
     def copy_blob(destination_container, destination_blob, source_container, source_blob, options = {})
-      source_blob_uri = blob_uri(source_container, source_blob, options[:source_snapshot] ? { "snapshot" => options[:source_snapshot] } : {}).to_s
+      source_blob_uri = blob_uri(source_container, source_blob, options[:source_snapshot] ? {"snapshot" => options[:source_snapshot]} : {}).to_s
 
-      return copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options)
+      copy_blob_from_uri(destination_container, destination_blob, source_blob_uri, options)
     end
 
     # Public: Aborts a pending Copy Blob operation and leaves a destination blob with zero length and full metadata.
@@ -853,13 +853,13 @@ module Azure::Storage
     #
     # Returns nil on success
     def abort_copy_blob(container, blob, copy_id, options = {})
-      query = { "comp" => "copy" }
+      query = {"comp" => "copy"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
       StorageService.with_query query, "copyid", copy_id
 
-      uri = blob_uri(container, blob, query);
+      uri = blob_uri(container, blob, query)
       headers = {}
-      StorageService.with_header headers, "x-ms-copy-action", "abort";
+      StorageService.with_header headers, "x-ms-copy-action", "abort"
 
       unless options.empty?
         StorageService.with_header headers, "x-ms-lease-id", options[:lease_id]
@@ -921,7 +921,7 @@ module Azure::Storage
       options[:delete_snapshots] = :include unless options[:delete_snapshots]
 
       headers = {}
-      StorageService.with_header headers, "x-ms-delete-snapshots", options[:delete_snapshots].to_s if options[:delete_snapshots] && options[:snapshot] == nil
+      StorageService.with_header headers, "x-ms-delete-snapshots", options[:delete_snapshots].to_s if options[:delete_snapshots] && options[:snapshot].nil?
       add_blob_conditional_headers options, headers
       headers["x-ms-lease-id"] = options[:lease_id] if options[:lease_id]
 

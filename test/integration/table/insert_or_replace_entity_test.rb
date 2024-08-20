@@ -67,10 +67,10 @@ describe Azure::Storage::Table::TableService do
       _(result.etag).must_equal etag
 
       entity.each { |k, v|
-        unless entity[k].class == Time
-          _(result.properties[k]).must_equal entity[k]
-        else
+        if entity[k].instance_of?(Time)
           _(result.properties[k].to_i).must_equal entity[k].to_i
+        else
+          _(result.properties[k]).must_equal entity[k]
         end
       }
     end
@@ -93,7 +93,7 @@ describe Azure::Storage::Table::TableService do
 
       assert exists, "cannot verify existing record"
 
-      etag = subject.insert_or_replace_entity table_name,         "PartitionKey" => entity["PartitionKey"],
+      etag = subject.insert_or_replace_entity table_name, "PartitionKey" => entity["PartitionKey"],
         "RowKey" => entity["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
 

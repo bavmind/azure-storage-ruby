@@ -31,9 +31,13 @@ describe Azure::Storage::Blob::BlobService do
   describe "#list_blobs" do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_names) { ["blobname0", "blobname1", "blobname2", "blobname3", "prefix0/blobname4", "prefix0/blobname5", "prefix0/child_prefix0/blobname6"] }
-    let(:content) { content = ""; 1024.times.each { |i| content << "@" }; content }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
-    let(:options) { { content_type: "application/foo", metadata: metadata } }
+    let(:content) {
+      content = ""
+      1024.times.each { |i| content << "@" }
+      content
+    }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
+    let(:options) { {content_type: "application/foo", metadata: metadata} }
 
     before {
       subject.create_container container_name

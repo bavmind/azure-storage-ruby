@@ -67,10 +67,10 @@ describe Azure::Storage::Table::TableService do
       _(result.etag).must_equal etag
 
       entity.each { |k, v|
-        unless entity[k].class == Time
-          _(result.properties[k]).must_equal entity[k]
-        else
+        if entity[k].instance_of?(Time)
           _(result.properties[k].to_i).must_equal entity[k].to_i
+        else
+          _(result.properties[k]).must_equal entity[k]
         end
       }
     end
@@ -93,7 +93,7 @@ describe Azure::Storage::Table::TableService do
 
       assert exists, "cannot verify existing record"
 
-      etag = subject.insert_or_merge_entity table_name,         "PartitionKey" => entity["PartitionKey"],
+      etag = subject.insert_or_merge_entity table_name, "PartitionKey" => entity["PartitionKey"],
         "RowKey" => entity["RowKey"],
         "NewCustomProperty" => "NewCustomValue",
         "NewNilProperty" => nil
@@ -107,7 +107,7 @@ describe Azure::Storage::Table::TableService do
 
       # retained all existing props
       entity.each { |k, v|
-        if entity[k].class == Time
+        if entity[k].instance_of?(Time)
           _(result.properties[k].to_i).must_equal entity[k].to_i
         else
           _(result.properties[k]).must_equal entity[k]
@@ -116,7 +116,7 @@ describe Azure::Storage::Table::TableService do
 
       # and has the new one
       _(result.properties["NewCustomProperty"]).must_equal "NewCustomValue"
-      _(result.properties["NewNilProperty"]).must_equal nil
+      _(result.properties["NewNilProperty"]).must_be_nil
     end
 
     it "errors on an invalid table name" do

@@ -32,7 +32,7 @@ module Azure::Storage::Common::Core::Filter
       @retry_count = retry_count || LinearRetryPolicyFilter::DEFAULT_RETRY_COUNT
       @retry_interval = retry_interval || LinearRetryPolicyFilter::DEFAULT_RETRY_INTERVAL
 
-      super @retry_count, @retry_interval
+      super(@retry_count, @retry_interval)
     end
 
     DEFAULT_RETRY_COUNT = 3
@@ -48,7 +48,7 @@ module Azure::Storage::Common::Core::Filter
     # incrementing counter, timestamp, etc). The retry_data object
     # will be the same instance throughout the lifetime of the request
     def apply_retry_policy(retry_data)
-      retry_data[:count] = retry_data[:count] == nil ? 1 : retry_data[:count] + 1
+      retry_data[:count] = retry_data[:count].nil? ? 1 : retry_data[:count] + 1
       retry_data[:interval] = @retry_interval
     end
   end

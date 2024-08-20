@@ -32,7 +32,7 @@ describe Azure::Storage::File::FileService do
 
     it "gets acl and custom metadata for the share" do
       share = subject.create_share share_name
-      properties = share.properties
+      share.properties
 
       share = subject.get_share_stats share_name
       _(share).wont_be_nil

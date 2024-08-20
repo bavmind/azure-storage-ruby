@@ -32,7 +32,7 @@ describe Azure::Storage::Blob::BlobService do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { "blobname" }
     let(:length) { 1024 }
-    let(:metadata) { { "custommetadata" => "CustomMetadataValue" } }
+    let(:metadata) { {"custommetadata" => "CustomMetadataValue"} }
     before {
       subject.create_container container_name
       subject.create_page_blob container_name, blob_name, length
@@ -52,10 +52,9 @@ describe Azure::Storage::Blob::BlobService do
 
     describe "when a blob has a snapshot" do
       let(:snapshot) { subject.create_blob_snapshot container_name, blob_name, metadata: metadata }
-      before { s = snapshot }
+      before { snapshot }
 
       it "gets metadata for a blob snapshot (when set during create)" do
-
         blob = subject.get_blob_metadata container_name, blob_name, snapshot: snapshot
         _(blob.encrypted).must_be_nil
 
@@ -64,7 +63,6 @@ describe Azure::Storage::Blob::BlobService do
           _(blob.metadata).must_include k
           _(blob.metadata[k]).must_equal v
         }
-
       end
 
       it "errors if the snapshot does not exist" do
@@ -93,12 +91,11 @@ describe Azure::Storage::Blob::BlobService do
       new_lease_id = subject.acquire_blob_lease container_name, page_blob_name
       # assert wrong lease fails
       status_code = ""
-      description = ""
       begin
         blob = subject.get_blob_metadata container_name, page_blob_name, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
-        description = e.description
+        e.description
       end
       _(status_code).must_equal "412"
       # assert right lease succeeds

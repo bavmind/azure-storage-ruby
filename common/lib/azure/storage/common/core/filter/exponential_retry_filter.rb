@@ -33,11 +33,11 @@ module Azure::Storage::Common::Core::Filter
       @min_retry_interval = min_retry_interval || ExponentialRetryPolicyFilter::DEFAULT_MIN_RETRY_INTERVAL
       @max_retry_interval = max_retry_interval || ExponentialRetryPolicyFilter::DEFAULT_MAX_RETRY_INTERVAL
 
-      super @retry_count, @min_retry_interval
+      super(@retry_count, @min_retry_interval)
     end
 
     attr_reader :min_retry_interval,
-                :max_retry_interval
+      :max_retry_interval
 
     DEFAULT_RETRY_COUNT = 3
     DEFAULT_MIN_RETRY_INTERVAL = 10
@@ -54,11 +54,11 @@ module Azure::Storage::Common::Core::Filter
     # will be the same instance throughout the lifetime of the request
     def apply_retry_policy(retry_data)
       # Adjust retry count
-      retry_data[:count] = retry_data[:count] === nil ? 1 : retry_data[:count] + 1
+      retry_data[:count] = retry_data[:count].nil? ? 1 : retry_data[:count] + 1
 
       # Adjust retry interval
-      increment_delta = (@max_retry_interval - @min_retry_interval).fdiv(2**(@retry_count - 1)) * (2**(retry_data[:count] - 1));
-      retry_data[:interval] = retry_data[:interval] === nil ? @min_retry_interval : [@min_retry_interval + increment_delta, @max_retry_interval].min;
+      increment_delta = (@max_retry_interval - @min_retry_interval).fdiv(2**(@retry_count - 1)) * (2**(retry_data[:count] - 1))
+      retry_data[:interval] = retry_data[:interval].nil? ? @min_retry_interval : [@min_retry_interval + increment_delta, @max_retry_interval].min
     end
   end
 end

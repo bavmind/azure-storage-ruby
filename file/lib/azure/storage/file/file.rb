@@ -130,7 +130,7 @@ module Azure::Storage::File
   # * +:timeout+                   - Integer. A timeout in seconds.
   # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                  in the analytics logs when storage analytics logging is enabled.
-  # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+  # * +:location_mode+             - LocationMode. Specifies the location mode used to decide
   #                                  which location the request should be sent to.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-file
@@ -144,7 +144,7 @@ module Azure::Storage::File
     uri = file_uri(share, directory_path, file, query, options)
 
     headers = {}
-    options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
+    options[:start_range] = 0 if options[:end_range] && !(options[:start_range])
     if options[:start_range]
       StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}"
       StorageService.with_header headers, "x-ms-range-get-content-md5", "true" if options[:get_content_md5]
@@ -154,7 +154,7 @@ module Azure::Storage::File
     result = Serialization.file_from_headers(response.headers)
     result.name = file
 
-    return result, response.body
+    [result, response.body]
   end
 
   # Public: Returns all properties and metadata on the file.
@@ -172,7 +172,7 @@ module Azure::Storage::File
   # * +:timeout+                   - Integer. A timeout in seconds.
   # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                  in the analytics logs when storage analytics logging is enabled.
-  # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+  # * +:location_mode+             - LocationMode. Specifies the location mode used to decide
   #                                  which location the request should be sent to.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-file-properties
@@ -224,7 +224,7 @@ module Azure::Storage::File
   #
   # Returns nil on success.
   def set_file_properties(share, directory_path, file, options = {})
-    query = { "comp" => "properties" }
+    query = {"comp" => "properties"}
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
     uri = file_uri(share, directory_path, file, query)
 
@@ -267,7 +267,7 @@ module Azure::Storage::File
   #
   # Returns nil on success.
   def resize_file(share, directory_path, file, size, options = {})
-    options = { content_length: size }.merge(options)
+    options = {content_length: size}.merge(options)
     set_file_properties share, directory_path, file, options
   end
 
@@ -297,7 +297,7 @@ module Azure::Storage::File
   # Returns a File
   #
   def put_file_range(share, directory_path, file, start_range, end_range = nil, content = nil, options = {})
-    query = { "comp" => "range" }
+    query = {"comp" => "range"}
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
     uri = file_uri(share, directory_path, file, query)
@@ -335,7 +335,7 @@ module Azure::Storage::File
   #
   # Returns a File
   def clear_file_range(share, directory_path, file, start_range, end_range = nil, options = {})
-    query = { "comp" => "range" }
+    query = {"comp" => "range"}
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
     uri = file_uri(share, directory_path, file, query)
@@ -369,7 +369,7 @@ module Azure::Storage::File
   # * +:timeout+                   - Integer. A timeout in seconds.
   # * +:request_id+                - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                  in the analytics logs when storage analytics logging is enabled.
-  # * +:location_mode+             - LocationMode. Specifies the location mode used to decide 
+  # * +:location_mode+             - LocationMode. Specifies the location mode used to decide
   #                                  which location the request should be sent to.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-ranges
@@ -379,13 +379,13 @@ module Azure::Storage::File
   #   eg. (File::File, [ [0, 511], [512, 1024], ... ])
   #
   def list_file_ranges(share, directory_path, file, options = {})
-    query = { "comp" => "rangelist" }
+    query = {"comp" => "rangelist"}
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
     options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
     uri = file_uri(share, directory_path, file, query, options)
 
-    options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
+    options[:start_range] = 0 if options[:end_range] && !(options[:start_range])
 
     headers = {}
     StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}" if options[:start_range]
@@ -395,7 +395,7 @@ module Azure::Storage::File
     result = Serialization.file_from_headers(response.headers)
     result.name = file
     rangelist = Serialization.range_list_from_xml(response.body)
-    return result, rangelist
+    [result, rangelist]
   end
 
   # Public: Returns only user-defined metadata for the specified file.
@@ -413,7 +413,7 @@ module Azure::Storage::File
   # * +:timeout+                  - Integer. A timeout in seconds.
   # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
-  # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+  # * +:location_mode+            - LocationMode. Specifies the location mode used to decide
   #                                 which location the request should be sent to.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-file-metadata
@@ -421,7 +421,7 @@ module Azure::Storage::File
   # Returns a File
   def get_file_metadata(share, directory_path, file, options = {})
     # Query
-    query = { "comp" => "metadata" }
+    query = {"comp" => "metadata"}
     query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Call
@@ -456,7 +456,7 @@ module Azure::Storage::File
   # Returns nil on success
   def set_file_metadata(share, directory_path, file, metadata, options = {})
     # Query
-    query = { "comp" => "metadata" }
+    query = {"comp" => "metadata"}
     query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Headers
@@ -542,7 +542,7 @@ module Azure::Storage::File
     StorageService.add_metadata_to_headers options[:metadata], headers unless options.empty?
 
     response = call(:put, uri, nil, headers, options)
-    return response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]
+    [response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]]
   end
 
   # Public: Copies a source file to a destination file within the same storage account.
@@ -581,7 +581,7 @@ module Azure::Storage::File
   def copy_file(destination_share, destination_directory_path, destination_file, source_share, source_directory_path, source_file, options = {})
     source_file_uri = file_uri(source_share, source_directory_path, source_file, {}).to_s
 
-    return copy_file_from_uri(destination_share, destination_directory_path, destination_file, source_file_uri, options)
+    copy_file_from_uri(destination_share, destination_directory_path, destination_file, source_file_uri, options)
   end
 
   # Public: Aborts a pending Copy File operation and leaves a destination file with zero length and full metadata.
@@ -605,13 +605,13 @@ module Azure::Storage::File
   #
   # Returns nil on success
   def abort_copy_file(share, directory_path, file, copy_id, options = {})
-    query = { "comp" => "copy" }
+    query = {"comp" => "copy"}
     StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
     StorageService.with_query query, "copyid", copy_id
 
-    uri = file_uri(share, directory_path, file, query);
+    uri = file_uri(share, directory_path, file, query)
     headers = {}
-    StorageService.with_header headers, "x-ms-copy-action", "abort";
+    StorageService.with_header headers, "x-ms-copy-action", "abort"
 
     call(:put, uri, nil, headers, options)
     nil
@@ -660,7 +660,7 @@ module Azure::Storage::File
     content = StringIO.new(content) if content.is_a? String
     upload_count = (Float(length) / Float(FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES)).ceil
 
-    for idx in 0...upload_count
+    (0...upload_count).each do |idx|
       start_range = idx * FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES
       end_range = start_range + FileConstants::DEFAULT_WRITE_SIZE_IN_BYTES - 1
       end_range = (length - 1) if end_range > (length - 1)

@@ -37,14 +37,16 @@ describe Azure::Storage::File::FileService do
       subject.create_directory share_name, directory_name
       subject.create_file share_name, directory_name, file_name, file_length
     }
-    let(:options) { {
-      content_type: "application/my-special-format",
-      content_encoding: "gzip",
-      content_language: "klingon",
-      content_md5: "5e1f7f9c28345d2b",
-      content_disposition: "attachment",
-      cache_control: "max-age=1296000",
-    }}
+    let(:options) {
+      {
+        content_type: "application/my-special-format",
+        content_encoding: "gzip",
+        content_language: "klingon",
+        content_md5: "5e1f7f9c28345d2b",
+        content_disposition: "attachment",
+        cache_control: "max-age=1296000"
+      }
+    }
 
     it "sets and gets properties for a file" do
       result = subject.set_file_properties share_name, directory_name, file_name, options

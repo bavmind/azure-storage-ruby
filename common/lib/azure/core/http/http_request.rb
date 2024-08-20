@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'digest/md5'
-require 'base64'
-require 'net/http'
-require 'time'
-require 'tempfile'
+require "digest/md5"
+require "base64"
+require "net/http"
+require "time"
+require "tempfile"
 
-require 'azure/core/version'
-require 'azure/core/http/http_response'
-require 'azure/core/http/retry_policy'
-require 'azure/core/default'
-require 'azure/http_response_helper'
+require "azure/core/version"
+require "azure/core/http/http_response"
+require "azure/core/http/retry_policy"
+require "azure/core/default"
+require "azure/http_response_helper"
 
 module Azure
   module Core
@@ -48,7 +48,7 @@ module Azure
         # Azure client which contains configuration context and http agents
         # @return [Azure::Client]
         attr_accessor :client
-        
+
         # The http filter
         attr_accessor :has_retry_filter
 
@@ -64,10 +64,10 @@ module Azure
 
           @method = method
           @uri = if uri.is_a?(String)
-                   URI.parse(uri)
-                 else
-                   uri
-                 end
+            URI.parse(uri)
+          else
+            uri
+          end
 
           @client = options[:client] || Azure
 
@@ -97,24 +97,24 @@ module Azure
         # The code block provided must call _next or the filter pipeline
         # will not complete and the HTTP request will never execute
         #
-        def with_filter(filter=nil, options={}, &block)
-          filter = filter || block
+        def with_filter(filter = nil, options = {}, &block)
+          filter ||= block
           if filter
             is_retry_policy = filter.is_a?(Azure::Core::Http::RetryPolicy)
             filter.retry_data[:request_options] = options if is_retry_policy
             @has_retry_filter ||= is_retry_policy
-            
-            original_call = self._method(:call)
+
+            original_call = _method(:call)
 
             # support 1.8.7 (define_singleton_method doesn't exist until 1.9.1)
-            filter_call = Proc.new do
+            filter_call = proc do
               filter.call(self, original_call)
             end
-            k = class << self;
-              self;
+            k = class << self
+                  self
             end
             if k.method_defined? :define_singleton_method
-              self.define_singleton_method(:call, filter_call)
+              define_singleton_method(:call, filter_call)
             else
               k.send(:define_method, :call, filter_call)
             end
@@ -124,12 +124,12 @@ module Azure
         # Build a default headers Hash
         def default_headers(current_time)
           {}.tap do |def_headers|
-            def_headers['User-Agent'] = Azure::Core::Default::USER_AGENT
-            def_headers['x-ms-date'] = current_time
-            def_headers['x-ms-version'] = '2014-02-14'
-            def_headers['DataServiceVersion'] = '1.0;NetFx'
-            def_headers['MaxDataServiceVersion'] = '3.0;NetFx'
-            def_headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
+            def_headers["User-Agent"] = Azure::Core::Default::USER_AGENT
+            def_headers["x-ms-date"] = current_time
+            def_headers["x-ms-version"] = "2014-02-14"
+            def_headers["DataServiceVersion"] = "1.0;NetFx"
+            def_headers["MaxDataServiceVersion"] = "3.0;NetFx"
+            def_headers["Content-Type"] = "application/atom+xml; charset=utf-8"
           end
         end
 
@@ -147,7 +147,7 @@ module Azure
         # @return [HttpResponse]
         def call
           conn = http_setup
-          res = set_up_response(method.to_sym, uri, conn, headers ,body)
+          res = set_up_response(method.to_sym, uri, conn, headers, body)
 
           response = HttpResponse.new(res)
           response.uri = uri
@@ -158,36 +158,36 @@ module Azure
         private
 
         def apply_body_headers
-          return headers['Content-Length'] = '0' unless body
+          return headers["Content-Length"] = "0" unless body
 
-          return apply_io_headers        if IO === body || Tempfile === body
+          return apply_io_headers if IO === body || Tempfile === body
           return apply_string_io_headers if StringIO === body
-          return apply_miscellaneous_headers
+          apply_miscellaneous_headers
         end
 
         def apply_io_headers
-          headers['Content-Length'] = body.size.to_s if body.respond_to?('size')
-          if headers['Content-Length'].nil?
-            raise ArgumentError, '\'Content-Length\' must be defined if size cannot be obtained from body IO.'
+          headers["Content-Length"] = body.size.to_s if body.respond_to?(:size)
+          if headers["Content-Length"].nil?
+            raise ArgumentError, "'Content-Length' must be defined if size cannot be obtained from body IO."
           end
-          headers['Content-MD5'] = Digest::MD5.file(body.path).base64digest unless headers['Content-MD5']
+          headers["Content-MD5"] = Digest::MD5.file(body.path).base64digest unless headers["Content-MD5"]
         end
 
         def apply_string_io_headers
-          headers['Content-Length'] = body.size.to_s
-          unless headers['Content-MD5']
-            headers['Content-MD5'] = Digest::MD5.new.tap do |checksum|
-                                       while chunk = body.read(5242880)
-                                         checksum << chunk
-                                       end
-                                       body.rewind
-                                     end.base64digest
+          headers["Content-Length"] = body.size.to_s
+          unless headers["Content-MD5"]
+            headers["Content-MD5"] = Digest::MD5.new.tap do |checksum|
+              while (chunk = body.read(5242880))
+                checksum << chunk
+              end
+              body.rewind
+            end.base64digest
           end
         end
 
         def apply_miscellaneous_headers
-          headers['Content-Length'] = body.size.to_s
-          headers['Content-MD5'] = Base64.strict_encode64(Digest::MD5.digest(body.to_s)) unless headers['Content-MD5']
+          headers["Content-Length"] = body.size.to_s
+          headers["Content-MD5"] = Base64.strict_encode64(Digest::MD5.digest(body.to_s)) unless headers["Content-MD5"]
         end
       end
     end

@@ -33,9 +33,13 @@ describe Azure::Storage::Blob::BlobService do
   describe "#get_blob" do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { "blobname" }
-    let(:content) { content = ""; 1024.times.each { |i| content << "@" }; content }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
-    let(:options) { { content_type: "application/foo", metadata: metadata } }
+    let(:content) {
+      content = ""
+      1024.times.each { |i| content << "@" }
+      content
+    }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
+    let(:options) { {content_type: "application/foo", metadata: metadata} }
 
     before {
       subject.create_container container_name
@@ -82,7 +86,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        blob = subject.get_blob container_name, blob_name, if_none_match: "*"
+        subject.get_blob container_name, blob_name, if_none_match: "*"
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

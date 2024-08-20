@@ -12,32 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/core/service'
+require "azure/core/service"
 
 module Azure
   module Core
     # A base class for Service implementations
     class FilteredService < Service
-
       # Create a new instance of the FilteredService
       #
       # @param host     [String] The hostname. (optional, Default empty)
       # @param options  [Hash] options including {:client} (optional, Default {})
-      def initialize(host='', options={})
+      def initialize(host = "", options = {})
         super
         @filters = []
       end
 
       attr_accessor :filters
 
-      def call(method, uri, body=nil, headers=nil, options={})
+      def call(method, uri, body = nil, headers = nil, options = {})
         super(method, uri, body, headers) do |request|
-          filters.reverse.each { |filter| request.with_filter filter, options } if filters
+          filters&.reverse_each { |filter| request.with_filter filter, options }
         end
       end
 
-      def with_filter(filter=nil, &block)
-        filter = filter || block
+      def with_filter(filter = nil, &block)
+        filter ||= block
         filters.push filter if filter
       end
     end

@@ -27,7 +27,7 @@ describe Azure::Storage::File::FileService do
   let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
   subject {
     Azure::Storage::File::FileService.create(SERVICE_CREATE_OPTIONS()) { |headers|
-      headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+      headers["User-Agent"] = "#{user_agent_prefix}; #{headers["User-Agent"]}"
     }
   }
   after { ShareNameHelper.clean }
@@ -37,7 +37,7 @@ describe Azure::Storage::File::FileService do
     let(:directory_name) { FileNameHelper.name }
     let(:file_name) { FileNameHelper.name }
     let(:file_length) { 1024 }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
     before {
       subject.create_share share_name
       subject.create_directory share_name, directory_name

@@ -29,7 +29,7 @@ describe Azure::Storage::Blob::BlobService do
   after { ContainerNameHelper.clean }
 
   describe "#get_container_properties" do
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
     let(:public_access_level) { "blob" }
 
     it "gets properties and custom metadata for the container" do

@@ -24,7 +24,7 @@
 require "integration/test_helper"
 require "azure/storage/blob/blob_service"
 require "securerandom"
-require 'digest/md5'
+require "digest/md5"
 
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
@@ -80,23 +80,21 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "IO payload works" do
-      begin
-        content = SecureRandom.hex(1024)
-        length = content.size
-        blob_name = BlobNameHelper.name
-        file = File.open blob_name, "w+"
-        file.write content
-        file.seek 0
-        subject.create_page_blob_from_content container_name, blob_name, length, file
-        blob, body = subject.get_blob(container_name, blob_name)
-        _(blob.name).must_equal blob_name
-        _(blob.properties[:content_length]).must_equal length
-        _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
-      ensure
-        unless file.nil?
-          file.close
-          File.delete blob_name
-        end
+      content = SecureRandom.hex(1024)
+      length = content.size
+      blob_name = BlobNameHelper.name
+      file = File.open blob_name, "w+"
+      file.write content
+      file.seek 0
+      subject.create_page_blob_from_content container_name, blob_name, length, file
+      blob, body = subject.get_blob(container_name, blob_name)
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:content_length]).must_equal length
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
+    ensure
+      unless file.nil?
+        file.close
+        File.delete blob_name
       end
     end
   end
@@ -127,7 +125,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        blob = subject.put_blob_pages container_name, page_blob_name, 0, 511, content
+        subject.put_blob_pages container_name, page_blob_name, 0, 511, content
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description
@@ -221,13 +219,13 @@ describe Azure::Storage::Blob::BlobService do
 
     it "list blob pages in the snapshot" do
       # initialize the blob
-      content_512B = SecureRandom.random_bytes(512)
-      subject.put_blob_pages container_name, blob_name3, 0, 511, content_512B
-      subject.put_blob_pages container_name, blob_name3, 1024, 1535, content_512B
+      content_512b = SecureRandom.random_bytes(512)
+      subject.put_blob_pages container_name, blob_name3, 0, 511, content_512b
+      subject.put_blob_pages container_name, blob_name3, 1024, 1535, content_512b
       # snapshot
       snapshot1 = subject.create_blob_snapshot container_name, blob_name3
       # modify the blob after snapshot
-      subject.put_blob_pages container_name, blob_name3, 2048, 2559, content_512B
+      subject.put_blob_pages container_name, blob_name3, 2048, 2559, content_512b
       # verify that even the blob has been altered, the returned list
       # will not contain the change if snapshot is specified
       ranges = subject.list_page_blob_ranges container_name, blob_name3, snapshot: snapshot1
@@ -248,10 +246,10 @@ describe Azure::Storage::Blob::BlobService do
       # initialize the blob
       page_blob_name = BlobNameHelper.name
       subject.create_page_blob container_name, page_blob_name, length
-      content_512B = SecureRandom.random_bytes(512)
-      subject.put_blob_pages container_name, page_blob_name, 0, 511, content_512B
-      subject.put_blob_pages container_name, page_blob_name, 1024, 1535, content_512B
-      subject.put_blob_pages container_name, page_blob_name, 2048, 2559, content_512B
+      content_512b = SecureRandom.random_bytes(512)
+      subject.put_blob_pages container_name, page_blob_name, 0, 511, content_512b
+      subject.put_blob_pages container_name, page_blob_name, 1024, 1535, content_512b
+      subject.put_blob_pages container_name, page_blob_name, 2048, 2559, content_512b
       # acquire lease for blob
       lease_id = subject.acquire_blob_lease container_name, page_blob_name
       subject.release_blob_lease container_name, page_blob_name, lease_id
@@ -260,7 +258,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        ranges = subject.list_page_blob_ranges container_name, page_blob_name, lease_id: lease_id
+        subject.list_page_blob_ranges container_name, page_blob_name, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

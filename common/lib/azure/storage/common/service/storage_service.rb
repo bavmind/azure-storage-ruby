@@ -43,16 +43,20 @@ module Azure::Storage::Common
       #                                                   (optional, Default=Azure::Storage::CommonAuth::SharedKey.new)
       # @param account_name   [String] The account name (optional, Default=Azure::Storage.storage_account_name)
       # @param options        [Azure::Storage::CommonConfigurable] the client configuration context
-      def initialize(signer = nil, account_name = nil, options = {}, &block)
-        StorageService.register_request_callback(&block) if block_given?
+      def initialize(signer = nil, account_name = nil, options = {}, &)
+        StorageService.register_request_callback(&) if block_given?
         client_config = options[:client]
-        signer = signer || Azure::Storage::Common::Core::Auth::SharedKey.new(
+        if client_config.storage_access_key
+          signer ||= Azure::Storage::Common::Core::Auth::SharedKey.new(
+            client_config.storage_account_name,
+            client_config.storage_access_key
+          )
+        end
+        signer ||= Azure::Storage::Common::Core::Auth::SharedAccessSignatureSigner.new(
           client_config.storage_account_name,
-          client_config.storage_access_key) if client_config.storage_access_key
-        signer = signer || Azure::Storage::Common::Core::Auth::SharedAccessSignatureSigner.new(
-          client_config.storage_account_name,
-          client_config.storage_sas_token)
-        @storage_service_host = { primary: "", secondary: "" };
+          client_config.storage_sas_token
+        )
+        @storage_service_host = {primary: "", secondary: ""}
         super(signer, account_name, options)
       end
 
@@ -124,7 +128,8 @@ module Azure::Storage::Common
 
         options.update(
           location_mode: LocationMode::SECONDARY_ONLY,
-          request_location_mode: RequestLocationMode::SECONDARY_ONLY)
+          request_location_mode: RequestLocationMode::SECONDARY_ONLY
+        )
         response = call(:get, service_stats_uri(query, options), nil, {}, options)
         Serialization.service_stats_from_xml response.body
       end
@@ -176,42 +181,42 @@ module Azure::Storage::Common
           if options[:request_location_mode].nil?
             RequestLocationMode::PRIMARY_ONLY
           else
-            request_location_mode = options[:request_location_mode]
+            options[:request_location_mode]
           end
 
         location = StorageService.get_location location_mode, request_location_mode
 
-        if self.client.is_a?(Azure::Storage::Common::Client) && self.client.options[:use_path_style_uri]
+        if client.is_a?(Azure::Storage::Common::Client) && client.options[:use_path_style_uri]
           account_path = get_account_path location
-          path = path.length > 0 ? account_path + "/" + path : account_path
+          path = (path.length > 0) ? account_path + "/" + path : account_path
         end
 
-        @host = location == StorageLocation::PRIMARY ? @storage_service_host[:primary] : @storage_service_host[:secondary]
+        @host = (location == StorageLocation::PRIMARY) ? @storage_service_host[:primary] : @storage_service_host[:secondary]
 
         encode = options[:encode].nil? ? false : options[:encode]
         if encode
           path = CGI.escape(path.encode("UTF-8"))
 
           # decode the forward slashes to match what the server expects.
-          path = path.gsub(/%2F/, "/")
+          path = path.gsub("%2F", "/")
           # decode the backward slashes to match what the server expects.
-          path = path.gsub(/%5C/, "/")
+          path = path.gsub("%5C", "/")
           # Re-encode the spaces (encoded as space) to the % encoding.
-          path = path.gsub(/\+/, "%20")
+          path = path.gsub("+", "%20")
         end
 
         @host = storage_service_host[:primary]
-        options[:primary_uri] = super path, query
+        options[:primary_uri] = super(path, query)
 
         @host = storage_service_host[:secondary]
-        options[:secondary_uri] = super path, query
+        options[:secondary_uri] = super(path, query)
 
         if location == StorageLocation::PRIMARY
           @host = @storage_service_host[:primary]
-          return options[:primary_uri]
+          options[:primary_uri]
         else
           @host = @storage_service_host[:secondary]
-          return options[:secondary_uri]
+          options[:secondary_uri]
         end
       end
 
@@ -222,9 +227,9 @@ module Azure::Storage::Common
       # Returns the account path
       def get_account_path(location)
         if location == StorageLocation::PRIMARY
-          self.client.options[:storage_account_name]
+          client.options[:storage_account_name]
         else
-          self.client.options[:storage_account_name] + "-secondary"
+          client.options[:storage_account_name] + "-secondary"
         end
       end
 
@@ -279,10 +284,8 @@ module Azure::Storage::Common
         # * +:metadata+  - A Hash of metadata name/value pairs
         # * +:headers+   - A Hash of HTTP headers
         def add_metadata_to_headers(metadata, headers)
-          if metadata
-            metadata.each do |key, value|
-              headers["x-ms-meta-#{key}"] = value
-            end
+          metadata&.each do |key, value|
+            headers["x-ms-meta-#{key}"] = value
           end
         end
 
@@ -300,20 +303,20 @@ module Azure::Storage::Common
         # * +:headers+    - A Hash of HTTP headers
         # * +:name+       - The header name
         # * +:value+      - The value
-        alias with_header with_value
+        alias_method :with_header, :with_value
 
         # Adds a query parameter
         #
         # * +:query+      - A Hash of HTTP query
         # * +:name+       - The parameter name
         # * +:value+      - The value
-        alias with_query with_value
+        alias_method :with_query, :with_value
 
         # Declares a default hash object for request headers
         def common_headers(options = {}, body = nil)
           headers = {}
-          headers.merge!("x-ms-client-request-id" => options[:request_id]) if options[:request_id]
-          @request_callback.call(headers) if @request_callback
+          headers["x-ms-client-request-id"] = options[:request_id] if options[:request_id]
+          @request_callback&.call(headers)
           headers
         end
       end

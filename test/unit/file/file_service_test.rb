@@ -38,8 +38,8 @@ describe Azure::Storage::File::FileService do
   let(:request_body) { "request-body" }
 
   let(:response_headers) { {} }
-  let(:response_body) { mock() }
-  let(:response) { mock() }
+  let(:response_body) { mock }
+  let(:response) { mock }
 
   let(:share_name) { "share-name" }
   let(:directory_path) { "directory_path" }
@@ -52,7 +52,7 @@ describe Azure::Storage::File::FileService do
 
   describe "#list_shares" do
     let(:verb) { :get }
-    let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+    let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
     let(:shares_enumeration_result) { Azure::Storage::Common::Service::EnumerationResults.new }
 
     before {
@@ -86,8 +86,8 @@ describe Azure::Storage::File::FileService do
       }
 
       it "modifies the URI query parameters when provided a :prefix value" do
-        query = { "prefix" => "pre" }
-        local_options = { prefix: "pre" }.merge options
+        query = {"prefix" => "pre"}
+        local_options = {prefix: "pre"}.merge options
 
         subject.expects(:shares_uri).with(query, local_options).returns(uri)
         subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -95,8 +95,8 @@ describe Azure::Storage::File::FileService do
       end
 
       it "modifies the URI query parameters when provided a :marker value" do
-        query = { "marker" => "mark" }
-        local_options = { marker: "mark" }.merge options
+        query = {"marker" => "mark"}
+        local_options = {marker: "mark"}.merge options
 
         subject.expects(:shares_uri).with(query, local_options).returns(uri)
         subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -104,8 +104,8 @@ describe Azure::Storage::File::FileService do
       end
 
       it "modifies the URI query parameters when provided a :max_results value" do
-        query = { "maxresults" => "5" }
-        local_options = { max_results: 5 }.merge options
+        query = {"maxresults" => "5"}
+        local_options = {max_results: 5}.merge options
 
         subject.expects(:shares_uri).with(query, local_options).returns(uri)
         subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -113,8 +113,8 @@ describe Azure::Storage::File::FileService do
       end
 
       it "modifies the URI query parameters when provided a :metadata value" do
-        query = { "include" => "metadata" }
-        local_options = { metadata: true }.merge options
+        query = {"include" => "metadata"}
+        local_options = {metadata: true}.merge options
 
         subject.expects(:shares_uri).with(query, local_options).returns(uri)
         subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -122,8 +122,8 @@ describe Azure::Storage::File::FileService do
       end
 
       it "modifies the URI query parameters when provided a :timeout value" do
-        query = { "timeout" => "37" }
-        local_options = { timeout: 37 }.merge options
+        query = {"timeout" => "37"}
+        local_options = {timeout: 37}.merge options
 
         subject.expects(:shares_uri).with(query, local_options).returns(uri)
         subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -131,7 +131,7 @@ describe Azure::Storage::File::FileService do
       end
 
       it "does not modify the URI query parameters when provided an unknown value" do
-        local_options = { unknown_key: "some_value" }.merge options
+        local_options = {unknown_key: "some_value"}.merge options
 
         subject.expects(:shares_uri).with(query, local_options).returns(uri)
         subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -218,64 +218,64 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.delete_share share_name
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
 
     describe "#set_share_properties" do
-        let(:verb) { :put }
-        let(:request_headers) { {} }
+      let(:verb) { :put }
+      let(:request_headers) { {} }
 
-        before {
-          query.update("comp" => "properties")
-          response.stubs(:success?).returns(true)
+      before {
+        query.update("comp" => "properties")
+        response.stubs(:success?).returns(true)
+        subject.stubs(:share_uri).with(share_name, query).returns(uri)
+        subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+      }
+
+      it "assembles a URI for the request" do
+        subject.expects(:share_uri).with(share_name, query).returns(uri)
+        subject.set_share_properties share_name
+      end
+
+      it "calls StorageService#call with the prepared request" do
+        subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
+        subject.set_share_properties share_name
+      end
+
+      it "returns nil on success" do
+        result = subject.set_share_properties share_name
+        _(result).must_be_nil
+      end
+
+      describe "when the options Hash is used" do
+        it "modifies the request headers when provided a :content_type value" do
+          request_headers["x-ms-share-quota"] = "50"
+          options = {quota: 50}
+          subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+          subject.set_share_properties share_name, options
+        end
+
+        it "modifies the URI query parameters when provided a :timeout value" do
+          query["timeout"] = "37"
           subject.stubs(:share_uri).with(share_name, query).returns(uri)
-          subject.stubs(:call).with(verb, uri, nil, request_headers, {}).returns(response)
-        }
 
-        it "assembles a URI for the request" do
-          subject.expects(:share_uri).with(share_name, query).returns(uri)
-          subject.set_share_properties share_name
+          options = {timeout: 37}
+          subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
+          subject.set_share_properties share_name, options
         end
 
-        it "calls StorageService#call with the prepared request" do
-          subject.expects(:call).with(verb, uri, nil, request_headers, {}).returns(response)
-          subject.set_share_properties share_name
-        end
-
-        it "returns nil on success" do
-          result = subject.set_share_properties share_name
-          _(result).must_equal nil
-        end
-
-        describe "when the options Hash is used" do
-          it "modifies the request headers when provided a :content_type value" do
-            request_headers["x-ms-share-quota"] = "50"
-            options = { quota: 50 }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.set_share_properties share_name, options
-          end
-
-          it "modifies the URI query parameters when provided a :timeout value" do
-            query.merge!("timeout" => "37")
-            subject.stubs(:share_uri).with(share_name, query).returns(uri)
-
-            options = { timeout: 37 }
-            subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.set_share_properties share_name, options
-          end
-
-          it "does not modify the request headers when provided an unknown value" do
-            options = { unknown_key: "some_value" }
-            subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
-            subject.set_share_properties share_name, options
-          end
+        it "does not modify the request headers when provided an unknown value" do
+          options = {unknown_key: "some_value"}
+          subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
+          subject.set_share_properties share_name, options
         end
       end
+    end
 
     describe "#get_share_properties" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:share_properties) { {} }
 
       before {
@@ -312,9 +312,9 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_share_metadata" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-      let(:share_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
-      let(:response_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1" } }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:share_metadata) { {"MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1"} }
+      let(:response_headers) { {"x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1"} }
 
       before {
         query.update("comp" => "metadata")
@@ -352,11 +352,12 @@ describe Azure::Storage::File::FileService do
 
     describe "#set_share_metadata" do
       let(:verb) { :put }
-      let(:share_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
+      let(:share_metadata) { {"MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1"} }
       let(:request_headers) {
-        { "x-ms-meta-MetadataKey" => "MetaDataValue",
-         "x-ms-meta-MetadataKey1" => "MetaDataValue1"
-         }
+        {
+          "x-ms-meta-MetadataKey" => "MetaDataValue",
+          "x-ms-meta-MetadataKey1" => "MetaDataValue1"
+        }
       }
 
       before {
@@ -378,13 +379,13 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_share_metadata share_name, share_metadata
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
 
     describe "#get_share_acl" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:signed_identifier) { Azure::Storage::Common::Service::SignedIdentifier.new }
       let(:signed_identifiers) { [signed_identifier] }
 
@@ -475,13 +476,13 @@ describe Azure::Storage::File::FileService do
 
         it "serializes the request contents" do
           serialization.expects(:signed_identifiers_to_xml).with(signed_identifiers).returns(request_body)
-          options = { signed_identifiers: signed_identifiers }
+          options = {signed_identifiers: signed_identifiers}
           subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
           subject.set_share_acl share_name, options
         end
 
         it "returns a share and an ACL" do
-          options = { signed_identifiers: signed_identifiers }
+          options = {signed_identifiers: signed_identifiers}
           subject.stubs(:call).with(verb, uri, request_body, request_headers, options).returns(response)
           returned_share, returned_acl = subject.set_share_acl share_name, options
 
@@ -496,7 +497,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_share_stats" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:share_stats) { 10 }
 
       before {
@@ -540,8 +541,8 @@ describe Azure::Storage::File::FileService do
 
     describe "#list_directories_and_files" do
       let(:verb) { :get }
-      let(:query) { { "comp" => "list" } }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:query) { {"comp" => "list"} }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:directories_and_files_enumeration_results) { Azure::Storage::Common::Service::EnumerationResults.new }
 
       before {
@@ -581,7 +582,7 @@ describe Azure::Storage::File::FileService do
 
         it "modifies the URI query parameters when provided a :marker value" do
           query["marker"] = "mark"
-          local_options = { marker: "mark" }.merge(options)
+          local_options = {marker: "mark"}.merge(options)
 
           subject.expects(:directory_uri).with(share_name, directory_path, query, local_options).returns(uri)
           subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -590,7 +591,7 @@ describe Azure::Storage::File::FileService do
 
         it "modifies the URI query parameters when provided a :max_results value" do
           query["maxresults"] = "5"
-          local_options = { max_results: 5 }.merge options
+          local_options = {max_results: 5}.merge options
 
           subject.expects(:directory_uri).with(share_name, directory_path, query, local_options).returns(uri)
           subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -599,7 +600,7 @@ describe Azure::Storage::File::FileService do
 
         it "modifies the URI query parameters when provided a :timeout value" do
           query["timeout"] = "37"
-          local_options = { timeout: 37 }.merge options
+          local_options = {timeout: 37}.merge options
 
           subject.expects(:directory_uri).with(share_name, directory_path, query, local_options).returns(uri)
           subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -607,7 +608,7 @@ describe Azure::Storage::File::FileService do
         end
 
         it "does not modify the URI query parameters when provided an unknown value" do
-          local_options = { unknown_key: "some_value" }.merge options
+          local_options = {unknown_key: "some_value"}.merge options
 
           subject.expects(:directory_uri).with(share_name, directory_path, query, local_options).returns(uri)
           subject.expects(:call).with(:get, uri, nil, {}, local_options).returns(response)
@@ -619,7 +620,7 @@ describe Azure::Storage::File::FileService do
     describe "#get_directory_properties" do
       let(:verb) { :get }
       let(:query) { {} }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:directory_properties) { {} }
 
       before {
@@ -657,9 +658,9 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_directory_metadata" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
-      let(:directory_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
-      let(:response_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1" } }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:directory_metadata) { {"MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1"} }
+      let(:response_headers) { {"x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1"} }
 
       before {
         query.update("comp" => "metadata")
@@ -696,11 +697,12 @@ describe Azure::Storage::File::FileService do
 
     describe "#set_directory_metadata" do
       let(:verb) { :put }
-      let(:directory_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
+      let(:directory_metadata) { {"MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1"} }
       let(:request_headers) {
-        { "x-ms-meta-MetadataKey" => "MetaDataValue",
-         "x-ms-meta-MetadataKey1" => "MetaDataValue1"
-         }
+        {
+          "x-ms-meta-MetadataKey" => "MetaDataValue",
+          "x-ms-meta-MetadataKey1" => "MetaDataValue1"
+        }
       }
 
       before {
@@ -722,7 +724,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_directory_metadata share_name, directory_path, directory_metadata
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
   end
@@ -769,42 +771,42 @@ describe Azure::Storage::File::FileService do
       describe "when the options Hash is used" do
         it "modifies the request headers when provided a :content_type value" do
           request_headers["x-ms-content-type"] = "fct-value"
-          options = { content_type: "fct-value" }
+          options = {content_type: "fct-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.create_file share_name, directory_path, file_name, file_length, options
         end
 
         it "modifies the request headers when provided a :content_encoding value" do
           request_headers["x-ms-content-encoding"] = "fce-value"
-          options = { content_encoding: "fce-value" }
+          options = {content_encoding: "fce-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.create_file share_name, directory_path, file_name, file_length, options
         end
 
         it "modifies the request headers when provided a :content_language value" do
           request_headers["x-ms-content-language"] = "fcl-value"
-          options = { content_language: "fcl-value" }
+          options = {content_language: "fcl-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.create_file share_name, directory_path, file_name, file_length, options
         end
 
         it "modifies the request headers when provided a :content_md5 value" do
           request_headers["x-ms-content-md5"] = "cm-value"
-          options = { content_md5: "cm-value" }
+          options = {content_md5: "cm-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.create_file share_name, directory_path, file_name, file_length, options
         end
 
         it "modifies the request headers when provided a :cache_control value" do
           request_headers["x-ms-cache-control"] = "fcc-value"
-          options = { cache_control: "fcc-value" }
+          options = {cache_control: "fcc-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.create_file share_name, directory_path, file_name, file_length, options
         end
 
         it "modifies the request headers when provided a :content_disposition value" do
           request_headers["x-ms-content-disposition"] = "fcd-value"
-          options = { content_disposition: "fcd-value" }
+          options = {content_disposition: "fcd-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.create_file share_name, directory_path, file_name, file_length, options
         end
@@ -812,13 +814,13 @@ describe Azure::Storage::File::FileService do
         it "modifies the request headers when provided a :metadata value" do
           request_headers["x-ms-meta-MetadataKey"] = "MetaDataValue"
           request_headers["x-ms-meta-MetadataKey1"] = "MetaDataValue1"
-          options = { metadata: { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
+          options = {metadata: {"MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1"}}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.create_file share_name, directory_path, file_name, file_length, options
         end
 
         it "does not modify the request headers when provided an unknown value" do
-          options = { unknown_key: "some_value" }
+          options = {unknown_key: "some_value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.create_file share_name, directory_path, file_name, file_length, options
         end
@@ -830,7 +832,7 @@ describe Azure::Storage::File::FileService do
       let(:start_range) { 255 }
       let(:end_range) { 512 }
       let(:content) { "some content" }
-      let(:query) { { "comp" => "range" } }
+      let(:query) { {"comp" => "range"} }
       let(:request_headers) {
         {
           "x-ms-write" => "update",
@@ -864,7 +866,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#clear_file_range" do
       let(:verb) { :put }
-      let(:query) { { "comp" => "range" } }
+      let(:query) { {"comp" => "range"} }
       let(:start_range) { 255 }
       let(:end_range) { 512 }
       let(:request_headers) {
@@ -929,9 +931,9 @@ describe Azure::Storage::File::FileService do
 
     describe "#list_file_ranges" do
       let(:verb) { :get }
-      let(:query) { { "comp" => "rangelist" } }
+      let(:query) { {"comp" => "rangelist"} }
       let(:range_list) { [[0, 511], [512, 1023]] }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
 
       before {
         subject.stubs(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
@@ -955,7 +957,7 @@ describe Azure::Storage::File::FileService do
       end
 
       it "returns a list of ranges" do
-        file, result = subject.list_file_ranges share_name, directory_path, file_name
+        _file, result = subject.list_file_ranges share_name, directory_path, file_name
         _(result).must_be_kind_of Array
         _(result.first).must_be_kind_of Array
         _(result.first.first).must_be_kind_of Integer
@@ -967,7 +969,7 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=#{start_range}-" }
 
         it "modifies the request headers with the desired range" do
-          local_call_options = { start_range: "#{start_range}".to_i }.merge options
+          local_call_options = {start_range: start_range.to_s.to_i}.merge options
           subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_call_options).returns(uri)
           subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
           subject.list_file_ranges share_name, directory_path, file_name, start_range: start_range
@@ -979,8 +981,8 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=0-#{end_range}" }
 
         it "modifies the request headers with the desired range" do
-          local_call_options = { start_range: 0, end_range: "#{end_range}".to_i }.merge options
-          local_uri_options = { start_range: nil, end_range: "#{end_range}".to_i }.merge options
+          local_call_options = {start_range: 0, end_range: end_range.to_s.to_i}.merge options
+          local_uri_options = {start_range: nil, end_range: end_range.to_s.to_i}.merge options
 
           subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_uri_options).returns(uri)
           subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
@@ -995,7 +997,7 @@ describe Azure::Storage::File::FileService do
 
         it "modifies the request headers with the desired range" do
           request_headers["x-ms-range"] = "bytes=#{start_range}-#{end_range}"
-          local_call_options = { start_range: start_range, end_range: end_range }.merge options
+          local_call_options = {start_range: start_range, end_range: end_range}.merge options
 
           subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_call_options).returns(uri)
           subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
@@ -1006,9 +1008,9 @@ describe Azure::Storage::File::FileService do
 
     describe "#resize_file" do
       let(:verb) { :put }
-      let(:query) { { "comp" => "properties" } }
+      let(:query) { {"comp" => "properties"} }
       let(:size) { 2048 }
-      let(:request_headers) { {"x-ms-content-length" => size.to_s } }
+      let(:request_headers) { {"x-ms-content-length" => size.to_s} }
 
       before {
         subject.stubs(:file_uri).with(share_name, directory_path, file_name, query).returns(uri)
@@ -1044,61 +1046,61 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_file_properties share_name, directory_path, file_name
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
 
       describe "when the options Hash is used" do
         it "modifies the request headers when provided a :content_type value" do
           request_headers["x-ms-content-type"] = "fct-value"
-          options = { content_type: "fct-value" }
+          options = {content_type: "fct-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.set_file_properties share_name, directory_path, file_name, options
         end
 
         it "modifies the request headers when provided a :content_encoding value" do
           request_headers["x-ms-content-encoding"] = "fce-value"
-          options = { content_encoding: "fce-value" }
+          options = {content_encoding: "fce-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.set_file_properties share_name, directory_path, file_name, options
         end
 
         it "modifies the request headers when provided a :content_language value" do
           request_headers["x-ms-content-language"] = "fcl-value"
-          options = { content_language: "fcl-value" }
+          options = {content_language: "fcl-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.set_file_properties share_name, directory_path, file_name, options
         end
 
         it "modifies the request headers when provided a :content_md5 value" do
           request_headers["x-ms-content-md5"] = "fcm-value"
-          options = { content_md5: "fcm-value" }
+          options = {content_md5: "fcm-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.set_file_properties share_name, directory_path, file_name, options
         end
 
         it "modifies the request headers when provided a :cache_control value" do
           request_headers["x-ms-cache-control"] = "fcc-value"
-          options = { cache_control: "fcc-value" }
+          options = {cache_control: "fcc-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.set_file_properties share_name, directory_path, file_name, options
         end
 
         it "modifies the request headers when provided a :content_length value" do
           request_headers["x-ms-content-length"] = "37"
-          options = { content_length: 37.to_s }
+          options = {content_length: 37.to_s}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.set_file_properties share_name, directory_path, file_name, options
         end
 
         it "modifies the request headers when provided a :content_disposition value" do
           request_headers["x-ms-content-disposition"] = "fcd-value"
-          options = { content_disposition: "fcd-value" }
+          options = {content_disposition: "fcd-value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.set_file_properties share_name, directory_path, file_name, options
         end
 
         it "does not modify the request headers when provided an unknown value" do
-          options = { unknown_key: "some_value" }
+          options = {unknown_key: "some_value"}
           subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.set_file_properties share_name, directory_path, file_name, options
         end
@@ -1107,7 +1109,7 @@ describe Azure::Storage::File::FileService do
 
     describe "#get_file_properties" do
       let(:verb) { :head }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:request_headers) { {} }
 
       before {
@@ -1139,8 +1141,8 @@ describe Azure::Storage::File::FileService do
 
     describe "#set_file_metadata" do
       let(:verb) { :put }
-      let(:file_metadata) { { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
-      let(:request_headers) { { "x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1"} }
+      let(:file_metadata) { {"MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1"} }
+      let(:request_headers) { {"x-ms-meta-MetadataKey" => "MetaDataValue", "x-ms-meta-MetadataKey1" => "MetaDataValue1"} }
 
       before {
         query.update("comp" => "metadata")
@@ -1161,13 +1163,13 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.set_file_metadata share_name, directory_path, file_name, file_metadata
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
 
     describe "#get_file_metadata" do
       let(:verb) { :get }
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       # No header is added in the get_file_metadata. StorageService.call will add common headers.
       let(:request_headers) { {} }
 
@@ -1200,12 +1202,11 @@ describe Azure::Storage::File::FileService do
     end
 
     describe "#get_file" do
-      let(:options) { { request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
+      let(:options) { {request_location_mode: Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY} }
       let(:verb) { :get }
 
       before {
         response.stubs(:success?).returns(true)
-        response_body = "file-contents"
 
         subject.stubs(:file_uri).with(share_name, directory_path, file_name, query, options).returns(uri)
         subject.stubs(:call).with(verb, uri, nil, request_headers, options).returns(response)
@@ -1235,7 +1236,7 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=#{start_range}-" }
 
         it "modifies the request headers with the desired range" do
-          local_options = { start_range: 255 }.merge(options)
+          local_options = {start_range: 255}.merge(options)
           subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_options).returns(uri)
           subject.expects(:call).with(verb, uri, nil, request_headers, local_options).returns(response)
           subject.get_file share_name, directory_path, file_name, start_range: start_range
@@ -1247,10 +1248,10 @@ describe Azure::Storage::File::FileService do
         before { request_headers["x-ms-range"] = "bytes=0-#{end_range}" }
 
         it "modifies the request headers with the desired range" do
-          local_url_options = { start_range: nil, end_range: end_range }.merge(options)
+          local_url_options = {start_range: nil, end_range: end_range}.merge(options)
           subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_url_options).returns(uri)
 
-          local_call_options = { start_range: 0, end_range: end_range }.merge(options)
+          local_call_options = {start_range: 0, end_range: end_range}.merge(options)
           subject.expects(:call).with(verb, uri, nil, request_headers, local_call_options).returns(response)
           subject.get_file share_name, directory_path, file_name, start_range: nil, end_range: end_range
         end
@@ -1264,7 +1265,7 @@ describe Azure::Storage::File::FileService do
         }
 
         it "modifies the request headers with the desired range" do
-          local_options = { start_range: start_range, end_range: end_range }.merge(options)
+          local_options = {start_range: start_range, end_range: end_range}.merge(options)
           subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_options).returns(uri)
           subject.expects(:call).with(verb, uri, nil, request_headers, local_options).returns(response)
           subject.get_file share_name, directory_path, file_name, local_options
@@ -1283,7 +1284,7 @@ describe Azure::Storage::File::FileService do
           }
 
           it "modifies the request headers to include the x-ms-range-get-content-md5 header" do
-            local_options = { start_range: start_range, end_range: end_range, get_content_md5: true }.merge(options)
+            local_options = {start_range: start_range, end_range: end_range, get_content_md5: true}.merge(options)
             subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_options).returns(uri)
             subject.expects(:call).with(verb, uri, nil, request_headers, local_options).returns(response)
             subject.get_file share_name, directory_path, file_name, local_options
@@ -1292,7 +1293,7 @@ describe Azure::Storage::File::FileService do
 
         describe "and a range is NOT specified" do
           it "does not modify the request headers" do
-            local_options = { get_content_md5: true }.merge(options)
+            local_options = {get_content_md5: true}.merge(options)
             subject.expects(:file_uri).with(share_name, directory_path, file_name, query, local_options).returns(uri)
             subject.expects(:call).with(verb, uri, nil, request_headers, local_options).returns(response)
             subject.get_file share_name, directory_path, file_name, local_options
@@ -1325,7 +1326,7 @@ describe Azure::Storage::File::FileService do
 
       it "returns nil on success" do
         result = subject.delete_file share_name, directory_path, file_name
-        _(result).must_equal nil
+        _(result).must_be_nil
       end
     end
 
@@ -1380,13 +1381,13 @@ describe Azure::Storage::File::FileService do
         it "modifies the request headers when provided a :metadata value" do
           request_headers["x-ms-meta-MetadataKey"] = "MetaDataValue"
           request_headers["x-ms-meta-MetadataKey1"] = "MetaDataValue1"
-          options = { metadata: { "MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1" } }
+          options = {metadata: {"MetadataKey" => "MetaDataValue", "MetadataKey1" => "MetaDataValue1"}}
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.copy_file share_name, directory_path, file_name, source_share_name, source_directory_path, source_file_name, options
         end
 
         it "does not modify the request headers when provided an unknown value" do
-          options = { unknown_key: "some_value" }
+          options = {unknown_key: "some_value"}
           subject.expects(:call).with(verb, uri, nil, request_headers, options).returns(response)
           subject.copy_file share_name, directory_path, file_name, source_share_name, source_directory_path, source_file_name, options
         end

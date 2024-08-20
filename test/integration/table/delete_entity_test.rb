@@ -70,10 +70,10 @@ describe Azure::Storage::Table::TableService do
       _(result).must_be_nil
 
       # Uncomment when issue 145 (Cannot use GB-18030 characters in strings) is fixed
-      #entity["RowKey"] = "keyWithUnicode" + 0xE.chr + 0x8B.chr + 0xA4.chr
-      #subject.insert_entity table_name, entity
-      #result = subject.delete_entity table_name, entity["PartitionKey"], entity["RowKey"]
-      #_(result).must_be_nil
+      # entity["RowKey"] = "keyWithUnicode" + 0xE.chr + 0x8B.chr + 0xA4.chr
+      # subject.insert_entity table_name, entity
+      # result = subject.delete_entity table_name, entity["PartitionKey"], entity["RowKey"]
+      # _(result).must_be_nil
 
       entity["RowKey"] = "Qbert_Says=.!@%^&"
       subject.insert_entity table_name, entity

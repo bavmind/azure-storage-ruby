@@ -28,7 +28,7 @@ require "azure/storage/common"
 
 describe Azure::Core::Http::RetryPolicy do
   it "uses blocks as retry logic" do
-    retry_policy = Azure::Core::Http::RetryPolicy.new do |a, b| true end
+    retry_policy = Azure::Core::Http::RetryPolicy.new { |a, b| true }
     _(retry_policy.should_retry?(nil, nil)).must_equal true
   end
 
@@ -45,7 +45,7 @@ describe Azure::Core::Http::RetryPolicy do
   end
 
   describe "RetryPolicy retries with a new URL" do
-    let(:retry_count) { 1 } 
+    let(:retry_count) { 1 }
     let(:retry_interval) { 1 }
 
     subject { Azure::Storage::Common::Core::Filter::LinearRetryPolicyFilter.new retry_count, retry_interval }
@@ -55,7 +55,7 @@ describe Azure::Core::Http::RetryPolicy do
     let(:secondary_uri) { URI.parse "http://secondary.com" }
     let(:request) { Azure::Core::Http::HttpRequest.new verb, primary_uri, {} }
     let(:response) { Azure::Core::Http::HttpResponse.new nil, primary_uri }
-    let(:retry_data) { { request_options: {} } }
+    let(:retry_data) { {request_options: {}} }
 
     before {
       request.stubs(:call).returns(response)

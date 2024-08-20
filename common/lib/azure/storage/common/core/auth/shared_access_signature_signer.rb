@@ -29,7 +29,7 @@ require "azure/core/auth/signer"
 module Azure::Storage::Common::Core
   module Auth
     class SharedAccessSignatureSigner < Azure::Core::Auth::Signer
-      attr :account_name, :sas_token
+      attr_reader :account_name, :sas_token
       attr_accessor :api_ver
 
       # Public: Initialize the Signer with a SharedAccessSignature

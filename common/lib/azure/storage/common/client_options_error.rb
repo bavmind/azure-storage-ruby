@@ -29,13 +29,13 @@ require "azure/storage/common/core"
 module Azure::Storage::Common
   class InvalidConnectionStringError < Core::StorageError
     def initialize(message = Azure::Storage::Common::Core::SR::INVALID_CONNECTION_STRING)
-      super(message)
+      super
     end
   end
 
   class InvalidOptionsError < Core::StorageError
     def initialize(message = Azure::Storage::Common::Core::SR::INVALID_CLIENT_OPTIONS)
-      super(message)
+      super
     end
   end
 end

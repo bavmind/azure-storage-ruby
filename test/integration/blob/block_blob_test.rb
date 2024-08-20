@@ -32,7 +32,12 @@ describe Azure::Storage::Blob::BlobService do
 
   let(:container_name) { ContainerNameHelper.name }
   let(:blob_name) { "blobname" }
-  let(:content) { content = ""; 512.times.each { |i| content << "@" }; content.force_encoding "utf-8"; content }
+  let(:content) {
+    content = ""
+    512.times.each { |i| content << "@" }
+    content.force_encoding "utf-8"
+    content
+  }
   before {
     subject.create_container container_name
   }
@@ -56,21 +61,19 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "creates a block blob with IO" do
-      begin
-        file = File.open blob_name, "w+"
-        file.write content
-        file.seek 0
-        subject.create_block_blob container_name, blob_name, file
-        blob = subject.get_blob_properties container_name, blob_name
-        _(blob.name).must_equal blob_name
-        _(is_boolean(blob.encrypted)).must_equal true
-        _(blob.properties[:content_length]).must_equal content.length
-        _(blob.properties[:content_type]).must_equal "application/octet-stream"
-      ensure
-        unless file.nil?
-          file.close
-          File.delete blob_name
-        end
+      file = File.open blob_name, "w+"
+      file.write content
+      file.seek 0
+      subject.create_block_blob container_name, blob_name, file
+      blob = subject.get_blob_properties container_name, blob_name
+      _(blob.name).must_equal blob_name
+      _(is_boolean(blob.encrypted)).must_equal true
+      _(blob.properties[:content_length]).must_equal content.length
+      _(blob.properties[:content_type]).must_equal "application/octet-stream"
+    ensure
+      unless file.nil?
+        file.close
+        File.delete blob_name
       end
     end
 
@@ -107,10 +110,10 @@ describe Azure::Storage::Blob::BlobService do
         content_encoding: "gzip",
         content_language: "en-US",
         cache_control: "max-age=1296000",
-        metadata: { "CustomMetadataProperty" => "CustomMetadataValue" }
+        metadata: {"CustomMetadataProperty" => "CustomMetadataValue"}
       }
 
-      blob = subject.create_block_blob container_name, blob_name, content, options
+      subject.create_block_blob container_name, blob_name, content, options
       blob = subject.get_blob_properties container_name, blob_name
       _(blob.name).must_equal blob_name
       _(is_boolean(blob.encrypted)).must_equal true
@@ -236,9 +239,9 @@ describe Azure::Storage::Blob::BlobService do
 
       blob, returned_content = subject.get_blob container_name, blob_name
       _(is_boolean(blob.encrypted)).must_equal true
-      _(blob.properties[:content_length]).must_equal (content.length * 2)
+      _(blob.properties[:content_length]).must_equal(content.length * 2)
       _(blob.properties[:content_type]).must_equal "application/octet-stream"
-      _(returned_content).must_equal (content + content)
+      _(returned_content).must_equal(content + content)
     end
 
     it "lease id works for commit_blob_blocks" do
@@ -264,7 +267,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        result = subject.commit_blob_blocks container_name, block_blob_name, blocklist
+        subject.commit_blob_blocks container_name, block_blob_name, blocklist
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description
@@ -277,15 +280,14 @@ describe Azure::Storage::Blob::BlobService do
 
       blob, returned_content = subject.get_blob container_name, block_blob_name
       _(is_boolean(blob.encrypted)).must_equal true
-      _(blob.properties[:content_length]).must_equal (content.length * 2)
-      _(returned_content).must_equal (content + content)
+      _(blob.properties[:content_length]).must_equal(content.length * 2)
+      _(returned_content).must_equal(content + content)
     end
   end
 
   describe "#list_blob_blocks" do
     let(:blocklist) { [["anyblockid0"], ["anyblockid1"], ["anyblockid2"], ["anyblockid3"]] }
     before {
-
       subject.put_blob_block container_name, blob_name, blocklist[0][0], content
       subject.put_blob_block container_name, blob_name, blocklist[1][0], content
 
@@ -346,7 +348,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        result = subject.list_blob_blocks container_name, block_blob_name, lease_id: lease_id
+        subject.list_blob_blocks container_name, block_blob_name, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

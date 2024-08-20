@@ -76,7 +76,7 @@ module Azure::Storage::File
   # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                in the analytics logs when storage analytics logging is enabled.
   #
-  # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+  # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
   #                                which location the request should be sent to.
   #
   # See: https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-directories-and-files
@@ -84,7 +84,7 @@ module Azure::Storage::File
   # Returns an Azure::Storage::Common::EnumerationResults
   #
   def list_directories_and_files(share, directory_path, options = {})
-    query = { "comp" => "list" }
+    query = {"comp" => "list"}
     unless options.nil?
       StorageService.with_query query, "marker", options[:marker]
       StorageService.with_query query, "maxresults", options[:max_results].to_s if options[:max_results]
@@ -161,7 +161,7 @@ module Azure::Storage::File
   # * +:timeout+                  - Integer. A timeout in seconds.
   # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
-  # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+  # * +:location_mode+            - LocationMode. Specifies the location mode used to decide
   #                                 which location the request should be sent to.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-properties
@@ -226,7 +226,7 @@ module Azure::Storage::File
   # * +:timeout+                  - Integer. A timeout in seconds.
   # * +:request_id+               - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
   #                                 in the analytics logs when storage analytics logging is enabled.
-  # * +:location_mode+            - LocationMode. Specifies the location mode used to decide 
+  # * +:location_mode+            - LocationMode. Specifies the location mode used to decide
   #                                 which location the request should be sent to.
   #
   # See https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/get-directory-metadata
@@ -234,7 +234,7 @@ module Azure::Storage::File
   # Returns a Directory
   def get_directory_metadata(share, directory_path, options = {})
     # Query
-    query = { "comp" => "metadata" }
+    query = {"comp" => "metadata"}
     query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Call
@@ -268,7 +268,7 @@ module Azure::Storage::File
   # Returns nil on success
   def set_directory_metadata(share, directory_path, metadata, options = {})
     # Query
-    query = { "comp" => "metadata" }
+    query = {"comp" => "metadata"}
     query["timeout"] = options[:timeout].to_s if options[:timeout]
 
     # Headers

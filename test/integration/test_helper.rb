@@ -27,8 +27,8 @@ require "azure/storage/file"
 require "azure/storage/table"
 require "azure/storage/queue"
 
-def SERVICE_CREATE_OPTIONS()
-  { storage_account_name: ENV.fetch("AZURE_STORAGE_ACCOUNT"), storage_access_key: ENV.fetch("AZURE_STORAGE_ACCESS_KEY") }
+def SERVICE_CREATE_OPTIONS
+  {storage_account_name: ENV.fetch("AZURE_STORAGE_ACCOUNT"), storage_access_key: ENV.fetch("AZURE_STORAGE_ACCESS_KEY")}
 end
 
 def is_boolean(value)
@@ -42,13 +42,14 @@ module Azure::Storage
     def initialize(callable = nil)
       @callable = callable
     end
-    def call(req, _next)
+
+    def call(req, next_)
       begin
-        r = _next.call
+        r = next_.call
       rescue Azure::Core::Http::HTTPError
       end
-      @callable.call(req, r) if @callable
-      r = _next.call
+      @callable&.call(req, r)
+      next_.call
     end
   end
 end

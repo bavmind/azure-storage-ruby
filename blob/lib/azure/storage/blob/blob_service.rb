@@ -77,10 +77,10 @@ module Azure::Storage
         # When empty options are given, it will try to read settings from Environment Variables. Refer to [Azure::Storage::Common::ClientOptions.env_vars_mapping] for the mapping relationship
         #
         # @return [Azure::Storage::Blob::BlobService]
-        def create(options = {}, &block)
-          service_options = { client: Azure::Storage::Common::Client::create(options, &block), api_version: Azure::Storage::Blob::Default::STG_VERSION }
+        def create(options = {}, &)
+          service_options = {client: Azure::Storage::Common::Client.create(options, &), api_version: Azure::Storage::Blob::Default::STG_VERSION}
           service_options[:user_agent_prefix] = options[:user_agent_prefix] if options[:user_agent_prefix]
-          Azure::Storage::Blob::BlobService.new(service_options, &block)
+          Azure::Storage::Blob::BlobService.new(service_options, &)
         end
 
         # Public: Creates an instance of [Azure::Storage::Blob::BlobService] with Storage Emulator
@@ -90,17 +90,17 @@ module Azure::Storage
         # * +proxy_uri+    - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
         #
         # @return [Azure::Storage::Blob::BlobService]
-        def create_development(proxy_uri = nil, &block)
-          service_options = { client: Azure::Storage::Common::Client::create_development(proxy_uri, &block), api_version: Azure::Storage::Blob::Default::STG_VERSION }
-          Azure::Storage::Blob::BlobService.new(service_options, &block)
+        def create_development(proxy_uri = nil, &)
+          service_options = {client: Azure::Storage::Common::Client.create_development(proxy_uri, &), api_version: Azure::Storage::Blob::Default::STG_VERSION}
+          Azure::Storage::Blob::BlobService.new(service_options, &)
         end
 
         # Public: Creates an instance of [Azure::Storage::Blob::BlobService] from Environment Variables
         #
         # @return [Azure::Storage::Blob::BlobService]
-        def create_from_env(&block)
-          service_options = { client: Azure::Storage::Common::Client::create_from_env(&block), api_version: Azure::Storage::Blob::Default::STG_VERSION }
-          Azure::Storage::Blob::BlobService.new(service_options, &block)
+        def create_from_env(&)
+          service_options = {client: Azure::Storage::Common::Client.create_from_env(&), api_version: Azure::Storage::Blob::Default::STG_VERSION}
+          Azure::Storage::Blob::BlobService.new(service_options, &)
         end
 
         # Public: Creates an instance of [Azure::Storage::Blob::BlobService] from Environment Variables
@@ -110,9 +110,9 @@ module Azure::Storage
         # * +connection_string+    - String. Please refer to https://azure.microsoft.com/en-us/documentation/articles/storage-configure-connection-string/.
         #
         # @return [Azure::Storage::Blob::BlobService]
-        def create_from_connection_string(connection_string, &block)
-          service_options = { client: Azure::Storage::Common::Client::create_from_connection_string(connection_string, &block), api_version: Azure::Storage::Blob::Default::STG_VERSION }
-          Azure::Storage::Blob::BlobService.new(service_options, &block)
+        def create_from_connection_string(connection_string, &)
+          service_options = {client: Azure::Storage::Common::Client.create_from_connection_string(connection_string, &), api_version: Azure::Storage::Blob::Default::STG_VERSION}
+          Azure::Storage::Blob::BlobService.new(service_options, &)
         end
       end
 
@@ -158,14 +158,14 @@ module Azure::Storage
       # * +:ca_file+ is independent.
       #
       # When empty options are given, it will try to read settings from Environment Variables. Refer to [Azure::Storage::Common::ClientOptions.env_vars_mapping] for the mapping relationship
-      def initialize(options = {}, &block)
+      def initialize(options = {}, &)
         service_options = options.clone
-        client_config = service_options[:client] ||= Azure::Storage::Common::Client::create(service_options, &block)
+        client_config = service_options[:client] ||= Azure::Storage::Common::Client.create(service_options, &)
         @user_agent_prefix = service_options[:user_agent_prefix] if service_options[:user_agent_prefix]
         @api_version = service_options[:api_version] || Azure::Storage::Blob::Default::STG_VERSION
         signer = service_options[:signer] || client_config.signer || Azure::Storage::Common::Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
         signer.api_ver = @api_version if signer.is_a? Azure::Storage::Common::Core::Auth::SharedAccessSignatureSigner
-        super(signer, client_config.storage_account_name, service_options, &block)
+        super(signer, client_config.storage_account_name, service_options, &)
         @storage_service_host[:primary] = client.storage_blob_host
         @storage_service_host[:secondary] = client.storage_blob_host true
       end
@@ -174,7 +174,7 @@ module Azure::Storage
         content_type = get_or_apply_content_type(body, headers[Azure::Storage::Common::HeaderConstants::BLOB_CONTENT_TYPE])
         headers[Azure::Storage::Common::HeaderConstants::BLOB_CONTENT_TYPE] = content_type if content_type
 
-        headers["x-ms-version"] = @api_version ? @api_version : Default::STG_VERSION
+        headers["x-ms-version"] = @api_version || Default::STG_VERSION
         headers["User-Agent"] = @user_agent_prefix ? "#{@user_agent_prefix}; #{Default::USER_AGENT}" : Default::USER_AGENT
         response = super
 
@@ -321,29 +321,30 @@ module Azure::Storage
       # to write, or to renew, change, or release the lease.
       #
       protected
-        def acquire_lease(container, blob, options = {})
-          query = { "comp" => "lease" }
-          StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          if blob
-            uri = blob_uri(container, blob, query)
-          else
-            uri = container_uri(container, query)
-          end
+      def acquire_lease(container, blob, options = {})
+        query = {"comp" => "lease"}
+        StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          duration = -1
-          duration = options[:duration] if options[:duration]
-
-          headers = {}
-          StorageService.with_header headers, "x-ms-lease-action", "acquire"
-          StorageService.with_header headers, "x-ms-lease-duration", duration.to_s if duration
-          StorageService.with_header headers, "x-ms-proposed-lease-id", options[:proposed_lease_id]
-          StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
-          add_blob_conditional_headers options, headers
-
-          response = call(:put, uri, nil, headers, options)
-          response.headers["x-ms-lease-id"]
+        uri = if blob
+          blob_uri(container, blob, query)
+        else
+          container_uri(container, query)
         end
+
+        duration = -1
+        duration = options[:duration] if options[:duration]
+
+        headers = {}
+        StorageService.with_header headers, "x-ms-lease-action", "acquire"
+        StorageService.with_header headers, "x-ms-lease-duration", duration.to_s if duration
+        StorageService.with_header headers, "x-ms-proposed-lease-id", options[:proposed_lease_id]
+        StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
+        add_blob_conditional_headers options, headers
+
+        response = call(:put, uri, nil, headers, options)
+        response.headers["x-ms-lease-id"]
+      end
 
       # Protected: Renews the lease. The lease can be renewed if the lease ID specified on the request matches that
       # associated with the blob. Note that the lease may be renewed even if it has expired as long as the container or blob
@@ -383,25 +384,26 @@ module Azure::Storage
       # Returns the renewed lease id
       #
       protected
-        def renew_lease(container, blob, lease, options = {})
-          query = { "comp" => "lease" }
-          StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          if blob
-            uri = blob_uri(container, blob, query)
-          else
-            uri = container_uri(container, query)
-          end
+      def renew_lease(container, blob, lease, options = {})
+        query = {"comp" => "lease"}
+        StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          headers = {}
-          StorageService.with_header headers, "x-ms-lease-action", "renew"
-          StorageService.with_header headers, "x-ms-lease-id", lease
-          StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
-          add_blob_conditional_headers options, headers
-
-          response = call(:put, uri, nil, headers, options)
-          response.headers["x-ms-lease-id"]
+        uri = if blob
+          blob_uri(container, blob, query)
+        else
+          container_uri(container, query)
         end
+
+        headers = {}
+        StorageService.with_header headers, "x-ms-lease-action", "renew"
+        StorageService.with_header headers, "x-ms-lease-id", lease
+        StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
+        add_blob_conditional_headers options, headers
+
+        response = call(:put, uri, nil, headers, options)
+        response.headers["x-ms-lease-id"]
+      end
 
       # Protected: Change the ID of an existing lease.
       #
@@ -441,26 +443,27 @@ module Azure::Storage
       # to write, or to renew, change, or release the lease.
       #
       protected
-        def change_lease(container, blob, lease, proposed_lease, options = {})
-          query = { "comp" => "lease" }
-          StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          if blob
-            uri = blob_uri(container, blob, query)
-          else
-            uri = container_uri(container, query)
-          end
+      def change_lease(container, blob, lease, proposed_lease, options = {})
+        query = {"comp" => "lease"}
+        StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          headers = {}
-          StorageService.with_header headers, "x-ms-lease-action", "change"
-          StorageService.with_header headers, "x-ms-lease-id", lease
-          StorageService.with_header headers, "x-ms-proposed-lease-id", proposed_lease
-          StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
-          add_blob_conditional_headers options, headers
-
-          response = call(:put, uri, nil, headers, options)
-          response.headers["x-ms-lease-id"]
+        uri = if blob
+          blob_uri(container, blob, query)
+        else
+          container_uri(container, query)
         end
+
+        headers = {}
+        StorageService.with_header headers, "x-ms-lease-action", "change"
+        StorageService.with_header headers, "x-ms-lease-id", lease
+        StorageService.with_header headers, "x-ms-proposed-lease-id", proposed_lease
+        StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
+        add_blob_conditional_headers options, headers
+
+        response = call(:put, uri, nil, headers, options)
+        response.headers["x-ms-lease-id"]
+      end
 
       # Protected: Releases the lease. The lease may be released if the lease ID specified on the request matches that
       # associated with the container or blob. Releasing the lease allows another client to immediately acquire the lease for
@@ -499,25 +502,26 @@ module Azure::Storage
       # Returns nil on success
       #
       protected
-        def release_lease(container, blob, lease, options = {})
-          query = { "comp" => "lease" }
-          StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          if blob
-            uri = blob_uri(container, blob, query)
-          else
-            uri = container_uri(container, query)
-          end
+      def release_lease(container, blob, lease, options = {})
+        query = {"comp" => "lease"}
+        StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          headers = {}
-          StorageService.with_header headers, "x-ms-lease-action", "release"
-          StorageService.with_header headers, "x-ms-lease-id", lease
-          StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
-          add_blob_conditional_headers options, headers
-
-          call(:put, uri, nil, headers, options)
-          nil
+        uri = if blob
+          blob_uri(container, blob, query)
+        else
+          container_uri(container, query)
         end
+
+        headers = {}
+        StorageService.with_header headers, "x-ms-lease-action", "release"
+        StorageService.with_header headers, "x-ms-lease-id", lease
+        StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
+        add_blob_conditional_headers options, headers
+
+        call(:put, uri, nil, headers, options)
+        nil
+      end
 
       # Protected: Breaks the lease, if the container or blob has an active lease. Once a lease is broken, it cannot be renewed. Any
       # authorized request can break the lease; the request is not required to specify a matching lease ID. When a
@@ -570,25 +574,26 @@ module Azure::Storage
       # is immediate, 0 is returned.
       #
       protected
-        def break_lease(container, blob, options = {})
-          query = { "comp" => "lease" }
-          StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          if blob
-            uri = blob_uri(container, blob, query)
-          else
-            uri = container_uri(container, query)
-          end
+      def break_lease(container, blob, options = {})
+        query = {"comp" => "lease"}
+        StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
-          headers = {}
-          StorageService.with_header headers, "x-ms-lease-action", "break"
-          StorageService.with_header headers, "x-ms-lease-break-period", options[:break_period].to_s if options[:break_period]
-          StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
-          add_blob_conditional_headers options, headers
-
-          response = call(:put, uri, nil, headers, options)
-          response.headers["x-ms-lease-time"].to_i
+        uri = if blob
+          blob_uri(container, blob, query)
+        else
+          container_uri(container, query)
         end
+
+        headers = {}
+        StorageService.with_header headers, "x-ms-lease-action", "break"
+        StorageService.with_header headers, "x-ms-lease-break-period", options[:break_period].to_s if options[:break_period]
+        StorageService.with_header headers, "Origin", options[:origin].to_s if options[:origin]
+        add_blob_conditional_headers options, headers
+
+        response = call(:put, uri, nil, headers, options)
+        response.headers["x-ms-lease-time"].to_i
+      end
 
       # Protected: Generate the URI for the collection of containers.
       #
@@ -599,10 +604,11 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def containers_uri(query = {}, options = {})
-          query = { "comp" => "list" }.merge(query)
-          generate_uri("", query, options)
-        end
+
+      def containers_uri(query = {}, options = {})
+        query = {"comp" => "list"}.merge(query)
+        generate_uri("", query, options)
+      end
 
       # Protected: Generate the URI for the user delegation key.
       #
@@ -613,10 +619,11 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def user_delegation_key_uri(query = {}, options = {})
-          query = { :restype => "service", :comp => "userdelegationkey" }.merge(query)
-          generate_uri("", query, options)
-        end
+
+      def user_delegation_key_uri(query = {}, options = {})
+        query = {restype: "service", comp: "userdelegationkey"}.merge(query)
+        generate_uri("", query, options)
+      end
 
       # Protected: Generate the URI for a specific container.
       #
@@ -628,11 +635,12 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def container_uri(name, query = {}, options = {})
-          return name if name.kind_of? ::URI
-          query = { "restype" => "container" }.merge(query)
-          generate_uri(name, query, options)
-        end
+
+      def container_uri(name, query = {}, options = {})
+        return name if name.is_a? ::URI
+        query = {"restype" => "container"}.merge(query)
+        generate_uri(name, query, options)
+      end
 
       # Protected: Generate the URI for a specific Blob.
       #
@@ -645,15 +653,16 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def blob_uri(container_name, blob_name, query = {}, options = {})
-          if container_name.nil? || container_name.empty?
-            path = blob_name
-          else
-            path = ::File.join(container_name, blob_name)
-          end
-          options = { encode: true }.merge(options)
-          generate_uri(path, query, options)
+
+      def blob_uri(container_name, blob_name, query = {}, options = {})
+        path = if container_name.nil? || container_name.empty?
+          blob_name
+        else
+          ::File.join(container_name, blob_name)
         end
+        options = {encode: true}.merge(options)
+        generate_uri(path, query, options)
+      end
 
       # Adds conditional header with required condition
       #
@@ -661,58 +670,60 @@ module Azure::Storage
       # options   - A Hash of condition name/value pairs
       #
       protected
-        def add_blob_conditional_headers(options, headers)
-          return unless options
 
-          # Common conditional headers for blobs: https://msdn.microsoft.com/en-us/library/azure/dd179371.aspx
-          StorageService.with_header headers, "If-Modified-Since", options[:if_modified_since]
-          StorageService.with_header headers, "If-Unmodified-Since", options[:if_unmodified_since]
-          StorageService.with_header headers, "If-Match", options[:if_match]
-          StorageService.with_header headers, "If-None-Match", options[:if_none_match]
+      def add_blob_conditional_headers(options, headers)
+        return unless options
 
-          # Conditional headers for copying blob
-          StorageService.with_header headers, "If-Modified-Since", options[:dest_if_modified_since]
-          StorageService.with_header headers, "If-Unmodified-Since", options[:dest_if_unmodified_since]
-          StorageService.with_header headers, "If-Match", options[:dest_if_match]
-          StorageService.with_header headers, "If-None-Match", options[:dest_if_none_match]
-          StorageService.with_header headers, "x-ms-source-if-modified-since", options[:source_if_modified_since]
-          StorageService.with_header headers, "x-ms-source-if-unmodified-since", options[:source_if_unmodified_since]
-          StorageService.with_header headers, "x-ms-source-if-match", options[:source_if_match]
-          StorageService.with_header headers, "x-ms-source-if-none-match", options[:source_if_none_match]
+        # Common conditional headers for blobs: https://msdn.microsoft.com/en-us/library/azure/dd179371.aspx
+        StorageService.with_header headers, "If-Modified-Since", options[:if_modified_since]
+        StorageService.with_header headers, "If-Unmodified-Since", options[:if_unmodified_since]
+        StorageService.with_header headers, "If-Match", options[:if_match]
+        StorageService.with_header headers, "If-None-Match", options[:if_none_match]
 
-          # Conditional headers for page blob
-          StorageService.with_header headers, "x-ms-if-sequence-number-le", options[:if_sequence_number_le] if options[:if_sequence_number_le]
-          StorageService.with_header headers, "x-ms-if-sequence-number-lt", options[:if_sequence_number_lt] if options[:if_sequence_number_lt]
-          StorageService.with_header headers, "x-ms-if-sequence-number-eq", options[:if_sequence_number_eq] if options[:if_sequence_number_eq]
+        # Conditional headers for copying blob
+        StorageService.with_header headers, "If-Modified-Since", options[:dest_if_modified_since]
+        StorageService.with_header headers, "If-Unmodified-Since", options[:dest_if_unmodified_since]
+        StorageService.with_header headers, "If-Match", options[:dest_if_match]
+        StorageService.with_header headers, "If-None-Match", options[:dest_if_none_match]
+        StorageService.with_header headers, "x-ms-source-if-modified-since", options[:source_if_modified_since]
+        StorageService.with_header headers, "x-ms-source-if-unmodified-since", options[:source_if_unmodified_since]
+        StorageService.with_header headers, "x-ms-source-if-match", options[:source_if_match]
+        StorageService.with_header headers, "x-ms-source-if-none-match", options[:source_if_none_match]
 
-          # Conditional headers for append blob
-          StorageService.with_header headers, "x-ms-blob-condition-maxsize", options[:max_size]
-          StorageService.with_header headers, "x-ms-blob-condition-appendpos", options[:append_position]
-        end
+        # Conditional headers for page blob
+        StorageService.with_header headers, "x-ms-if-sequence-number-le", options[:if_sequence_number_le] if options[:if_sequence_number_le]
+        StorageService.with_header headers, "x-ms-if-sequence-number-lt", options[:if_sequence_number_lt] if options[:if_sequence_number_lt]
+        StorageService.with_header headers, "x-ms-if-sequence-number-eq", options[:if_sequence_number_eq] if options[:if_sequence_number_eq]
+
+        # Conditional headers for append blob
+        StorageService.with_header headers, "x-ms-blob-condition-maxsize", options[:max_size]
+        StorageService.with_header headers, "x-ms-blob-condition-appendpos", options[:append_position]
+      end
 
       # Get the content type according to the blob content type header and request body.
       #
       # headers      - The request body
       # content_type - The request content type
       protected
-        def get_or_apply_content_type(body, content_type = nil)
-          unless body.nil?
-            if (body.is_a? String) && body.encoding.to_s != "ASCII_8BIT" && !body.empty?
-              if content_type.nil?
-                content_type = "text/plain; charset=#{body.encoding}"
-              else
-                # Force the request.body to the content encoding of specified in the header
-                charset = parse_charset_from_content_type(content_type)
-                body.force_encoding(charset) if charset
-              end
+
+      def get_or_apply_content_type(body, content_type = nil)
+        unless body.nil?
+          if (body.is_a? String) && body.encoding.to_s != "ASCII_8BIT" && !body.empty?
+            if content_type.nil?
+              content_type = "text/plain; charset=#{body.encoding}"
             else
-              # It is either that the body is not a string, or that the body's encoding is ASCII_8BIT, which is a binary
-              # In this case, set the content type to be default content-type
-              content_type = Default::CONTENT_TYPE_VALUE unless content_type
+              # Force the request.body to the content encoding of specified in the header
+              charset = parse_charset_from_content_type(content_type)
+              body.force_encoding(charset) if charset
             end
+          else
+            # It is either that the body is not a string, or that the body's encoding is ASCII_8BIT, which is a binary
+            # In this case, set the content type to be default content-type
+            content_type ||= Default::CONTENT_TYPE_VALUE
           end
-          content_type
         end
+        content_type
+      end
     end
   end
 end

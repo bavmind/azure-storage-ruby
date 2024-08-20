@@ -69,7 +69,7 @@ describe Azure::Storage::Common::Service::Serialization do
 
   describe "#signed_identifier_from_xml" do
     let(:signed_identifier_xml) { Nokogiri.Slop(Fixtures["container_acl"]).root.SignedIdentifier }
-    let(:mock_access_policy) { mock() }
+    let(:mock_access_policy) { mock }
     before { subject.expects(:access_policy_from_xml).with(signed_identifier_xml.AccessPolicy).returns(mock_access_policy) }
 
     it "accepts an XML node" do
@@ -167,7 +167,7 @@ describe Azure::Storage::Common::Service::Serialization do
   end
 
   describe "#metadata_from_headers" do
-    let(:headers) { { "Content-Type" => "application/xml", "Content-Length" => "37" } }
+    let(:headers) { {"Content-Type" => "application/xml", "Content-Length" => "37"} }
 
     let(:metadata_headers) { headers.merge("x-ms-meta-MyMetadata1" => "first value", "x-ms-meta-MyMetadata2" => "second value") }
 
@@ -288,7 +288,6 @@ describe Azure::Storage::Common::Service::Serialization do
       _(metrics.retention_policy).must_equal mock_retention_policy
     end
   end
-
 
   describe "#logging_to_xml" do
     let(:logging) {
@@ -471,7 +470,6 @@ describe Azure::Storage::Common::Service::Serialization do
     let(:non_slop_node) { Nokogiri.parse(xml_data).root }
 
     describe "when passed a String" do
-
       it "parses the string into a Nokogiri::XML::Element node" do
         result = subject.slopify(xml_data)
         _(result).must_be_kind_of Nokogiri::XML::Element
@@ -522,7 +520,7 @@ describe Azure::Storage::Common::Service::Serialization do
   end
 
   describe "#expect_node" do
-    let(:node) { mock() }
+    let(:node) { mock }
     it "throws an error if the xml node doesn't match the passed element name" do
       node.expects(:name).returns("NotFoo")
       assert_raises RuntimeError do

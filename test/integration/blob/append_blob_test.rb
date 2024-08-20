@@ -23,6 +23,20 @@
 #--------------------------------------------------------------------------
 require "integration/test_helper"
 
+class LocalFakeString
+  def initialize(string)
+    @string = StringIO.new(string)
+  end
+
+  def read(length)
+    @string.read(length)
+  end
+
+  def eof?
+    @string.eof?
+  end
+end
+
 describe Azure::Storage::Blob::BlobService do
   subject { Azure::Storage::Blob::BlobService.create(SERVICE_CREATE_OPTIONS()) }
   after { ContainerNameHelper.clean }
@@ -37,33 +51,22 @@ describe Azure::Storage::Blob::BlobService do
 
     it "1MB string payload with 512K max size fails" do
       length = 1 * 1024 * 1024
-      maxSize = 512 * 1024
+      max_size = 512 * 1024
       content = SecureRandom.random_bytes(length)
       blob_name = BlobNameHelper.name
       exception = assert_raises(Azure::Storage::Common::Core::StorageError) do
-        subject.create_append_blob_from_content container_name, blob_name, content, max_size: maxSize
+        subject.create_append_blob_from_content container_name, blob_name, content, max_size: max_size
       end
       _(exception.message).must_include("Given content has exceeded the specified maximum size for the blob.")
     end
 
     it "4MB + 1 byte IO with no 'size' and 4MB max size fails with max size condition not met" do
-      class LocalFakeString
-        def initialize(string)
-          @string = StringIO.new(string)
-        end
-        def read(length)
-          @string.read(length)
-        end
-        def eof?
-          @string.eof?
-        end
-      end
       length = 4 * 1024 * 1024 + 1
-      maxSize = length - 1
+      max_size = length - 1
       content = LocalFakeString.new(SecureRandom.random_bytes(length))
       blob_name = BlobNameHelper.name
       exception = assert_raises(Azure::Core::Http::HTTPError) do
-        subject.create_append_blob_from_content container_name, blob_name, content, max_size: maxSize
+        subject.create_append_blob_from_content container_name, blob_name, content, max_size: max_size
       end
       _(exception.status_code).must_equal 412
       _(exception.message).must_include("MaxBlobSizeConditionNotMet")
@@ -73,11 +76,11 @@ describe Azure::Storage::Blob::BlobService do
       length = 4 * 1024 * 1024
       content = SecureRandom.random_bytes(length)
       blob_name = BlobNameHelper.name
-      tempSubject = subject.clone
+      temp_subject = subject.clone
       # Use duplicate request filter to simulate the retry scenario
-      tempSubject.with_filter(Azure::Storage::DuplicateRequestFilter.new)
+      temp_subject.with_filter(Azure::Storage::DuplicateRequestFilter.new)
       exception = assert_raises(Azure::Core::Http::HTTPError) do
-        tempSubject.create_append_blob_from_content container_name, blob_name, content, max_size: length
+        temp_subject.create_append_blob_from_content container_name, blob_name, content, max_size: length
       end
       _(exception.status_code).must_equal 412
       _(exception.message).must_include("AppendPositionConditionNotMet")
@@ -120,29 +123,27 @@ describe Azure::Storage::Blob::BlobService do
     end
 
     it "IO payload works" do
-      begin
-        content = SecureRandom.hex(3 * 1024 * 1024)
-        length = content.size
-        blob_name = BlobNameHelper.name
-        file = File.open blob_name, "w+"
-        file.write content
-        file.seek 0
-        subject.create_append_blob_from_content container_name, blob_name, file
-        blob, body = subject.get_blob(container_name, blob_name)
-        _(blob.name).must_equal blob_name
-        _(blob.properties[:content_length]).must_equal length
-        _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
-      ensure
-        unless file.nil?
-          file.close
-          File.delete blob_name
-        end
+      content = SecureRandom.hex(3 * 1024 * 1024)
+      length = content.size
+      blob_name = BlobNameHelper.name
+      file = File.open blob_name, "w+"
+      file.write content
+      file.seek 0
+      subject.create_append_blob_from_content container_name, blob_name, file
+      blob, body = subject.get_blob(container_name, blob_name)
+      _(blob.name).must_equal blob_name
+      _(blob.properties[:content_length]).must_equal length
+      _(Digest::MD5.hexdigest(body)).must_equal Digest::MD5.hexdigest(content)
+    ensure
+      unless file.nil?
+        file.close
+        File.delete blob_name
       end
     end
   end
 
   describe "#create_append_blob" do
-    let(:complex_blob_name) { 'qa-872053-/*"\'&.({[<+ ' + [ 0x7D, 0xEB, 0x8B, 0xA4].pack("U*") + "_" + "0" }
+    let(:complex_blob_name) { 'qa-872053-/*"\'&.({[<+ ' + [0x7D, 0xEB, 0x8B, 0xA4].pack("U*") + "_" + "0" }
 
     before {
       subject.create_container container_name
@@ -175,7 +176,7 @@ describe Azure::Storage::Blob::BlobService do
         content_encoding: "gzip",
         content_language: "en-US",
         cache_control: "max-age=1296000",
-        metadata: { "CustomMetadataProperty" => "CustomMetadataValue" }
+        metadata: {"CustomMetadataProperty" => "CustomMetadataValue"}
       }
 
       blob = subject.create_append_blob container_name, blob_name, options
@@ -223,7 +224,11 @@ describe Azure::Storage::Blob::BlobService do
   end
 
   describe "#append_blob_block" do
-    let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      512.times.each { |i| content << "@" }
+      content
+    }
     let(:blob_name) { BlobNameHelper.name }
 
     before {
@@ -233,7 +238,7 @@ describe Azure::Storage::Blob::BlobService do
     it "appends a block as part of an append blob" do
       subject.create_append_blob container_name, blob_name
 
-      options = { content_md5: Base64.strict_encode64(Digest::MD5.digest(content)) }
+      options = {content_md5: Base64.strict_encode64(Digest::MD5.digest(content))}
       blob = subject.append_blob_block container_name, blob_name, content, options
       _(is_boolean(blob.encrypted)).must_equal true
 
@@ -258,17 +263,17 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_append_blob container_name, blob_name
 
       exception = assert_raises(Azure::Core::Http::HTTPError) do
-        options = { content_md5: "aaaaaa==" }
+        options = {content_md5: "aaaaaa=="}
         subject.append_blob_block container_name, blob_name, content, options
       end
-      refute_nil(exception.message.index "InvalidMd5 (400): The MD5 value specified in the request is invalid")
+      refute_nil(exception.message.index("InvalidMd5 (400): The MD5 value specified in the request is invalid"))
     end
 
     it "appends a block as part of an append blob with maximum size" do
       blob_name = BlobNameHelper.name
       subject.create_append_blob container_name, blob_name
 
-      options = { max_size: 600.to_s }
+      options = {max_size: 600.to_s}
       blob = subject.append_blob_block container_name, blob_name, content, options
       _(is_boolean(blob.encrypted)).must_equal true
       _(blob.properties[:append_offset]).must_equal 0
@@ -277,7 +282,7 @@ describe Azure::Storage::Blob::BlobService do
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.append_blob_block container_name, blob_name, content, options
       end
-      refute_nil(exception.message.index "MaxBlobSizeConditionNotMet (412): The max blob size condition specified was not met")
+      refute_nil(exception.message.index("MaxBlobSizeConditionNotMet (412): The max blob size condition specified was not met"))
     end
 
     it "appends a block as part of an append blob with append postion" do
@@ -289,7 +294,7 @@ describe Azure::Storage::Blob::BlobService do
       _(blob.properties[:append_offset]).must_equal 0
       _(blob.properties[:committed_count]).must_equal 1
 
-      options = { append_position: 512.to_s }
+      options = {append_position: 512.to_s}
       blob = subject.append_blob_block container_name, blob_name, content, options
       _(is_boolean(blob.encrypted)).must_equal true
       _(blob.properties[:append_offset]).must_equal 512
@@ -298,7 +303,7 @@ describe Azure::Storage::Blob::BlobService do
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.append_blob_block container_name, blob_name, content, options
       end
-      refute_nil(exception.message.index "AppendPositionConditionNotMet (412): The append position condition specified was not met")
+      refute_nil(exception.message.index("AppendPositionConditionNotMet (412): The append position condition specified was not met"))
     end
 
     it "lease id works for append_blob_block" do

@@ -41,7 +41,7 @@ module Azure::Storage
         when Date, Time, DateTime
           "Edm.DateTime"
         when Integer
-          value.abs < 2**31 ? "Edm.Int32" : "Edm.Int64"
+          (value.abs < 2**31) ? "Edm.Int32" : "Edm.Int64"
         when TrueClass, FalseClass
           "Edm.Boolean"
         when GUID
@@ -51,7 +51,7 @@ module Azure::Storage
         when String
           value.encoding.names.include?("BINARY") ? "Edm.Binary" : ""
         else
-          value.kind_of?(IO) ? "Edm.Binary" : ""
+          value.is_a?(IO) ? "Edm.Binary" : ""
         end
       end
 
@@ -85,17 +85,17 @@ module Azure::Storage
         when TrueClass, FalseClass
           value ? "true" : "false"
         when Float, Integer
-          value.abs < 2**31 ? value.to_s : value.to_s + "L"
+          (value.abs < 2**31) ? value.to_s : value.to_s + "L"
         when GUID
-          "guid'#{value.to_s}'"
+          "guid'#{value}'"
         when IO, File
           "X'" + value.to_s.unpack("H*").join("") + "'"
         else
-          if value != nil && value.encoding.names.include?("BINARY")
+          if !value.nil? && value.encoding.names.include?("BINARY")
             "X'" + value.to_s.unpack("H*").join("") + "'"
           else
             # NULL also is treated as EdmType::STRING
-            value.to_s.gsub("'", "''");
+            value.to_s.gsub("'", "''")
           end
         end
       end
@@ -115,13 +115,13 @@ module Azure::Storage
         when "Edm.Int32", "Edm.Int64"
           Integer(value)
         when "Edm.Boolean"
-          value == true || value == "true" ? true : false
+          value == true || value == "true"
         when "Edm.Guid"
           GUID.new(value.to_s)
         when "Edm.Binary"
           Base64.decode64(value.to_s).force_encoding("BINARY")
         else
-          value == "" ? nil : value.to_s
+          (value == "") ? nil : value.to_s
         end
       end
 

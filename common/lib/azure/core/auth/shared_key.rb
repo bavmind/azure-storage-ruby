@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'cgi'
-require 'azure/core/auth/signer'
+require "cgi"
+require "azure/core/auth/signer"
 
 module Azure
   module Core
     module Auth
       class SharedKey < Signer
         # The Azure account's name.
-        attr :account_name
+        attr_reader :account_name
 
         # Initialize the Signer.
         #
@@ -28,7 +28,7 @@ module Azure
         #                global configuration.
         # @param access_key   [String] The access_key encoded in Base64. Defaults to the
         #                one in the global configuration.
-        def initialize(account_name=Azure.storage_account_name, access_key=Azure.storage_access_key)
+        def initialize(account_name = Azure.storage_account_name, access_key = Azure.storage_access_key)
           @account_name = account_name
           super(access_key)
         end
@@ -37,7 +37,7 @@ module Azure
         #
         # @return [String]
         def name
-          'SharedKey'
+          "SharedKey"
         end
 
         # Create the signature for the request parameters
@@ -58,14 +58,14 @@ module Azure
         # @return       [Azure::Core::Http::HttpRequest]
         def sign_request(req)
           # Need to make sure Content-Length is correctly set.
-          if ((!req.body.nil?)) then
-            if (req.body.respond_to? :bytesize) then
-              req.headers['Content-Length'] = req.body.bytesize.to_s
-            elsif (req.body.respond_to? :size)
-              req.headers['Content-Length'] = req.body.size.to_s
+          if !req.body.nil?
+            if req.body.respond_to? :bytesize
+              req.headers["Content-Length"] = req.body.bytesize.to_s
+            elsif req.body.respond_to? :size
+              req.headers["Content-Length"] = req.body.size.to_s
             end
           end
-          req.headers['Authorization'] = "#{name} #{sign(req.method, req.uri, req.headers)}"
+          req.headers["Authorization"] = "#{name} #{sign(req.method, req.uri, req.headers)}"
           req
         end
 
@@ -79,17 +79,17 @@ module Azure
         def signable_string(method, uri, headers)
           [
             method.to_s.upcase,
-            headers.fetch('Content-Encoding', ''),
-            headers.fetch('Content-Language', ''),
-            headers.fetch('Content-Length', ''),
-            headers.fetch('Content-MD5', ''),
-            headers.fetch('Content-Type', ''),
-            headers.fetch('Date', ''),
-            headers.fetch('If-Modified-Since', ''),
-            headers.fetch('If-Match', ''),
-            headers.fetch('If-None-Match', ''),
-            headers.fetch('If-Unmodified-Since', ''),
-            headers.fetch('Range', ''),
+            headers.fetch("Content-Encoding", ""),
+            headers.fetch("Content-Language", ""),
+            headers.fetch("Content-Length", ""),
+            headers.fetch("Content-MD5", ""),
+            headers.fetch("Content-Type", ""),
+            headers.fetch("Date", ""),
+            headers.fetch("If-Modified-Since", ""),
+            headers.fetch("If-Match", ""),
+            headers.fetch("If-None-Match", ""),
+            headers.fetch("If-Unmodified-Since", ""),
+            headers.fetch("Range", ""),
             canonicalized_headers(headers),
             canonicalized_resource(uri)
           ].join("\n")
@@ -101,10 +101,10 @@ module Azure
         #
         # @return [String] a string with the canonicalized headers.
         def canonicalized_headers(headers)
-          headers = headers.map { |k,v| [k.to_s.downcase, v] }
-          headers.select! { |k,_| k =~ /^x-ms-/ }
-          headers.sort_by! { |(k,_)| k }
-          headers.map! { |k,v| '%s:%s' % [k, v] }.join("\n")
+          headers = headers.map { |k, v| [k.to_s.downcase, v] }
+          headers.select! { |k, _| k =~ /^x-ms-/ }
+          headers.sort_by! { |(k, _)| k }
+          headers.map! { |k, v| "%s:%s" % [k, v] }.join("\n")
         end
 
         # Calculate the Canonicalized Resource string for a request.
@@ -113,10 +113,10 @@ module Azure
         #
         # @return           [String] a string with the canonicalized resource.
         def canonicalized_resource(uri)
-          resource = '/' + account_name + (uri.path.empty? ? '/' : uri.path)
-          params = CGI.parse(uri.query.to_s).map { |k,v| [k.downcase, v] }
-          params.sort_by! { |k,_| k }
-          params.map! { |k,v| '%s:%s' % [k, v.map(&:strip).sort.join(',')] }
+          resource = "/" + account_name + (uri.path.empty? ? "/" : uri.path)
+          params = CGI.parse(uri.query.to_s).map { |k, v| [k.downcase, v] }
+          params.sort_by! { |k, _| k }
+          params.map! { |k, v| "%s:%s" % [k, v.map(&:strip).sort.join(",")] }
           [resource, *params].join("\n")
         end
       end

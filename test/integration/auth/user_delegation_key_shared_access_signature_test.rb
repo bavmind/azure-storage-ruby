@@ -45,7 +45,7 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
 
     token_credential = Azure::Storage::Common::Core::TokenCredential.new access_token
     token_signer = Azure::Storage::Common::Core::Auth::TokenSigner.new token_credential
-    client = Azure::Storage::Common::Client::create(storage_account_name: storage_account_name, signer: token_signer)
+    client = Azure::Storage::Common::Client.create(storage_account_name: storage_account_name, signer: token_signer)
     Azure::Storage::Blob::BlobService.new(api_version: "2018-11-09", client: client)
   }
 
@@ -59,7 +59,11 @@ describe Azure::Storage::Common::Core::Auth::SharedAccessSignature do
   describe "#blob_service_sas_for_container" do
     let(:container_name) { ContainerNameHelper.name }
     let(:block_blob_name) { BlobNameHelper.name }
-    let(:content) { content = ""; 512.times.each { |i| content << "@" }; content }
+    let(:content) {
+      content = ""
+      512.times.each { |i| content << "@" }
+      content
+    }
 
     before {
       subject.create_container container_name

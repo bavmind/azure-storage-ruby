@@ -67,15 +67,15 @@ describe Azure::Storage::Table::TableService do
     it "Queries a table for list of entities" do
       result = subject.query_entities table_name
       _(result).must_be_kind_of Array
-      _(result.length).must_equal ((partitions.length + 1) * entities_per_partition)
+      _(result.length).must_equal((partitions.length + 1) * entities_per_partition)
 
       result.each { |e|
         _(entities[e.properties["PartitionKey"]]).must_include e.properties["RowKey"]
         entity_properties.each { |k, v|
-          unless v.class == Time
-            _(e.properties[k]).must_equal v
-          else
+          if v.instance_of?(Time)
             _(e.properties[k].to_i).must_equal v.to_i
+          else
+            _(e.properties[k]).must_equal v
           end
         }
       }
@@ -92,10 +92,10 @@ describe Azure::Storage::Table::TableService do
       result.each { |e|
         _(e.properties["RowKey"]).must_equal row_key
         entity_properties.each { |k, v|
-          unless v.class == Time
-            _(e.properties[k]).must_equal v
-          else
+          if v.instance_of?(Time)
             _(e.properties[k].to_i).must_equal v.to_i
+          else
+            _(e.properties[k]).must_equal v
           end
         }
       }
@@ -106,7 +106,7 @@ describe Azure::Storage::Table::TableService do
       puts "#########################################"
       result = subject.query_entities table_name, select: projection
       _(result).must_be_kind_of Array
-      _(result.length).must_equal ((partitions.length + 1) * entities_per_partition)
+      _(result.length).must_equal((partitions.length + 1) * entities_per_partition)
 
       result.each { |e|
         _(e.properties.length).must_equal projection.length
@@ -195,6 +195,5 @@ describe Azure::Storage::Table::TableService do
       _(result4.length).must_equal 3
       _(result4.continuation_token).must_be_nil
     end
-
   end
 end

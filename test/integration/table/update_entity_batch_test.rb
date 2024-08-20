@@ -60,7 +60,7 @@ describe Azure::Storage::Table::TableService do
 
     it "updates an existing entity, removing any properties not included in the update operation" do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
-      batch.update entity_properties["RowKey"],         "PartitionKey" => entity_properties["PartitionKey"],
+      batch.update entity_properties["RowKey"], "PartitionKey" => entity_properties["PartitionKey"],
         "RowKey" => entity_properties["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
       etags = subject.execute_batch batch
@@ -84,7 +84,7 @@ describe Azure::Storage::Table::TableService do
 
     it "updates an existing entity, removing any properties not included in the update operation and adding nil one" do
       batch = Azure::Storage::Table::Batch.new table_name, entity_properties["PartitionKey"]
-      batch.update entity_properties["RowKey"],         "PartitionKey" => entity_properties["PartitionKey"],
+      batch.update entity_properties["RowKey"], "PartitionKey" => entity_properties["PartitionKey"],
         "RowKey" => entity_properties["RowKey"],
         "NewCustomProperty" => nil
       etags = subject.execute_batch batch
@@ -103,7 +103,7 @@ describe Azure::Storage::Table::TableService do
       }
 
       # and has the new one
-      _(result.properties["NewCustomProperty"]).must_equal nil
+      _(result.properties["NewCustomProperty"]).must_be_nil
     end
 
     it "errors on a non-existing row key" do
@@ -113,7 +113,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.update entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -121,7 +121,7 @@ describe Azure::Storage::Table::TableService do
       assert_raises(RuntimeError) do
         batch = Azure::Storage::Table::Batch.new "this_table.cannot-exist!", entity_properties["PartitionKey"]
         batch.update entity_properties["RowKey"], entity_properties
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -132,7 +132,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.update entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -143,7 +143,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.update entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
   end

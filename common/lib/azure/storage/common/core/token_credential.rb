@@ -27,7 +27,6 @@ require "azure/core"
 
 module Azure::Storage::Common::Core
   class TokenCredential
-
     # Public: Initializes an instance of [Azure::Storage::Common::Core::TokenCredential]
     #
     # ==== Attributes

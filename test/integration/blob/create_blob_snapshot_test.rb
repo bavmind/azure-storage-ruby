@@ -31,9 +31,13 @@ describe Azure::Storage::Blob::BlobService do
   describe "#create_blob_snapshot" do
     let(:container_name) { ContainerNameHelper.name }
     let(:blob_name) { "blobname" }
-    let(:content) { content = ""; 1024.times.each { |i| content << "@" }; content }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
-    let(:options) { { content_type: "application/foo", metadata: metadata } }
+    let(:content) {
+      content = ""
+      1024.times.each { |i| content << "@" }
+      content
+    }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
+    let(:options) { {content_type: "application/foo", metadata: metadata} }
 
     before {
       subject.create_container container_name
@@ -83,7 +87,6 @@ describe Azure::Storage::Blob::BlobService do
         _(blob.metadata).must_include k.downcase
         _(blob.metadata[k.downcase]).must_equal v
       }
-
     end
 
     it "lease id works for create_blob_snapshot" do
@@ -97,7 +100,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        snapshot = subject.create_blob_snapshot container_name, page_blob_name, lease_id: lease_id
+        subject.create_blob_snapshot container_name, page_blob_name, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

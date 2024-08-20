@@ -39,10 +39,10 @@ class Minitest::Mock
 
   alias_method :expect_without_stub_support, :expect
 
-  def expect(name, *args)
+  def expect(name, *)
     metaclass = class << self; self; end
     metaclass.send :undef_method, name if respond_to?(name)
-    expect_without_stub_support(name, *args)
+    expect_without_stub_support(name, *)
   end
 end
 

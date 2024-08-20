@@ -75,15 +75,15 @@ describe Azure::Storage::Table::TableService do
 
       result = q.execute
       _(result).must_be_kind_of Array
-      _(result.length).must_equal ((partitions.length + 1) * entities_per_partition)
+      _(result.length).must_equal((partitions.length + 1) * entities_per_partition)
 
       result.each { |e|
         _(entities[e.properties["PartitionKey"]]).must_include e.properties["RowKey"]
         entity_properties.each { |k, v|
-          unless v.class == Time
-            _(e.properties[k]).must_equal v
-          else
+          if v.instance_of?(Time)
             _(e.properties[k].to_i).must_equal v.to_i
+          else
+            _(e.properties[k]).must_equal v
           end
         }
       }
@@ -105,10 +105,10 @@ describe Azure::Storage::Table::TableService do
       result.each { |e|
         _(e.properties["RowKey"]).must_equal row_key
         entity_properties.each { |k, v|
-          unless v.class == Time
-            _(e.properties[k]).must_equal v
-          else
+          if v.instance_of?(Time)
             _(e.properties[k].to_i).must_equal v.to_i
+          else
+            _(e.properties[k]).must_equal v
           end
         }
       }
@@ -124,7 +124,7 @@ describe Azure::Storage::Table::TableService do
 
       result = q.execute
       _(result).must_be_kind_of Array
-      _(result.length).must_equal ((partitions.length + 1) * entities_per_partition)
+      _(result.length).must_equal((partitions.length + 1) * entities_per_partition)
 
       result.each { |e|
         _(e.properties.length).must_equal projection.length
@@ -142,7 +142,7 @@ describe Azure::Storage::Table::TableService do
 
       q = Azure::Storage::Table::Query.new
         .from(table_name)
-        .where("CustomIntegerProperty gt #{entity_properties['CustomIntegerProperty']}")
+        .where("CustomIntegerProperty gt #{entity_properties["CustomIntegerProperty"]}")
         .where("CustomBooleanProperty eq false")
 
       result = q.execute
@@ -152,7 +152,7 @@ describe Azure::Storage::Table::TableService do
 
       q = Azure::Storage::Table::Query.new
         .from(table_name)
-        .where("CustomIntegerProperty gt #{entity_properties['CustomIntegerProperty']}")
+        .where("CustomIntegerProperty gt #{entity_properties["CustomIntegerProperty"]}")
         .where("CustomBooleanProperty eq true")
       result = q.execute
       _(result).must_be_kind_of Array
@@ -220,12 +220,11 @@ describe Azure::Storage::Table::TableService do
         "CustomIntegerProperty" => entity_properties["CustomIntegerProperty"] + 1,
         "CustomBooleanProperty" => false)
 
-
       q = Azure::Storage::Table::Query.new
         .from(table_name)
         .select("PartitionKey")
         .select("CustomIntegerProperty")
-        .where("CustomIntegerProperty eq #{entity_properties['CustomIntegerProperty']}")
+        .where("CustomIntegerProperty eq #{entity_properties["CustomIntegerProperty"]}")
         .top(3)
 
       result = q.execute

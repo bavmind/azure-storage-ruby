@@ -17,7 +17,7 @@ module Azure
   module Core
     module Default
       # Default User Agent header string
-      USER_AGENT   = "Azure-Core/#{Azure::Core::Version}".freeze
+      USER_AGENT = "Azure-Core/#{Azure::Core::Version}".freeze
     end
   end
 end

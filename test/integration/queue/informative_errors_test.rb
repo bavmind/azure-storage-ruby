@@ -33,14 +33,13 @@ describe Azure::Storage::Queue::QueueService do
 
     it "exception message should be valid" do
       # getting metadata from a non existent should throw
-      begin
-        subject.get_queue_metadata queue_name
-        flunk "No exception"
-      rescue Azure::Core::Http::HTTPError => error
-        _(error.status_code).must_equal 404
-        _(error.type).must_equal "QueueNotFound"
-        _(error.description.start_with?("The specified queue does not exist.")).must_equal true
-      end
+
+      subject.get_queue_metadata queue_name
+      flunk "No exception"
+    rescue Azure::Core::Http::HTTPError => error
+      _(error.status_code).must_equal 404
+      _(error.type).must_equal "QueueNotFound"
+      _(error.description.start_with?("The specified queue does not exist.")).must_equal true
     end
   end
 end

@@ -110,7 +110,7 @@ module Azure::Storage::Blob
       query = {}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
+      headers = options[:lease_id] ? {"x-ms-lease-id" => options[:lease_id]} : {}
 
       # Call
       options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
@@ -146,10 +146,10 @@ module Azure::Storage::Blob
     # Returns a Container
     def get_container_metadata(name, options = {})
       # Query
-      query = { "comp" => "metadata" }
+      query = {"comp" => "metadata"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
+      headers = options[:lease_id] ? {"x-ms-lease-id" => options[:lease_id]} : {}
 
       # Call
       options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
@@ -184,7 +184,7 @@ module Azure::Storage::Blob
     # Returns nil on success
     def set_container_metadata(name, metadata, options = {})
       # Query
-      query = { "comp" => "metadata" }
+      query = {"comp" => "metadata"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Headers
@@ -227,10 +227,10 @@ module Azure::Storage::Blob
     #
     def get_container_acl(name, options = {})
       # Query
-      query = { "comp" => "acl" }
+      query = {"comp" => "acl"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
+      headers = options[:lease_id] ? {"x-ms-lease-id" => options[:lease_id]} : {}
 
       # Call
       options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
@@ -241,9 +241,9 @@ module Azure::Storage::Blob
       container.name = name
 
       signed_identifiers = nil
-      signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) if response.body != nil && response.body.length > 0
+      signed_identifiers = Serialization.signed_identifiers_from_xml(response.body) if !response.body.nil? && response.body.length > 0
 
-      return container, signed_identifiers
+      [container, signed_identifiers]
     end
 
     # Public: Sets the ACL and any container-level access policies for the container.
@@ -273,7 +273,7 @@ module Azure::Storage::Blob
     #
     def set_container_acl(name, public_access_level, options = {})
       # Query
-      query = { "comp" => "acl" }
+      query = {"comp" => "acl"}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
       # Scheme + path
@@ -298,7 +298,7 @@ module Azure::Storage::Blob
       container.name = name
       container.public_access_level = public_access_level
 
-      return container, signed_identifiers || []
+      [container, signed_identifiers || []]
     end
 
     # Public: Deletes a container.
@@ -328,7 +328,7 @@ module Azure::Storage::Blob
       query = {}
       query["timeout"] = options[:timeout].to_s if options[:timeout]
 
-      headers = options[:lease_id] ? { "x-ms-lease-id" => options[:lease_id] } : {}
+      headers = options[:lease_id] ? {"x-ms-lease-id" => options[:lease_id]} : {}
 
       # Call
       call(:delete, container_uri(name, query), nil, headers, options)
@@ -601,8 +601,8 @@ module Azure::Storage::Blob
     # Returns an Azure::Storage::Common::EnumerationResults
     def list_blobs(name, options = {})
       # Query
-      query = { "comp" => "list" }
-      query["prefix"] = options[:prefix].gsub(/\\/, "/") if options[:prefix]
+      query = {"comp" => "list"}
+      query["prefix"] = options[:prefix].tr("\\", "/") if options[:prefix]
       query["delimiter"] = options[:delimiter] if options[:delimiter]
       query["marker"] = options[:marker] if options[:marker]
       query["maxresults"] = options[:max_results].to_s if options[:max_results]

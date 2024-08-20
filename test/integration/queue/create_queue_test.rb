@@ -28,13 +28,13 @@ describe Azure::Storage::Queue::QueueService do
   let(:user_agent_prefix) { "azure_storage_ruby_integration_test" }
   subject {
     Azure::Storage::Queue::QueueService.create(SERVICE_CREATE_OPTIONS()) { |headers|
-      headers["User-Agent"] = "#{user_agent_prefix}; #{headers['User-Agent']}"
+      headers["User-Agent"] = "#{user_agent_prefix}; #{headers["User-Agent"]}"
     }
   }
 
   describe "#create_queue" do
     let(:queue_name) { QueueNameHelper.name }
-    let(:metadata) { { "custommetadata" => "CustomMetadataValue" } }
+    let(:metadata) { {"custommetadata" => "CustomMetadataValue"} }
     after { QueueNameHelper.clean }
 
     it "creates a queue with a valid name" do
@@ -46,7 +46,7 @@ describe Azure::Storage::Queue::QueueService do
       result = subject.create_queue queue_name, metadata: metadata
       _(result).must_be_nil
 
-      message_count, queue_metadata = subject.get_queue_metadata queue_name
+      _message_count, queue_metadata = subject.get_queue_metadata queue_name
 
       metadata.each { |k, v|
         _(queue_metadata).must_include k

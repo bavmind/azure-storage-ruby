@@ -87,7 +87,7 @@ module Azure::Storage
       end
 
       def self.quota_from_headers(headers)
-        headers["x-ms-share-quota"] ? headers["x-ms-share-quota"].to_i : nil
+        headers["x-ms-share-quota"]&.to_i
       end
 
       def self.share_stats_from_xml(xml)
@@ -186,7 +186,7 @@ module Azure::Storage
         props[:content_length] = headers["Content-Length"].to_i unless headers["Content-Length"].nil?
         props[:content_length] = headers["x-ms-content-length"].to_i unless headers["x-ms-content-length"].nil?
 
-        props[:content_type] =  headers["Content-Type"]
+        props[:content_type] = headers["Content-Type"]
         props[:content_encoding] = headers["Content-Encoding"]
         props[:content_language] = headers["Content-Language"]
         props[:content_disposition] = headers["Content-Disposition"]

@@ -29,9 +29,9 @@ require "azure/storage/common/core/error"
 
 if RUBY_VERSION.to_f < 2.0
   begin
-    require "Win32/Console/ANSI" if RUBY_PLATFORM =~ /win32|mingw32/
+    require "Win32/Console/ANSI" if RUBY_PLATFORM.match?(/win32|mingw32/)
   rescue LoadError
-    puts "WARNING: Output will look weird on Windows unless"\
+    puts "WARNING: Output will look weird on Windows unless" \
          ' you install the "win32console" gem.'
   end
 end
@@ -39,7 +39,7 @@ end
 module Azure::Storage::Common
   module Error
     # Azure Error
-    class Error <  Azure::Core::Error
+    class Error < Azure::Core::Error
       attr_reader :description
       attr_reader :status_code
       attr_reader :type
@@ -79,7 +79,7 @@ module Azure::Storage::Common
       def export_der(cert, key, pass = nil, name = nil)
         pkcs12 = OpenSSL::PKCS12.create(pass, name, key, cert)
         Base64.encode64(pkcs12.to_der)
-      rescue Exception => e
+      rescue => e
         puts e.message
         abort
       end
@@ -89,7 +89,7 @@ module Azure::Storage::Common
       end
 
       def enable_winrm?(winrm_transport)
-        (!winrm_transport.nil? && (winrm_transport.select { |x| x.downcase == "http" || x.downcase == "https" }.size > 0))
+        !winrm_transport.nil? && (winrm_transport.count { |x| x.downcase == "http" || x.downcase == "https" } > 0)
       end
 
       def get_certificate(private_key_file)
@@ -102,7 +102,7 @@ module Azure::Storage::Common
         cert.not_before = Time.now
         cert.not_after = cert.not_before + (60 * 60 * 24 * 365)
         cert.public_key = rsa.public_key
-        cert.sign(rsa, OpenSSL::Digest::SHA1.new)
+        cert.sign(rsa, OpenSSL::Digest.new("SHA1"))
         cert
       end
 
@@ -111,7 +111,7 @@ module Azure::Storage::Common
       end
 
       def parse_charset_from_content_type(content_type)
-        if (content_type && content_type.length > 0)
+        if content_type && content_type.length > 0
           charset = content_type.split(";").delete_if { |attribute| !attribute.lstrip.start_with?("charset=") }.map { |x| x.lstrip }[0]
           charset["charset=".length...charset.length] if charset
         end
@@ -189,13 +189,14 @@ module Azure::Storage::Common
 end
 
 class String
-  { reset:  0,
-    bold:  1,
-    dark:  2,
-    underline:  4,
-    blink:  5,
-    orange:  6,
-    negative:  7,
+  {
+    reset: 0,
+    bold: 1,
+    dark: 2,
+    underline: 4,
+    blink: 5,
+    orange: 6,
+    negative: 7,
     black: 30,
     red: 31,
     green: 32,
@@ -203,7 +204,7 @@ class String
     blue: 34,
     magenta: 35,
     cyan: 36,
-    white: 37,
+    white: 37
   }.each do |key, value|
     define_method key do
       "\e[#{value}m" + self + "\e[0m"
@@ -214,13 +215,13 @@ end
 # Code validate private/public IP acceptable ranges.
 class IPAddr
   PRIVATE_RANGES = [
-    IPAddr.new('10.0.0.0/8'),
-    IPAddr.new('172.16.0.0/12'),
-    IPAddr.new('192.168.0.0/16')
+    IPAddr.new("10.0.0.0/8"),
+    IPAddr.new("172.16.0.0/12"),
+    IPAddr.new("192.168.0.0/16")
   ]
 
   def private?
-    return false unless self.ipv4?
+    return false unless ipv4?
     PRIVATE_RANGES.each do |ipr|
       return true if ipr.include?(self)
     end
@@ -255,7 +256,11 @@ class IPAddr
     end
 
     def valid?(ip)
-      (IPAddr.new(ip) rescue nil).nil?
+      begin
+        IPAddr.new(ip)
+      rescue
+        nil
+      end.nil?
     end
   end
 end

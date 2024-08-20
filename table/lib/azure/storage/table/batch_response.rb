@@ -39,7 +39,7 @@ module Azure::Storage
           find(context) { |c| response_headers c }
           find(context) { |c| response_body c }
         else
-          while (find(context) { |c| changeset_boundary_or_end c } == :boundary)
+          while find(context) { |c| changeset_boundary_or_end c } == :boundary
             find(context) { |c| changeset_headers c }
             find(context) { |c| response c }
             find(context) { |c| response_headers c }
@@ -51,7 +51,7 @@ module Azure::Storage
       end
 
       def self.find(context, &block)
-        while (context[:index] < context[:lines].length)
+        while context[:index] < context[:lines].length
           result = block.call(context)
           return result if result
           context[:index] += 1
@@ -62,36 +62,30 @@ module Azure::Storage
         end_of_body = nil
         end_of_body = changeset_boundary_or_end(context.dup.merge!(index: context[:index] + 1)) if context[:index] < (context[:lines].length - 1)
 
+        context[:responses].last[:body] ||= ""
+        context[:responses].last[:body] << current_line(context)
         if end_of_body
-          context[:responses].last[:body] ||= ""
-          context[:responses].last[:body] << current_line(context)
-          return context[:responses].last[:body]
-        else
-          context[:responses].last[:body] ||= ""
-          context[:responses].last[:body] << current_line(context)
-          return nil
+          context[:responses].last[:body]
         end
       end
 
       def self.response_headers(context)
         match = /(.*): (.*)/.match(current_line(context))
 
-        if context[:responses].last[:headers] && (not match)
+        if context[:responses].last[:headers] && !match
           context[:index] += 1
-          return context[:responses].last[:headers]
+          context[:responses].last[:headers]
         elsif match
           context[:responses].last[:headers] ||= {}
           context[:responses].last[:headers][match[1].downcase] = match[2].strip
-          return nil
-        else
-          return nil
+          nil
         end
       end
 
       def self.response(context)
         match = /HTTP\/1.1 (\d*) (.*)/.match(current_line(context))
         return nil unless match
-        response = { status_code: match[1], message: match[2] }
+        response = {status_code: match[1], message: match[2]}
         context[:responses].push response
       end
 
@@ -103,20 +97,22 @@ module Azure::Storage
         match_boundary = /--changesetresponse_(.*)/.match(current_line(context))
         match_end = /--changesetresponse_(.*)--/.match(current_line(context)) || /--batchresponse_(.*)--/.match(current_line(context))
 
-        (match_boundary && (not match_end)) ? :boundary : (match_end ? :end : nil)
+        if match_boundary && !match_end
+          :boundary
+        else
+          (match_end ? :end : nil)
+        end
       end
 
       def self.batch_headers(context)
         match = /(.*): (.*)/.match(current_line(context))
 
-        if context[:batch_headers] && (not match)
-          return context[:batch_headers]
+        if context[:batch_headers] && !match
+          context[:batch_headers]
         elsif match
           context[:batch_headers] ||= {}
           context[:batch_headers][match[1].downcase] = match[2]
-          return nil
-        else
-          return nil
+          nil
         end
       end
 

@@ -31,7 +31,7 @@ module Azure::Storage
     module Auth
       class SharedKey < Azure::Storage::Common::Core::Auth::SharedKey
         # The account name
-        attr :account_name
+        attr_reader :account_name
 
         # Generate the string to sign.
         #
@@ -42,11 +42,11 @@ module Azure::Storage
         # Returns a plain text string.
         def signable_string(method, uri, headers)
           [
-              method.to_s.upcase,
-              headers.fetch("Content-MD5", ""),
-              headers.fetch("Content-Type", ""),
-              headers.fetch("Date") { headers.fetch("x-ms-date") },
-              canonicalized_resource(uri)
+            method.to_s.upcase,
+            headers.fetch("Content-MD5", ""),
+            headers.fetch("Content-Type", ""),
+            headers.fetch("Date") { headers.fetch("x-ms-date") },
+            canonicalized_resource(uri)
           ].join("\n")
         end
 

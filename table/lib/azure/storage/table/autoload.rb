@@ -32,17 +32,17 @@ require "azure/storage/common"
 module Azure
   module Storage
     module Table
-      autoload :Default,        "azure/storage/table/default"
+      autoload :Default, "azure/storage/table/default"
       autoload :TableConstants, "azure/storage/table/default"
-      autoload :Version,        "azure/storage/table/version"
-      autoload :Serialization,  "azure/storage/table/serialization"
-      autoload :TableService,   "azure/storage/table/table_service"
-      autoload :Batch,          "azure/storage/table/batch"
-      autoload :Query,          "azure/storage/table/query"
-      autoload :BatchResponse,  "azure/storage/table/batch_response"
-      autoload :EdmType,        "azure/storage/table/edmtype"
-      autoload :Entity,         "azure/storage/table/entity"
-      autoload :GUID,           "azure/storage/table/guid"
+      autoload :Version, "azure/storage/table/version"
+      autoload :Serialization, "azure/storage/table/serialization"
+      autoload :TableService, "azure/storage/table/table_service"
+      autoload :Batch, "azure/storage/table/batch"
+      autoload :Query, "azure/storage/table/query"
+      autoload :BatchResponse, "azure/storage/table/batch_response"
+      autoload :EdmType, "azure/storage/table/edmtype"
+      autoload :Entity, "azure/storage/table/entity"
+      autoload :GUID, "azure/storage/table/guid"
     end
   end
 end

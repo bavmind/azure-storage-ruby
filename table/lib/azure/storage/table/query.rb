@@ -26,7 +26,7 @@ require "azure/storage/table/table_service"
 module Azure::Storage
   module Table
     class Query
-      def initialize(table = "", partition = nil, row = nil, &block)
+      def initialize(table = "", partition = nil, row = nil, &)
         @table = table
         @partition_key = partition
         @row_key = row
@@ -34,7 +34,7 @@ module Azure::Storage
         @filters = []
         @top_n = nil
         @table_service = Azure::Storage::Table::TableService.create_from_env
-        self.instance_eval(&block) if block_given?
+        instance_eval(&) if block_given?
       end
 
       attr_reader :table
@@ -91,7 +91,7 @@ module Azure::Storage
       end
 
       def execute
-        @table_service.query_entities(@table,           partition_key: @partition_key,
+        @table_service.query_entities(@table, partition_key: @partition_key,
           row_key: @row_key,
           select: @fields.map { |f| f.to_s },
           filter: _build_filter_string,

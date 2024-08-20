@@ -36,12 +36,14 @@ describe Azure::Storage::Blob::BlobService do
       subject.create_container container_name
       subject.create_page_blob container_name, blob_name, length
     }
-    let(:options) { {
+    let(:options) {
+      {
         content_type: "application/my-special-format",
         content_encoding: "gzip",
         content_language: "klingon",
-        cache_control: "max-age=1296000",
-      }}
+        cache_control: "max-age=1296000"
+      }
+    }
 
     it "sets and gets properties for a blob" do
       result = subject.set_blob_properties container_name, blob_name, options
@@ -93,12 +95,11 @@ describe Azure::Storage::Blob::BlobService do
       new_lease_id = subject.acquire_blob_lease container_name, page_blob_name
       # assert wrong lease fails
       status_code = ""
-      description = ""
       begin
-        blob = subject.get_blob_properties container_name, page_blob_name, lease_id: lease_id
+        subject.get_blob_properties container_name, page_blob_name, lease_id: lease_id
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
-        description = e.description
+        e.description
       end
       _(status_code).must_equal "412"
       # assert right lease succeeds
@@ -126,7 +127,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        blob = subject.set_blob_properties container_name, page_blob_name, options.merge(lease_id: lease_id)
+        subject.set_blob_properties container_name, page_blob_name, options.merge(lease_id: lease_id)
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description
@@ -145,7 +146,7 @@ describe Azure::Storage::Blob::BlobService do
       status_code = ""
       description = ""
       begin
-        blob = subject.set_blob_properties container_name, page_blob_name, options
+        subject.set_blob_properties container_name, page_blob_name, options
       rescue Azure::Core::Http::HTTPError => e
         status_code = e.status_code.to_s
         description = e.description

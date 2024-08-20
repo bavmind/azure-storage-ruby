@@ -102,7 +102,7 @@ module Azure::Storage::Common
           xml = slopify(xml)
           expect_node("EnumerationResults", xml)
 
-          results = results || Service::EnumerationResults.new;
+          results ||= Service::EnumerationResults.new
 
           results.continuation_token = xml.NextMarker.text if (xml > "NextMarker").any?
           results
@@ -115,7 +115,6 @@ module Azure::Storage::Common
           metadata = {}
 
           xml.children.each { |meta_node|
-
             key = meta_node.name.downcase
             if metadata.has_key? key
               metadata[key] = [metadata[key]] unless metadata[key].respond_to? :push
@@ -131,7 +130,7 @@ module Azure::Storage::Common
           metadata = {}
 
           headers.each { |k, v|
-            if key = k[/^x-ms-meta-(.*)/, 1]
+            if (key = k[/^x-ms-meta-(.*)/, 1])
               if metadata.has_key? key
                 metadata[key] = [metadata[key]] unless metadata[key].respond_to? :push
                 metadata[key].push(v)
@@ -145,10 +144,12 @@ module Azure::Storage::Common
         end
 
         def retention_policy_to_xml(retention_policy, xml)
-          xml.RetentionPolicy {
-            xml.Enabled retention_policy.enabled
-            xml.Days retention_policy.days if retention_policy.enabled && retention_policy.days
-          } if retention_policy
+          if retention_policy
+            xml.RetentionPolicy {
+              xml.Enabled retention_policy.enabled
+              xml.Days retention_policy.days if retention_policy.enabled && retention_policy.days
+            }
+          end
         end
 
         def retention_policy_from_xml(xml)
@@ -170,15 +171,19 @@ module Azure::Storage::Common
         end
 
         def hour_metrics_to_xml(metrics, xml)
-          xml.HourMetrics {
-            metrics_to_xml_children(metrics, xml)
-          } if metrics
+          if metrics
+            xml.HourMetrics {
+              metrics_to_xml_children(metrics, xml)
+            }
+          end
         end
 
         def minute_metrics_to_xml(metrics, xml)
-          xml.MinuteMetrics {
-            metrics_to_xml_children(metrics, xml)
-          } if metrics
+          if metrics
+            xml.MinuteMetrics {
+              metrics_to_xml_children(metrics, xml)
+            }
+          end
         end
 
         def metrics_from_xml(xml)
@@ -193,13 +198,15 @@ module Azure::Storage::Common
         end
 
         def logging_to_xml(logging, xml)
-          xml.Logging {
-            xml.Version logging.version
-            xml.Delete logging.delete
-            xml.Read logging.read
-            xml.Write logging.write
-            retention_policy_to_xml(logging.retention_policy, xml)
-          } if logging
+          if logging
+            xml.Logging {
+              xml.Version logging.version
+              xml.Delete logging.delete
+              xml.Read logging.read
+              xml.Write logging.write
+              retention_policy_to_xml(logging.retention_policy, xml)
+            }
+          end
         end
 
         def logging_from_xml(xml)
@@ -247,8 +254,8 @@ module Azure::Storage::Common
           expect_node("CorsRule", xml)
 
           CorsRule.new do |cors_rule|
-            cors_rule.allowed_origins =  ary_from_node(xml.AllowedOrigins) if (xml > "AllowedOrigins").any?
-            cors_rule.allowed_methods =  ary_from_node(xml.AllowedMethods) if (xml > "AllowedMethods").any?
+            cors_rule.allowed_origins = ary_from_node(xml.AllowedOrigins) if (xml > "AllowedOrigins").any?
+            cors_rule.allowed_methods = ary_from_node(xml.AllowedMethods) if (xml > "AllowedMethods").any?
             cors_rule.max_age_in_seconds = xml.MaxAgeInSeconds.text.to_i if (xml > "MaxAgeInSeconds").any?
             cors_rule.exposed_headers = ary_from_node(xml.ExposedHeaders) if (xml > "ExposedHeaders").any?
             cors_rule.allowed_headers = ary_from_node(xml.AllowedHeaders) if (xml > "AllowedHeaders").any?
@@ -314,8 +321,10 @@ module Azure::Storage::Common
         end
 
         def slopify(xml)
-          node = (xml.is_a? String) ? Nokogiri.Slop(xml).root : xml
-          node.slop! if node.is_a? Nokogiri::XML::Document unless node.respond_to? :method_missing
+          node = xml.is_a?(String) ? Nokogiri.Slop(xml).root : xml
+          unless node.respond_to? :method_missing
+            node.slop! if node.is_a? Nokogiri::XML::Document
+          end
           node = node.root if node.is_a? Nokogiri::XML::Document
           node
         end

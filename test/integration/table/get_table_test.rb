@@ -39,8 +39,8 @@ describe Azure::Storage::Table::TableService do
 
     it "errors on an invalid table" do
       assert_raises(Azure::Core::Http::HTTPError) do
-         subject.get_table "this_table.cannot-exist!"
-       end
+        subject.get_table "this_table.cannot-exist!"
+      end
     end
   end
 end

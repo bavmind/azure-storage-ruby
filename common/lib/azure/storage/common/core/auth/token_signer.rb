@@ -35,7 +35,7 @@ module Azure::Storage::Common::Core
       end
 
       def sign_request(req)
-        req.headers['Authorization'] = "Bearer #{@credential.token}"
+        req.headers["Authorization"] = "Bearer #{@credential.token}"
         req
       end
     end

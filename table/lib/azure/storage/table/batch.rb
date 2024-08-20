@@ -39,7 +39,7 @@ module Azure::Storage
     # results = svc.execute_batch batch
     #
     class Batch
-      def initialize(table, partition, &block)
+      def initialize(table, partition, &)
         @table = table
         @partition = partition
         @operations = []
@@ -47,61 +47,67 @@ module Azure::Storage
         @batch_id = "batch_" + SecureRandom.uuid
         @changeset_id = "changeset_" + SecureRandom.uuid
 
-        self.instance_eval(&block) if block_given?
+        instance_eval(&) if block_given?
       end
 
       private
-        attr_reader :table
-        attr_reader :partition
 
-        attr_accessor :operations
-        attr_accessor :entity_keys
-        attr_accessor :changeset_id
+      attr_reader :table
+      attr_reader :partition
+
+      attr_accessor :operations
+      attr_accessor :entity_keys
+      attr_accessor :changeset_id
 
       public
+
       attr_accessor :batch_id
 
       protected
-        class ResponseWrapper
-          def initialize(hash)
-            @hash = hash
-          end
 
-          def uri
-            @hash[:uri]
-          end
-
-          def status_code
-            @hash[:status_code].to_i
-          end
-
-          def body
-            @hash[:body]
-          end
+      class ResponseWrapper
+        def initialize(hash)
+          @hash = hash
         end
+
+        def uri
+          @hash[:uri]
+        end
+
+        def status_code
+          @hash[:status_code].to_i
+        end
+
+        def body
+          @hash[:body]
+        end
+      end
 
       protected
-        def add_operation(method, row_key = nil, body = nil, headers = nil)
-          raise Azure::Storage::Common::Core::StorageError.new("Get operation should be the only operation in the batch.") if operations.length > 0 && (method == :get || operations[0][:method] == :get)
-          op = {
-            method: method,
-            row_key: row_key,
-            body: body,
-            headers: headers.merge(
-              Azure::Storage::Common::HeaderConstants::CONTENT_TYPE => Azure::Storage::Common::HeaderConstants::JSON_CONTENT_TYPE_VALUE,
-              Azure::Storage::Common::HeaderConstants::DATA_SERVICE_VERSION => TableConstants::DEFAULT_DATA_SERVICE_VERSION
-            )
-          }
-          operations.push op
-        end
+
+      def add_operation(method, row_key = nil, body = nil, headers = nil)
+        raise Azure::Storage::Common::Core::StorageError.new("Get operation should be the only operation in the batch.") if operations.length > 0 && (method == :get || operations[0][:method] == :get)
+        op = {
+          method: method,
+          row_key: row_key,
+          body: body,
+          headers: headers.merge(
+            Azure::Storage::Common::HeaderConstants::CONTENT_TYPE => Azure::Storage::Common::HeaderConstants::JSON_CONTENT_TYPE_VALUE,
+            Azure::Storage::Common::HeaderConstants::DATA_SERVICE_VERSION => TableConstants::DEFAULT_DATA_SERVICE_VERSION
+          )
+        }
+        operations.push op
+      end
 
       protected
-        def check_entity_key(key)
-          raise ArgumentError, "Only allowed to perform a single operation per entity, and there is already a operation registered in this batch for the key: #{key}." if entity_keys.include? key
-          entity_keys.push key
-        end
+
+      def check_entity_key(key)
+        raise ArgumentError, "Only allowed to perform a single operation per entity, and there is already a operation registered in this batch for the key: #{key}." if entity_keys.include? key
+        entity_keys.push key
+      end
 
       public
+
       def parse_response(response)
         responses = BatchResponse.parse response.body, (!operations.empty? && operations[0][:method] == :get)
         new_responses = []
@@ -139,9 +145,10 @@ module Azure::Storage
       end
 
       public
+
       def to_body(table_service)
         body = ""
-        body.define_singleton_method(:add_line) do |a| self << (a || nil) + "\n" end
+        body.define_singleton_method(:add_line) { |a| self << (a || nil) + "\n" }
 
         is_get = true if !operations.empty? && operations[0][:method] == :get
 
@@ -157,11 +164,9 @@ module Azure::Storage
           body.add_line ""
           body.add_line "#{op[:method].to_s.upcase} #{uri} HTTP/1.1"
 
-          if op[:headers]
-            op[:headers].each { |k, v|
-              body.add_line "#{k}: #{v}"
-            }
-          end
+          op[:headers]&.each { |k, v|
+            body.add_line "#{k}: #{v}"
+          }
 
           if op[:body]
             body.add_line "Content-Length: #{op[:body].bytesize}"
@@ -170,7 +175,6 @@ module Azure::Storage
           else
             body.add_line ""
           end
-
         }
         body.add_line "--#{changeset_id}--" unless is_get
         body.add_line "--#{batch_id}--"
@@ -197,17 +201,17 @@ module Azure::Storage
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179433
       public
+
       def insert(row_key, entity_values, options = {})
         check_entity_key(row_key)
 
-        headers = { Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept]) }
+        headers = {Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept])}
         headers[Azure::Storage::Common::HeaderConstants::PREFER] = options[:prefer] unless options[:prefer].nil?
 
         body = Serialization.hash_to_json({
-            "PartitionKey" => partition,
-            "RowKey" => row_key
-          }.merge(entity_values)
-        )
+          "PartitionKey" => partition,
+          "RowKey" => row_key
+        }.merge(entity_values))
 
         add_operation(:post, nil, body, headers)
         self
@@ -230,10 +234,11 @@ module Azure::Storage
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179433
       public
+
       def get(row_key, options = {})
         check_entity_key(row_key)
 
-        headers = { Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept]) }
+        headers = {Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept])}
 
         add_operation(:get, row_key, nil, headers)
         self
@@ -261,10 +266,11 @@ module Azure::Storage
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179427
       public
+
       def update(row_key, entity_values, options = {})
         check_entity_key(row_key)
 
-        headers = { Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept]) }
+        headers = {Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept])}
         headers["If-Match"] = options[:if_match] || "*" unless options[:create_if_not_exists]
 
         body = Serialization.hash_to_json(entity_values)
@@ -295,10 +301,11 @@ module Azure::Storage
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd179392
       public
+
       def merge(row_key, entity_values, options = {})
         check_entity_key(row_key)
 
-        headers = { Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept]) }
+        headers = {Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept])}
         headers["If-Match"] = options[:if_match] || "*" unless options[:create_if_not_exists]
 
         body = Serialization.hash_to_json(entity_values)
@@ -316,6 +323,7 @@ module Azure::Storage
       #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452241
       public
+
       def insert_or_merge(row_key, entity_values)
         merge(row_key, entity_values, create_if_not_exists: true)
         self
@@ -330,6 +338,7 @@ module Azure::Storage
       #
       # See http://msdn.microsoft.com/en-us/library/azure/hh452242
       public
+
       def insert_or_replace(row_key, entity_values)
         update(row_key, entity_values, create_if_not_exists: true)
         self
@@ -353,6 +362,7 @@ module Azure::Storage
       #
       # See http://msdn.microsoft.com/en-us/library/azure/dd135727
       public
+
       def delete(row_key, options = {})
         headers = {
           Azure::Storage::Common::HeaderConstants::ACCEPT => Serialization.get_accept_string(options[:accept]),

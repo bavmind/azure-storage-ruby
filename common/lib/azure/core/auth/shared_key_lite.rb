@@ -22,7 +22,7 @@ module Azure
         #
         # @return [String]
         def name
-          'SharedKeyLite'
+          "SharedKeyLite"
         end
 
         # Generate the string to sign.
@@ -35,9 +35,9 @@ module Azure
         def signable_string(method, uri, headers)
           [
             method.to_s.upcase,
-            headers.fetch('Content-MD5', ''),
-            headers.fetch('Content-Type', ''),
-            headers.fetch('Date') { raise IndexError, 'Headers must include Date' },
+            headers.fetch("Content-MD5", ""),
+            headers.fetch("Content-Type", ""),
+            headers.fetch("Date") { raise IndexError, "Headers must include Date" },
             canonicalized_headers(headers),
             canonicalized_resource(uri)
           ].join("\n")

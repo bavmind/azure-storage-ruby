@@ -30,10 +30,14 @@ describe Azure::Storage::File::FileService do
     let(:source_share_name) { ShareNameHelper.name }
     let(:source_directory_name) { FileNameHelper.name }
     let(:source_file_name) { "audio+video%25.mp4" }
-    let(:source_file_uri) { "https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.file.core.windows.net/#{source_share_name}/#{source_directory_name}/#{CGI.escape(source_file_name).encode('UTF-8')}" }
+    let(:source_file_uri) { "https://#{SERVICE_CREATE_OPTIONS()[:storage_account_name]}.file.core.windows.net/#{source_share_name}/#{source_directory_name}/#{CGI.escape(source_file_name).encode("UTF-8")}" }
     let(:file_length) { 1024 }
-    let(:content) { content = ""; file_length.times.each { |i| content << "@" }; content }
-    let(:metadata) { { "custommetadata" => "CustomMetadataValue" } }
+    let(:content) {
+      content = ""
+      file_length.times.each { |i| content << "@" }
+      content
+    }
+    let(:metadata) { {"custommetadata" => "CustomMetadataValue"} }
 
     let(:dest_share_name) { ShareNameHelper.name }
     let(:dest_directory_name) { FileNameHelper.name }
@@ -50,7 +54,7 @@ describe Azure::Storage::File::FileService do
     }
 
     it "copies an existing file to a new storage location" do
-      copy_id, copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name
+      copy_id, _copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name
       _(copy_id).wont_be_nil
 
       file, returned_content = subject.get_file dest_share_name, dest_directory_name, dest_file_name
@@ -60,7 +64,7 @@ describe Azure::Storage::File::FileService do
     end
 
     it "copies an existing file from URI to a new storage location" do
-      copy_id, copy_status = subject.copy_file_from_uri dest_share_name, dest_directory_name, dest_file_name, source_file_uri
+      copy_id, _copy_status = subject.copy_file_from_uri dest_share_name, dest_directory_name, dest_file_name, source_file_uri
       _(copy_id).wont_be_nil
 
       file, returned_content = subject.get_file dest_share_name, dest_directory_name, dest_file_name
@@ -70,12 +74,12 @@ describe Azure::Storage::File::FileService do
     end
 
     it "returns a copyid which can be used to monitor status of the asynchronous copy operation" do
-      copy_id, copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name
+      copy_id, _copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name
       _(copy_id).wont_be_nil
 
       counter = 0
       finished = false
-      while (counter < (10) && (not finished))
+      while counter < (10) && !finished
         sleep(1)
         file = subject.get_file_properties dest_share_name, dest_directory_name, dest_file_name
         _(file.properties[:copy_id]).must_equal copy_id
@@ -91,12 +95,12 @@ describe Azure::Storage::File::FileService do
     end
 
     it "returns a copyid which can be used to abort copy operation" do
-      copy_id, copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name
+      copy_id, _copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name
       _(copy_id).wont_be_nil
 
       counter = 0
       finished = false
-      while (counter < (10) && (not finished))
+      while counter < (10) && !finished
         sleep(1)
         file = subject.get_file_properties dest_share_name, dest_directory_name, dest_file_name
         _(file.properties[:copy_id]).must_equal copy_id
@@ -108,12 +112,12 @@ describe Azure::Storage::File::FileService do
       exception = assert_raises(Azure::Core::Http::HTTPError) do
         subject.abort_copy_file dest_share_name, dest_directory_name, dest_file_name, copy_id
       end
-      refute_nil(exception.message.index "NoPendingCopyOperation (409): There is currently no pending copy operation")
+      refute_nil(exception.message.index("NoPendingCopyOperation (409): There is currently no pending copy operation"))
     end
 
     describe "when a options hash is used" do
       it "replaces source metadata on the copy with provided Hash in :metadata property" do
-        copy_id, copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name, metadata: metadata
+        copy_id, _copy_status = subject.copy_file dest_share_name, dest_directory_name, dest_file_name, source_share_name, source_directory_name, source_file_name, metadata: metadata
         _(copy_id).wont_be_nil
 
         file, returned_content = subject.get_file dest_share_name, dest_directory_name, dest_file_name

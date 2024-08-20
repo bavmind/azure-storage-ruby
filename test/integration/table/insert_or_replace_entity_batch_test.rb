@@ -70,10 +70,10 @@ describe Azure::Storage::Table::TableService do
       _(result.etag).must_equal etags[0]
 
       entity.each { |k, v|
-        unless entity[k].class == Time
-          _(result.properties[k]).must_equal entity[k]
-        else
+        if entity[k].instance_of?(Time)
           _(result.properties[k].to_i).must_equal entity[k].to_i
+        else
+          _(result.properties[k]).must_equal entity[k]
         end
       }
     end
@@ -97,7 +97,7 @@ describe Azure::Storage::Table::TableService do
       assert exists, "cannot verify existing record"
 
       batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
-      batch.insert_or_replace entity["RowKey"],         "PartitionKey" => entity["PartitionKey"],
+      batch.insert_or_replace entity["RowKey"], "PartitionKey" => entity["PartitionKey"],
         "RowKey" => entity["RowKey"],
         "NewCustomProperty" => "NewCustomValue"
       etags = subject.execute_batch batch
@@ -125,7 +125,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new "this_table.cannot-exist!", entity["PartitionKey"]
         batch.insert_or_replace entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -137,7 +137,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.insert_or_replace entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
 
@@ -148,7 +148,7 @@ describe Azure::Storage::Table::TableService do
 
         batch = Azure::Storage::Table::Batch.new table_name, entity["PartitionKey"]
         batch.insert_or_replace entity["RowKey"], entity
-        etags = subject.execute_batch batch
+        subject.execute_batch batch
       end
     end
   end

@@ -71,12 +71,12 @@ module Azure::Storage::Common
     # When empty options are given, it will try to read settings from Environment Variables. Refer to [Azure::Storage::Common::ClientOptions.env_vars_mapping] for the mapping relationship
     #
     # @return [Azure::Storage::Common::Client]
-    def initialize(options = {}, &block)
+    def initialize(options = {}, &)
       if options.is_a?(Hash) && options.has_key?(:user_agent_prefix)
         Azure::Storage::Common::Service::StorageService.user_agent_prefix = options[:user_agent_prefix]
         options.delete :user_agent_prefix
       end
-      Azure::Storage::Common::Service::StorageService.register_request_callback(&block) if block_given?
+      Azure::Storage::Common::Service::StorageService.register_request_callback(&) if block_given?
       reset!(options)
     end
 
@@ -124,8 +124,8 @@ module Azure::Storage::Common
       # When empty options are given, it will try to read settings from Environment Variables. Refer to [Azure::Storage::Common::ClientOptions.env_vars_mapping] for the mapping relationship
       #
       # @return [Azure::Storage::Common::Client]
-      def create(options = {}, &block)
-        Client.new(options, &block)
+      def create(options = {}, &)
+        Client.new(options, &)
       end
 
       # Public: Creates an instance of [Azure::Storage::Common::Client] with Storage Emulator
@@ -135,16 +135,16 @@ module Azure::Storage::Common
       # * +proxy_uri+    - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
       #
       # @return [Azure::Storage::Common::Client]
-      def create_development(proxy_uri = nil, &block)
+      def create_development(proxy_uri = nil, &)
         proxy_uri ||= StorageServiceClientConstants::DEV_STORE_URI
-        create(use_development_storage: true, development_storage_proxy_uri: proxy_uri, &block)
+        create(use_development_storage: true, development_storage_proxy_uri: proxy_uri, &)
       end
 
       # Public: Creates an instance of [Azure::Storage::Common::Client] from Environment Variables
       #
       # @return [Azure::Storage::Client]
-      def create_from_env(&block)
-        create(&block)
+      def create_from_env(&)
+        create(&)
       end
 
       # Public: Creates an instance of [Azure::Storage::Common::Client] from Environment Variables
@@ -154,8 +154,8 @@ module Azure::Storage::Common
       # * +connection_string+    - String. Please refer to https://azure.microsoft.com/en-us/documentation/articles/storage-configure-connection-string/.
       #
       # @return [Azure::Storage::Common::Client]
-      def create_from_connection_string(connection_string, &block)
-        Client.new(connection_string, &block)
+      def create_from_connection_string(connection_string, &)
+        Client.new(connection_string, &)
       end
     end
   end

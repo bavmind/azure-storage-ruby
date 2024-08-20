@@ -41,7 +41,7 @@ describe Azure::Storage::File::FileService do
     end
 
     it "creates the directory with custom metadata" do
-      metadata = { "CustomMetadataProperty" => "CustomMetadataValue" }
+      metadata = {"CustomMetadataProperty" => "CustomMetadataValue"}
 
       directory = subject.create_directory share_name, directory_name, metadata: metadata
 

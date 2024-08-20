@@ -26,9 +26,7 @@ require "unit/test_helper"
 require "azure/storage/common"
 
 describe Azure::Storage::Common::Client do
-
   before do
-
     @account_name = "mockaccount"
     @access_key = "YWNjZXNzLWtleQ=="
     @mock_blob_host_with_protocol = "http://www.blob.net"
@@ -71,7 +69,6 @@ describe Azure::Storage::Common::Client do
   end
 
   describe "when create with empty options" do
-
     it "should fail with nil params or call create_from_env directly" do
       removed = clear_storage_instance_variables
       _(lambda { Azure::Storage::Common::Client.create }).must_raise(Azure::Storage::Common::InvalidOptionsError)
@@ -92,11 +89,9 @@ describe Azure::Storage::Common::Client do
       _(lambda { Azure::Storage::Common::Client.create_from_connection_string("") }).must_raise(Azure::Storage::Common::InvalidConnectionStringError)
       restore_storage_instance_variables removed
     end
-
   end
 
   describe "when create development" do
-
     it "should succeed by Hash, connection_string or method" do
       client1 = Azure::Storage::Common::Client.create(@devstore_options)
       client2 = Azure::Storage::Common::Client.create(get_connection_string(@devstore_options))
@@ -129,11 +124,9 @@ describe Azure::Storage::Common::Client do
 
       ENV.delete("EMULATED")
     end
-
   end
 
   describe "when create with account name/key" do
-
     it "should succeed with Hash or connection_string" do
       client1 = Azure::Storage::Common::Client.new(@account_key_options)
       client2 = Azure::Storage::Common::Client.create_from_connection_string(get_connection_string(@account_key_options))
@@ -182,9 +175,8 @@ describe Azure::Storage::Common::Client do
   end
 
   describe "when create for anonymous or with sas" do
-
     it "should succeed if sas_token is given with name" do
-      opts = { storage_account_name: @account_name, storage_sas_token: @mock_sas }
+      opts = {storage_account_name: @account_name, storage_sas_token: @mock_sas}
       c = Azure::Storage::Common::Client.create(opts)
       _(c).wont_be_nil
       _(c.storage_account_name).must_equal(@account_name)
@@ -198,7 +190,7 @@ describe Azure::Storage::Common::Client do
     end
 
     it "should succeed if given a host anonymously" do
-      opts = { storage_blob_host: @mock_blob_host_with_protocol }
+      opts = {storage_blob_host: @mock_blob_host_with_protocol}
       c = Azure::Storage::Common::Client.create(opts)
       _(c).wont_be_nil
       _(c.storage_blob_host).must_equal(@mock_blob_host_with_protocol)
@@ -207,16 +199,15 @@ describe Azure::Storage::Common::Client do
   end
 
   describe "when create from env" do
-
     it "should fail if no environment variables are set" do
       removed = clear_storage_instance_variables
       _(lambda { Azure::Storage::Common::Client.create }).must_raise(Azure::Storage::Common::InvalidOptionsError)
       restore_storage_instance_variables removed
     end
 
-    it "calls default options to see if valid"  do
+    it "calls default options to see if valid" do
       options = Azure::Storage::Common::Default.options
-      for key in Azure::Storage::Common::Configurable::keys
+      Azure::Storage::Common::Configurable.keys.each do |key|
         _(options[key]).must_be_nil
       end
     end
@@ -231,7 +222,6 @@ describe Azure::Storage::Common::Client do
 
       clear_storage_envs
     end
-
   end
 
   describe "when create with TokenCredential" do
@@ -263,7 +253,6 @@ describe Azure::Storage::Common::Client do
       queue_signer_client = Azure::Storage::Queue::QueueService.new(client: common_signer_client, signer: token_signer)
       _(queue_signer_client).wont_be_nil
     end
-
   end
 
   describe "when create with ssl options" do
@@ -278,5 +267,4 @@ describe Azure::Storage::Common::Client do
   after do
     restore_storage_envs(@removed)
   end
-
 end

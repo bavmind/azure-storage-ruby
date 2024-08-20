@@ -12,57 +12,56 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
-require 'azure/core/error'
-require 'nokogiri'
-require 'json'
+require "azure/core/error"
+require "nokogiri"
+require "json"
 
 module Azure
   module Core
     module Http
       # Public: Class for handling all HTTP response errors
       class HTTPError < Azure::Core::Error
-
         # Public: Detail of the response
         #
         # Returns an Azure::Core::Http::HttpResponse object
-        attr :http_response
+        attr_reader :http_response
 
         # Public: The request URI
         #
         # Returns a String
-        attr :uri
+        attr_reader :uri
 
         # Public: The HTTP status code of this error
         #
         # Returns a Fixnum
-        attr :status_code
+        attr_reader :status_code
 
         # Public: The type of error
         #
         # http://msdn.microsoft.com/en-us/library/azure/dd179357
         #
         # Returns a String
-        attr :type
+        attr_reader :type
 
         # Public: Description of the error
         #
         # Returns a String
-        attr :description
+        attr_reader :description
 
         # Public: Detail of the error
         #
         # Returns a String
-        attr :detail
+        attr_reader :detail
 
         # Public: The header name whose value is invalid
         #
         # Returns a String
-        attr :header
+        attr_reader :header
 
         # Public: The invalid header value
         #
         # Returns a String
-        attr :header_value
+        attr_reader :header_value
 
         # Public: Initialize an error
         #
@@ -83,10 +82,10 @@ module Azure
         #
         # Returns nothing
         def parse_response
-          if @http_response.body && @http_response.respond_to?(:headers) && @http_response.headers['Content-Type']
-            if @http_response.headers['Content-Type'].include?('xml')
+          if @http_response.body && @http_response.respond_to?(:headers) && @http_response.headers["Content-Type"]
+            if @http_response.headers["Content-Type"].include?("xml")
               parse_xml_response
-            elsif @http_response.headers['Content-Type'].include?('json')
+            elsif @http_response.headers["Content-Type"].include?("json")
               parse_json_response
             end
           else
@@ -97,36 +96,36 @@ module Azure
         def parse_xml_response
           document = Nokogiri.Slop(@http_response.body)
 
-          @type = document.css('code').first.text if document.css('code').any?
-          @type = document.css('Code').first.text if document.css('Code').any?
-          @description = document.css('message').first.text if document.css('message').any?
-          @description = document.css('Message').first.text if document.css('Message').any?
-          @header = document.css('headername').first.text if document.css('headername').any?
-          @header = document.css('HeaderName').first.text if document.css('HeaderName').any?
-          @header_value = document.css('headervalue').first.text if document.css('headervalue').any?
-          @header_value = document.css('HeaderValue').first.text if document.css('HeaderValue').any?
+          @type = document.css("code").first.text if document.css("code").any?
+          @type = document.css("Code").first.text if document.css("Code").any?
+          @description = document.css("message").first.text if document.css("message").any?
+          @description = document.css("Message").first.text if document.css("Message").any?
+          @header = document.css("headername").first.text if document.css("headername").any?
+          @header = document.css("HeaderName").first.text if document.css("HeaderName").any?
+          @header_value = document.css("headervalue").first.text if document.css("headervalue").any?
+          @header_value = document.css("HeaderValue").first.text if document.css("HeaderValue").any?
 
           # service bus uses detail instead of message
-          @detail = document.css('detail').first.text if document.css('detail').any?
-          @detail = document.css('Detail').first.text if document.css('Detail').any?
+          @detail = document.css("detail").first.text if document.css("detail").any?
+          @detail = document.css("Detail").first.text if document.css("Detail").any?
         end
 
         def parse_json_response
-          odata_error = JSON.parse(@http_response.body)['odata.error']
-          @type = odata_error['code']
-          @description = odata_error['message']['value']
+          odata_error = JSON.parse(@http_response.body)["odata.error"]
+          @type = odata_error["code"]
+          @description = odata_error["message"]["value"]
         end
 
         def parse_unknown_response
-          @type = 'Unknown'
+          @type = "Unknown"
           if @http_response.body
-            @description = "#{@http_response.body.strip}"
+            @description = @http_response.body.strip.to_s
           end
         end
 
         def inspect
-          string = "#<#{self.class.name}:#{self.object_id} "
-          fields = self.instance_variables.map{|field| "#{field}: #{self.send(field.to_s.delete("@")).inspect}"}
+          string = "#<#{self.class.name}:#{object_id} "
+          fields = instance_variables.map { |field| "#{field}: #{send(field.to_s.delete("@")).inspect}" }
           string << fields.join(", ") << ">"
         end
       end

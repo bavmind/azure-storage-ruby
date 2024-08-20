@@ -30,32 +30,32 @@ require "base64"
 require "openssl"
 require "uri"
 require "faraday"
-require 'faraday/follow_redirects'
+require "faraday/follow_redirects"
 
 require "azure/storage/common/core/autoload"
 require "azure/storage/common/default"
 
 module Azure
   module Storage
-    autoload :Common,                       "azure/storage/common/core"
+    autoload :Common, "azure/storage/common/core"
     module Common
-      autoload :Default,                    "azure/storage/common/default"
-      autoload :Configurable,               "azure/storage/common/configurable"
-      autoload :Client,                     "azure/storage/common/client"
-      autoload :ClientOptions,              "azure/storage/common/client_options"
+      autoload :Default, "azure/storage/common/default"
+      autoload :Configurable, "azure/storage/common/configurable"
+      autoload :Client, "azure/storage/common/client"
+      autoload :ClientOptions, "azure/storage/common/client_options"
 
       module Auth
-        autoload :SharedAccessSignature,    "azure/storage/common/core/auth/shared_access_signature"
+        autoload :SharedAccessSignature, "azure/storage/common/core/auth/shared_access_signature"
       end
 
       module Service
-        autoload :Serialization,            "azure/storage/common/service/serialization"
-        autoload :SignedIdentifier,         "azure/storage/common/service/signed_identifier"
-        autoload :AccessPolicy,             "azure/storage/common/service/access_policy"
-        autoload :StorageService,           "azure/storage/common/service/storage_service"
-        autoload :CorsRule,                 "azure/storage/common/service/cors_rule"
-        autoload :EnumerationResults,       "azure/storage/common/service/enumeration_results"
-        autoload :UserDelegationKey,        "azure/storage/common/service/user_delegation_key"
+        autoload :Serialization, "azure/storage/common/service/serialization"
+        autoload :SignedIdentifier, "azure/storage/common/service/signed_identifier"
+        autoload :AccessPolicy, "azure/storage/common/service/access_policy"
+        autoload :StorageService, "azure/storage/common/service/storage_service"
+        autoload :CorsRule, "azure/storage/common/service/cors_rule"
+        autoload :EnumerationResults, "azure/storage/common/service/enumeration_results"
+        autoload :UserDelegationKey, "azure/storage/common/service/user_delegation_key"
       end
     end
   end

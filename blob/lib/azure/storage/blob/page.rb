@@ -159,7 +159,7 @@ module Azure::Storage
     #
     # Returns Blob
     def put_blob_pages(container, blob, start_range, end_range, content, options = {})
-      query = { "comp" => "page" }
+      query = {"comp" => "page"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
@@ -218,7 +218,7 @@ module Azure::Storage
     #
     # Returns Blob
     def clear_blob_pages(container, blob, start_range, end_range, options = {})
-      query = { "comp" => "page" }
+      query = {"comp" => "page"}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       uri = blob_uri(container, blob, query)
@@ -294,7 +294,7 @@ module Azure::Storage
     #   e.g. [ [0, 511], [512, 1024], ... ]
     #
     def list_page_blob_ranges(container, blob, options = {})
-      query = { "comp" => "pagelist" }
+      query = {"comp" => "pagelist"}
       query.update("snapshot" => options[:snapshot]) if options[:snapshot]
       query.update("prevsnapshot" => options[:previous_snapshot]) if options[:previous_snapshot]
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
@@ -302,7 +302,7 @@ module Azure::Storage
       options[:request_location_mode] = Azure::Storage::Common::RequestLocationMode::PRIMARY_OR_SECONDARY
       uri = blob_uri(container, blob, query, options)
 
-      options[:start_range] = 0 if options[:end_range] && (not options[:start_range])
+      options[:start_range] = 0 if options[:end_range] && !(options[:start_range])
 
       headers = {}
       StorageService.with_header headers, "x-ms-range", "bytes=#{options[:start_range]}-#{options[:end_range]}" if options[:start_range]
@@ -311,8 +311,7 @@ module Azure::Storage
 
       response = call(:get, uri, nil, headers, options)
 
-      pagelist = Serialization.page_list_from_xml(response.body)
-      pagelist
+      Serialization.page_list_from_xml(response.body)
     end
 
     # Public: Resizes a page blob to the specified size.
@@ -349,7 +348,7 @@ module Azure::Storage
     #
     # Returns nil on success.
     def resize_page_blob(container, blob, size, options = {})
-      options = { content_length: size }.merge(options)
+      options = {content_length: size}.merge(options)
       set_blob_properties container, blob, options
     end
 
@@ -417,7 +416,7 @@ module Azure::Storage
     #
     def incremental_copy_blob(destination_container, destination_blob, source_uri, options = {})
       # query parameters
-      query = { Azure::Storage::Common::QueryStringConstants::COMP => Azure::Storage::Common::QueryStringConstants::INCREMENTAL_COPY }
+      query = {Azure::Storage::Common::QueryStringConstants::COMP => Azure::Storage::Common::QueryStringConstants::INCREMENTAL_COPY}
       StorageService.with_query query, "timeout", options[:timeout].to_s if options[:timeout]
 
       # URI
@@ -433,7 +432,7 @@ module Azure::Storage
       end
 
       response = call(:put, uri, nil, headers, options)
-      return response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]
+      [response.headers["x-ms-copy-id"], response.headers["x-ms-copy-status"]]
     end
 
     # Public: Sets a page blob's sequence number.
@@ -494,7 +493,7 @@ module Azure::Storage
     #
     # Returns nil on success.
     def set_sequence_number(container, blob, action, number, options = {})
-      options = { sequence_number_action: action, sequence_number: number }.merge(options)
+      options = {sequence_number_action: action, sequence_number: number}.merge(options)
       set_blob_properties container, blob, options
     end
 
@@ -550,7 +549,7 @@ module Azure::Storage
       content = StringIO.new(content) if content.is_a? String
       upload_count = (Float(length) / Float(BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES)).ceil
 
-      for idx in 0...upload_count
+      (0...upload_count).each do |idx|
         start_range = idx * BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES
         end_range = start_range + BlobConstants::DEFAULT_WRITE_PAGE_SIZE_IN_BYTES - 1
         end_range = (length - 1) if end_range > (length - 1)

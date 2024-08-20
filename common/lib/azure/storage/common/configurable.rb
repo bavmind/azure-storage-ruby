@@ -53,18 +53,18 @@ module Azure::Storage::Common
     #     the end.
 
     attr_accessor :storage_access_key,
-                  :storage_account_name,
-                  :storage_connection_string,
-                  :storage_sas_token
+      :storage_account_name,
+      :storage_connection_string,
+      :storage_sas_token
 
     attr_writer :storage_table_host,
-                :storage_blob_host,
-                :storage_queue_host,
-                :storage_file_host,
-                :storage_table_host_secondary,
-                :storage_blob_host_secondary,
-                :storage_queue_host_secondary,
-                :storage_file_host_secondary
+      :storage_blob_host,
+      :storage_queue_host,
+      :storage_file_host,
+      :storage_table_host_secondary,
+      :storage_blob_host_secondary,
+      :storage_queue_host_secondary,
+      :storage_file_host_secondary
 
     attr_reader :signer
 
@@ -102,7 +102,7 @@ module Azure::Storage::Common
           if self == Azure::Storage::Common
             Azure::Storage::Common::Default.options[key]
           else
-            self.send(key)
+            send(key)
           end
         instance_variable_set(:"@#{key}", options.fetch(key, value))
 
@@ -111,17 +111,17 @@ module Azure::Storage::Common
           instance_variable_set(:"@#{key}_secondary", secondary_endpoint(options.fetch(key, value)))
         end
       end
-      self.send(:reset_agents!) if self.respond_to?(:reset_agents!)
+      send(:reset_agents!) if respond_to?(:reset_agents!)
       setup_signer_for_service(options[:api_version])
       self
     end
 
-    alias setup reset_config!
+    alias_method :setup, :reset_config!
 
     # Storage queue host
     # @return [String]
-    def storage_queue_host(isSecondary = false)
-      if isSecondary
+    def storage_queue_host(is_secondary = false)
+      if is_secondary
         @storage_queue_host_secondary || default_host(:queue, true)
       else
         @storage_queue_host || default_host(:queue, false)
@@ -130,8 +130,8 @@ module Azure::Storage::Common
 
     # Storage blob host
     # @return [String]
-    def storage_blob_host(isSecondary = false)
-      if isSecondary
+    def storage_blob_host(is_secondary = false)
+      if is_secondary
         @storage_blob_host_secondary || default_host(:blob, true)
       else
         @storage_blob_host || default_host(:blob, false)
@@ -140,8 +140,8 @@ module Azure::Storage::Common
 
     # Storage table host
     # @return [String]
-    def storage_table_host(isSecondary = false)
-      if isSecondary
+    def storage_table_host(is_secondary = false)
+      if is_secondary
         @storage_table_host_secondary || default_host(:table, true)
       else
         @storage_table_host || default_host(:table, false)
@@ -150,8 +150,8 @@ module Azure::Storage::Common
 
     # Storage file host
     # @return [String]
-    def storage_file_host(isSecondary = false)
-      if isSecondary
+    def storage_file_host(is_secondary = false)
+      if is_secondary
         @storage_file_host_secondary || default_host(:file, true)
       else
         @storage_file_host || default_host(:file, false)
@@ -160,53 +160,53 @@ module Azure::Storage::Common
 
     private
 
-      def default_host(service, isSecondary = false)
-        "https://#{storage_account_name}#{isSecondary ? "-secondary" : ""}.#{service}.core.windows.net" if storage_account_name
-      end
+    def default_host(service, is_secondary = false)
+      "https://#{storage_account_name}#{is_secondary ? "-secondary" : ""}.#{service}.core.windows.net" if storage_account_name
+    end
 
-      def setup_options
-        opts = {}
-        Azure::Storage::Common::Configurable.keys.map do |key|
-          opts[key] = self.send(key) if self.send(key)
-        end
-        opts
+    def setup_options
+      opts = {}
+      Azure::Storage::Common::Configurable.keys.map do |key|
+        opts[key] = send(key) if send(key)
       end
+      opts
+    end
 
-      def account_name_from_endpoint(endpoint)
-        return nil if endpoint.nil?
-        uri = URI::parse endpoint
-        fields = uri.host.split "."
-        fields[0]
-      end
+    def account_name_from_endpoint(endpoint)
+      return nil if endpoint.nil?
+      uri = URI.parse endpoint
+      fields = uri.host.split "."
+      fields[0]
+    end
 
-      def secondary_endpoint(primary_endpoint)
-        return nil if primary_endpoint.nil?
-        account_name = account_name_from_endpoint primary_endpoint
-        primary_endpoint.sub account_name, account_name + "-secondary"
-      end
+    def secondary_endpoint(primary_endpoint)
+      return nil if primary_endpoint.nil?
+      account_name = account_name_from_endpoint primary_endpoint
+      primary_endpoint.sub account_name, account_name + "-secondary"
+    end
 
-      def determine_account_name
-        if instance_variable_get(:@storage_account_name).nil?
-          hosts = [@storage_blob_host, @storage_table_host, @storage_queue_host, @storage_file_host]
-          account_name = nil;
-          hosts.each do |host|
-            parsed = account_name_from_endpoint host
-            if account_name.nil?
-              account_name = parsed
-            elsif !account_name.nil? && !parsed.nil? && (account_name <=> parsed) != (0)
-              raise InvalidOptionsError, "Ambiguous account name in service hosts."
-            end
+    def determine_account_name
+      if instance_variable_get(:@storage_account_name).nil?
+        hosts = [@storage_blob_host, @storage_table_host, @storage_queue_host, @storage_file_host]
+        account_name = nil
+        hosts.each do |host|
+          parsed = account_name_from_endpoint host
+          if account_name.nil?
+            account_name = parsed
+          elsif !account_name.nil? && !parsed.nil? && (account_name <=> parsed) != (0)
+            raise InvalidOptionsError, "Ambiguous account name in service hosts."
           end
-          raise InvalidOptionsError, "Cannot identify account name." if account_name.nil?
-          @storage_account_name = account_name
         end
+        raise InvalidOptionsError, "Cannot identify account name." if account_name.nil?
+        @storage_account_name = account_name
       end
+    end
 
-      def setup_signer_for_service(api_ver)
-        if @storage_sas_token
-          determine_account_name
-          @signer = Azure::Storage::Common::Core::Auth::SharedAccessSignatureSigner.new api_ver, @storage_account_name, @storage_sas_token
-        end
+    def setup_signer_for_service(api_ver)
+      if @storage_sas_token
+        determine_account_name
+        @signer = Azure::Storage::Common::Core::Auth::SharedAccessSignatureSigner.new api_ver, @storage_account_name, @storage_sas_token
       end
+    end
   end
 end

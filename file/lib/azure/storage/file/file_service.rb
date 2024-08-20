@@ -78,10 +78,10 @@ module Azure::Storage
         # When empty options are given, it will try to read settings from Environment Variables. Refer to [Azure::Storage::Common::ClientOptions.env_vars_mapping] for the mapping relationship
         #
         # @return [Azure::Storage::File::FileService]
-        def create(options = {}, &block)
-          service_options = { client: Azure::Storage::Common::Client::create(options, &block), api_version: Azure::Storage::File::Default::STG_VERSION }
+        def create(options = {}, &)
+          service_options = {client: Azure::Storage::Common::Client.create(options, &), api_version: Azure::Storage::File::Default::STG_VERSION}
           service_options[:user_agent_prefix] = options[:user_agent_prefix] if options[:user_agent_prefix]
-          Azure::Storage::File::FileService.new(service_options, &block)
+          Azure::Storage::File::FileService.new(service_options, &)
         end
 
         # Public: Creates an instance of [Azure::Storage::File::FileService] with Storage Emulator
@@ -91,17 +91,17 @@ module Azure::Storage
         # * +proxy_uri+    - String. Used with +:use_development_storage+ if emulator is hosted other than localhost.
         #
         # @return [Azure::Storage::File::FileService]
-        def create_development(proxy_uri = nil, &block)
-          service_options = { client: Azure::Storage::Common::Client::create_development(proxy_uri, &block), api_version: Azure::Storage::File::Default::STG_VERSION }
-          Azure::Storage::File::FileService.new(service_options, &block)
+        def create_development(proxy_uri = nil, &)
+          service_options = {client: Azure::Storage::Common::Client.create_development(proxy_uri, &), api_version: Azure::Storage::File::Default::STG_VERSION}
+          Azure::Storage::File::FileService.new(service_options, &)
         end
 
         # Public: Creates an instance of [Azure::Storage::File::FileService] from Environment Variables
         #
         # @return [Azure::Storage::File::FileService]
-        def create_from_env(&block)
-          service_options = { client: Azure::Storage::Common::Client::create_from_env(&block), api_version: Azure::Storage::File::Default::STG_VERSION }
-          Azure::Storage::File::FileService.new(service_options, &block)
+        def create_from_env(&)
+          service_options = {client: Azure::Storage::Common::Client.create_from_env(&), api_version: Azure::Storage::File::Default::STG_VERSION}
+          Azure::Storage::File::FileService.new(service_options, &)
         end
 
         # Public: Creates an instance of [Azure::Storage::File::FileService] from Environment Variables
@@ -111,9 +111,9 @@ module Azure::Storage
         # * +connection_string+    - String. Please refer to https://azure.microsoft.com/en-us/documentation/articles/storage-configure-connection-string/.
         #
         # @return [Azure::Storage::File::FileService]
-        def create_from_connection_string(connection_string, &block)
-          service_options = { client: Azure::Storage::Common::Client::create_from_connection_string(connection_string, &block), api_version: Azure::Storage::File::Default::STG_VERSION }
-          Azure::Storage::File::FileService.new(service_options, &block)
+        def create_from_connection_string(connection_string, &)
+          service_options = {client: Azure::Storage::Common::Client.create_from_connection_string(connection_string, &), api_version: Azure::Storage::File::Default::STG_VERSION}
+          Azure::Storage::File::FileService.new(service_options, &)
         end
       end
 
@@ -158,14 +158,14 @@ module Azure::Storage
       # * +:ca_file+ is independent.
       #
       # When empty options are given, it will try to read settings from Environment Variables. Refer to [Azure::Storage::Common::ClientOptions.env_vars_mapping] for the mapping relationship
-      def initialize(options = {}, &block)
+      def initialize(options = {}, &)
         service_options = options.clone
-        client_config = service_options[:client] ||= Azure::Storage::Common::Client::create(service_options, &block)
+        client_config = service_options[:client] ||= Azure::Storage::Common::Client.create(service_options, &)
         @user_agent_prefix = service_options[:user_agent_prefix] if service_options[:user_agent_prefix]
         @api_version = service_options[:api_version] || Azure::Storage::File::Default::STG_VERSION
         signer = service_options[:signer] || client_config.signer || Azure::Storage::Common::Core::Auth::SharedKey.new(client_config.storage_account_name, client_config.storage_access_key)
         signer.api_ver = @api_version if signer.is_a? Azure::Storage::Common::Core::Auth::SharedAccessSignatureSigner
-        super(signer, client_config.storage_account_name, service_options, &block)
+        super(signer, client_config.storage_account_name, service_options, &)
         @storage_service_host[:primary] = client.storage_file_host
         @storage_service_host[:secondary] = client.storage_file_host true
       end
@@ -173,7 +173,7 @@ module Azure::Storage
       def call(method, uri, body = nil, headers = {}, options = {})
         content_type = get_or_apply_content_type(body, headers[Azure::Storage::Common::HeaderConstants::FILE_CONTENT_TYPE])
         headers[Azure::Storage::Common::HeaderConstants::FILE_CONTENT_TYPE] = content_type if content_type
-        headers["x-ms-version"] = @api_version ? @api_version : Default::STG_VERSION
+        headers["x-ms-version"] = @api_version || Default::STG_VERSION
         headers["User-Agent"] = @user_agent_prefix ? "#{@user_agent_prefix}; #{Default::USER_AGENT}" : Default::USER_AGENT
 
         response = super
@@ -221,7 +221,7 @@ module Azure::Storage
       # * +:request_id+              - String. Provides a client-generated, opaque value with a 1 KB character limit that is recorded
       #                                in the analytics logs when storage analytics logging is enabled.
       #
-      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide 
+      # * +:location_mode+           - LocationMode. Specifies the location mode used to decide
       #                                which location the request should be sent to.
       #
       # See: https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/list-shares
@@ -254,10 +254,11 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def shares_uri(query = {}, options = {})
-          query = { "comp" => "list" }.merge(query)
-          generate_uri("", query, options)
-        end
+
+      def shares_uri(query = {}, options = {})
+        query = {"comp" => "list"}.merge(query)
+        generate_uri("", query, options)
+      end
 
       # Protected: Generate the URI for a specific share.
       #
@@ -269,11 +270,12 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def share_uri(name, query = {}, options = {})
-          return name if name.kind_of? ::URI
-          query = { restype: "share" }.merge(query)
-          generate_uri(name, query, options)
-        end
+
+      def share_uri(name, query = {}, options = {})
+        return name if name.is_a? ::URI
+        query = {restype: "share"}.merge(query)
+        generate_uri(name, query, options)
+      end
 
       # Protected: Generate the URI for a specific directory.
       #
@@ -287,12 +289,13 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def directory_uri(share, directory_path, query = {}, options = {})
-          path = directory_path.nil? ? share : ::File.join(share, directory_path)
-          query = { restype: "directory" }.merge(query)
-          options = { encode: true }.merge(options)
-          generate_uri(path, query, options)
-        end
+
+      def directory_uri(share, directory_path, query = {}, options = {})
+        path = directory_path.nil? ? share : ::File.join(share, directory_path)
+        query = {restype: "directory"}.merge(query)
+        options = {encode: true}.merge(options)
+        generate_uri(path, query, options)
+      end
 
       # Protected: Generate the URI for a specific file.
       #
@@ -306,39 +309,41 @@ module Azure::Storage
       # Returns a URI.
       #
       protected
-        def file_uri(share, directory_path, file, query = {}, options = {})
-          if directory_path.nil?
-            path = ::File.join(share, file)
-          else
-            path = ::File.join(share, directory_path, file)
-          end
-          options = { encode: true }.merge(options)
-          generate_uri(path, query, options)
+
+      def file_uri(share, directory_path, file, query = {}, options = {})
+        path = if directory_path.nil?
+          ::File.join(share, file)
+        else
+          ::File.join(share, directory_path, file)
         end
+        options = {encode: true}.merge(options)
+        generate_uri(path, query, options)
+      end
 
       # Get the content type according to the content type header and request body.
       #
       # headers      - The request body
       # content_type - The request content type
       protected
-        def get_or_apply_content_type(body, content_type = nil)
-          unless body.nil?
-            if (body.is_a? String) && body.encoding.to_s != "ASCII_8BIT" && !body.empty?
-              if content_type.nil?
-                content_type = "text/plain; charset=#{body.encoding}"
-              else
-                # Force the request.body to the content encoding of specified in the header
-                charset = parse_charset_from_content_type(content_type)
-                body.force_encoding(charset) if charset
-              end
+
+      def get_or_apply_content_type(body, content_type = nil)
+        unless body.nil?
+          if (body.is_a? String) && body.encoding.to_s != "ASCII_8BIT" && !body.empty?
+            if content_type.nil?
+              content_type = "text/plain; charset=#{body.encoding}"
             else
-              # It is either that the body is not a string, or that the body's encoding is ASCII_8BIT, which is a binary
-              # In this case, set the content type to be default content-type
-              content_type = Default::CONTENT_TYPE_VALUE unless content_type
+              # Force the request.body to the content encoding of specified in the header
+              charset = parse_charset_from_content_type(content_type)
+              body.force_encoding(charset) if charset
             end
+          else
+            # It is either that the body is not a string, or that the body's encoding is ASCII_8BIT, which is a binary
+            # In this case, set the content type to be default content-type
+            content_type ||= Default::CONTENT_TYPE_VALUE
           end
-          content_type
         end
+        content_type
+      end
     end
   end
 end

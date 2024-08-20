@@ -32,7 +32,7 @@ describe Azure::Storage::File::FileService do
     let(:prefix) { FileNameHelper.name }
     let(:directories_names) { [prefix + FileNameHelper.name, prefix + FileNameHelper.name, FileNameHelper.name] }
     let(:sub_directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
     before {
       subject.create_share share_name, metadata: metadata
       directories_names.each { |directory_name|
@@ -60,7 +60,7 @@ describe Azure::Storage::File::FileService do
       result.each { |directory|
         found += 1 if directories_names.include? directory.name
 
-        sub_result =  subject.list_directories_and_files share_name, directory.name
+        sub_result = subject.list_directories_and_files share_name, directory.name
         sub_result.each { |sub_directory_path|
           found += 1
         }
@@ -113,7 +113,7 @@ describe Azure::Storage::File::FileService do
     let(:sub_directories_names) { [FileNameHelper.name, FileNameHelper.name, FileNameHelper.name] }
     let(:file_names) { [prefix + FileNameHelper.name, prefix + FileNameHelper.name, FileNameHelper.name] }
     let(:file_length) { 1024 }
-    let(:metadata) { { "CustomMetadataProperty" => "CustomMetadataValue" } }
+    let(:metadata) { {"CustomMetadataProperty" => "CustomMetadataValue"} }
     before {
       subject.create_share share_name, metadata: metadata
       directories_names.each { |directory_name|
