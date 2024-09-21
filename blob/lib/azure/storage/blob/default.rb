@@ -29,7 +29,7 @@ require "rbconfig"
 module Azure::Storage::Blob
   module Default
     # Default REST service (STG) version number
-    STG_VERSION = "2018-11-09"
+    STG_VERSION = "2024-11-04"
 
     # The number of default concurrent requests for parallel operation.
     DEFAULT_PARALLEL_OPERATION_THREAD_COUNT = 1
@@ -101,7 +101,7 @@ module Azure::Storage::Blob
     MAX_APPEND_BLOB_SIZE = 1024 * 1024 * 1024 * 1024
 
     # The maximum size, in bytes, of a blob before it must be separated into blocks.
-    MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES = 256 * 1024 * 1024
+    MAX_SINGLE_UPLOAD_BLOB_SIZE_IN_BYTES = 4000 * 1024 * 1024
 
     # The maximum range get size when requesting for a contentMD5
     MAX_RANGE_GET_SIZE_WITH_MD5 = 4 * 1024 * 1024

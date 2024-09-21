@@ -80,7 +80,7 @@ describe Azure::Storage::Blob::BlobService do
     <SignedStart>2020-01-24T13:24:33Z</SignedStart>
     <SignedExpiry>2020-01-24T14:24:33Z</SignedExpiry>
     <SignedService>b</SignedService>
-    <SignedVersion>2018-11-09</SignedVersion>
+    <SignedVersion>2024-11-04</SignedVersion>
     <Value>abcdefgh1234567890=?.,:-</Value>
 </UserDelegationKey>'
     }
